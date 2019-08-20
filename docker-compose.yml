@@ -9,7 +9,7 @@ services:
     depends_on:
       - manager-php-fpm
     ports:
-      - "8083:80"
+      - "8084:80"
   manager-php-fpm:
     build:
       context: ./manager/docker/development
@@ -27,8 +27,8 @@ services:
   postgres:
     image: postgres:9.6
     ports:
-      - '5433:5432'
-    container_name: 'postgresql1'
+      - '5434:5432'
+    container_name: 'postgresql2'
     working_dir: /app
     restart: always
     environment:
