@@ -24,19 +24,16 @@ services:
       - ./manager:/app
       - composer:/root/.composer/cache
     tty: true
-  postgres:
-    image: postgres:9.6
-    ports:
-      - '5434:5432'
-    container_name: 'postgresql2'
-    working_dir: /app
-    restart: always
-    environment:
-      POSTGRES_DB: 'app'
-      POSTGRES_USER: 'app'
-      POSTGRES_PASSWORD: 'secret'
+  manager-postgres:
+    image: postgres:11.2-alpine
     volumes:
-      - ./manager/var/dump:/app/dump
-      - ./manager/var/data/postgresql:/var/lib/postgresql/data
+      - manager-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: secret
+    ports:
+      - '54321:5432'
 volumes:
+  manager-postgres:
   composer:
