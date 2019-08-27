@@ -33,7 +33,7 @@ services:
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: app
     ports:
-      - "54321:5432"
+      - "54322:5432"
 volumes:
   manager-postgres:
   composer:

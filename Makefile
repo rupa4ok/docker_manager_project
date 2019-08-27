@@ -18,7 +18,7 @@ manager-init: manager-composer-install
 perm:
 	sudo chown -R rupak:rupak manager
 manager-test:
-	docker-compose run --rm manager-php-cli bin/phpunit
+	docker-compose run --rm manager-php-cli php bin/phpunit tests
 manager-composer-install:
 	docker-compose run --rm manager-php-cli composer install
 cli:
