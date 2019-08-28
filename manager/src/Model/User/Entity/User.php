@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 class User
 {
+    public const STATUS_WAIT = 'wait';
+    public const STATUS_ACTIVE = 'active';
+
     /**
      * @ORM\Column(type="user_id")
      * @ORM\Id
@@ -16,21 +19,29 @@ class User
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
      */
     private $date;
 
     /**
      * @var Email|null
-     * @ORM\Column(type="user_user_email", nullable=true)
      */
     private $email;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", name="password_hash", nullable=true)
      */
     private $passwordHash;
+
+    /**
+     * @var string|null
+     */
+    private $confirmToken;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=16)
+     */
+    private $status;
 
     /**
      * @param Id $id
@@ -75,11 +86,30 @@ class User
         return $this->passwordHash;
     }
 
-    public static function signUpByEmail(Id $id, \DateTimeImmutable $date, Email $email, string $hash): self
+    /**
+     * @return mixed
+     */
+    public function getConfirmToken()
+    {
+        return $this->confirmToken;
+    }
+
+    public function isWait(): bool
+    {
+        return $this->status === self::STATUS_WAIT;
+    }
+    public function isActive(): bool
+    {
+        return $this->status === self::STATUS_ACTIVE;
+    }
+
+    public static function signUpByEmail(Id $id, \DateTimeImmutable $date, Email $email, string $hash, string $token): self
     {
         $user = new self($id, $date, $email, $hash);
         $user->email = $email;
         $user->passwordHash = $hash;
+        $user->confirmToken = $token;
+        $user->status = self::STATUS_WAIT;
         return $user;
     }
 }
