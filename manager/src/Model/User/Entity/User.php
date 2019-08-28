@@ -48,13 +48,16 @@ class User
      * @param \DateTimeImmutable $date
      * @param Email $email
      * @param string $hash
+     * @param string $token
      */
-    public function __construct(Id $id, \DateTimeImmutable $date, Email $email, string $hash)
+    public function __construct(Id $id, \DateTimeImmutable $date, Email $email, string $hash, string $token)
     {
         $this->id = $id;
         $this->date = $date;
         $this->email = $email;
         $this->passwordHash = $hash;
+        $this->confirmToken = $token;
+        $this->status = self::STATUS_WAIT;
     }
 
     public function getId()
@@ -103,9 +106,18 @@ class User
         return $this->status === self::STATUS_ACTIVE;
     }
 
+    public function confirmSignUp(): void
+    {
+        if (!$this->isWait()) {
+            throw new \DomainException(('Пользователь уже подтвержден'));
+        }
+        $this->status= self::STATUS_ACTIVE;
+        $this->confirmToken = null;
+    }
+
     public static function signUpByEmail(Id $id, \DateTimeImmutable $date, Email $email, string $hash, string $token): self
     {
-        $user = new self($id, $date, $email, $hash);
+        $user = new self($id, $date, $email, $hash, $token);
         $user->email = $email;
         $user->passwordHash = $hash;
         $user->confirmToken = $token;
