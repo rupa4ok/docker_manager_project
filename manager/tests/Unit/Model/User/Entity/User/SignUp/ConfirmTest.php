@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Model\User\Entity\User\SignUp;
+namespace App\Tests\Unit\Model\Entity\User\SignUp;
 
-use PHPUnit\Framework\TestCase;
+use App\Model\User\Entity\User;
 use App\Tests\Builder\User\UserBuilder;
+use PHPUnit\Framework\TestCase;
 
 class ConfirmTest extends TestCase
 {

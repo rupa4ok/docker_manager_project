@@ -138,4 +138,12 @@ class User
     {
         return $this->confirmToken;
     }
+
+    /**
+     * @return Network[]
+     */
+    public function getNetworks(): array
+    {
+        return $this->networks->toArray();
+    }
 }
