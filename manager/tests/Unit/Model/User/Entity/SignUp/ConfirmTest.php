@@ -14,7 +14,6 @@ class ConfirmTest extends TestCase
     public function testSuccess(): void
     {
         $user = $this->buildSignedUpUser();
-
         $user->confirmSignUp();
 
         self::assertFalse($user->isWait());

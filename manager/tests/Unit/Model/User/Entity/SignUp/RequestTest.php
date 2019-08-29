@@ -20,7 +20,7 @@ class RequestTest extends TestCase
             $hash = 'hash',
             $token = 'token',
         );
-
+ 
         self::assertTrue($user->isWait());
         self::assertFalse($user->isActive());
 

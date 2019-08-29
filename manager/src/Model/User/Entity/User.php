@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\User\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 class User
@@ -42,22 +43,22 @@ class User
      * @ORM\Column(type="string", length=16)
      */
     private $status;
+	
+	/**
+	 * @var Network[]|ArrayCollection
+	 */
+    private $network;
 
     /**
      * @param Id $id
      * @param \DateTimeImmutable $date
-     * @param Email $email
-     * @param string $hash
-     * @param string $token
      */
-    public function __construct(Id $id, \DateTimeImmutable $date, Email $email, string $hash, string $token)
+    public function __construct(Id $id, \DateTimeImmutable $date)
     {
         $this->id = $id;
         $this->date = $date;
-        $this->email = $email;
-        $this->passwordHash = $hash;
-        $this->confirmToken = $token;
         $this->status = self::STATUS_WAIT;
+        $this->network = new ArrayCollection();
     }
 
     public function getId()
