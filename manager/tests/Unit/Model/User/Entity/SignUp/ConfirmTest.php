@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Model\User\Entity\User\SignUp;
 
-use App\Model\User\Entity\Email;
-use App\Model\User\Entity\Id;
-use App\Model\User\Entity\User;
 use PHPUnit\Framework\TestCase;
+use App\Tests\Builder\User\UserBuilder;
 
 class ConfirmTest extends TestCase
 {
@@ -32,12 +30,6 @@ class ConfirmTest extends TestCase
 
     private function buildSignedUpUser(): User
     {
-        return new User(
-            Id::next(),
-            new \DateTimeImmutable(),
-            new Email('test@test.ru'),
-            'hash',
-            $token = 'token'
-        );
+        return (new UserBuilder())->viaEmail()->build();
     }
 }
