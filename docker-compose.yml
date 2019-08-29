@@ -9,7 +9,7 @@ services:
     depends_on:
       - manager-php-fpm
     ports:
-      - "8084:80"
+      - "8090:80"
   manager-php-fpm:
     build:
       context: ./manager/docker/development

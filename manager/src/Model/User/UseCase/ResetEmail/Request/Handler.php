@@ -24,7 +24,7 @@ class Handler
     )
     {
         $this->users = $users;
-        $this->sender = $tokenizer;
+        $this->tokenizer = $tokenizer;
         $this->flusher = $flusher;
         $this->sender = $sender;
     }

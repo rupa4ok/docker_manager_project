@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\User\Entity\User;
+namespace App\Model\User\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Webmozart\Assert\Assert;
