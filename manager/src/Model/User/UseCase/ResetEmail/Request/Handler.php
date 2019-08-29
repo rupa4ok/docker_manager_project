@@ -6,8 +6,8 @@ namespace App\Model\User\UseCase\ResetEmail\Request;
 
 use App\Model\Flusher;
 use App\Model\User\Entity\Email;
-use App\Model\User\Entity\Id;
-use App\Model\User\Entity\User;
+use App\Model\User\Service\ResetTokenizer;
+use App\Model\User\Service\ResetTokenSender;
 use App\Model\User\Entity\UserRepository;
 
 class Handler

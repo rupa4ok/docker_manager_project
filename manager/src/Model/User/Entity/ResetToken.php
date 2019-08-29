@@ -7,9 +7,6 @@ namespace App\Model\User\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Webmozart\Assert\Assert;
 
-/**
- * @ORM\Embeddable
- */
 class ResetToken
 {
     /**
