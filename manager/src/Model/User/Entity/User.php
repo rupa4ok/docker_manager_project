@@ -100,13 +100,13 @@ class User
     public function requestPasswordReset(ResetToken $token, \DateTimeImmutable $date): void
     {
         if (!$this->isActive()) {
-            throw new \DomainException('User is not active.');
+            throw new \DomainException('Пользователь не активен.');
         }
         if (!$this->email) {
-            throw new \DomainException('Email is not specified.');
+            throw new \DomainException('Email не найден.');
         }
         if ($this->resetToken && !$this->resetToken->isExpiredTo($date)) {
-            throw new \DomainException('Resetting is already requested.');
+            throw new \DomainException('Запрос на сброс пароля уже отправлен.');
         }
         $this->resetToken = $token;
     }
