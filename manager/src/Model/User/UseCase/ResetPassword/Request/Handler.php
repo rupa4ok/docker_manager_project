@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\User\UseCase\ResetEmail\Request;
+namespace App\Model\User\UseCase\ResetPassword\Request;
 
 use App\Model\Flusher;
 use App\Model\User\Entity\Email;

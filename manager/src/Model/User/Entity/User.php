@@ -111,6 +111,18 @@ class User
         $this->resetToken = $token;
     }
 
+    public function passwordReset(\DateTimeImmutable $date, string $hash): void
+    {
+        if (!$this->resetToken) {
+            throw new \DomainException('Запрос на сброс пароля не отправлен.');
+        }
+        if ($this->resetToken->isExpiredTo($date)) {
+            throw new \DomainException('Код подтверждения сброса пароля истек.');
+        }
+        $this->passwordHash = $hash;
+        $this->resetToken = null;
+    }
+
     public function isWait(): bool
     {
         return $this->status === self::STATUS_WAIT;
