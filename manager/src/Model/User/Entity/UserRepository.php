@@ -14,7 +14,9 @@ interface UserRepository
 
     public function getByEmail(Email $email): User;
 
-    public function findByConfirmToken(): ?User;
+    public function findByConfirmToken($token): ?User;
 
     public function findByResetToken($token): User;
+	
+	public function get(Id $id): User;
 }

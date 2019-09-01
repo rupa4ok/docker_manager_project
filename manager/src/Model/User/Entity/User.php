@@ -48,6 +48,10 @@ class User
      * @ORM\Embedded(class="ResetToken", columnPrefix="reset_token_")
      */
     private $resetToken;
+	/**
+	 * @var Role
+	 */
+    private $role;
 
     /**
      * @param Id $id
@@ -57,6 +61,7 @@ class User
     {
         $this->id = $id;
         $this->date = $date;
+        $this->role = Role::user();
         $this->networks = new ArrayCollection();
     }
 
@@ -122,6 +127,14 @@ class User
         $this->passwordHash = $hash;
         $this->resetToken = null;
     }
+	
+	public function changeRole(Role $role): void
+	{
+		if ($this->role->isEqual($role)) {
+			throw new \DomainException('Роль уже установлена.');
+		}
+		$this->role = $role;
+	}
 
     public function isWait(): bool
     {
@@ -182,4 +195,9 @@ class User
     {
         return $this->resetToken;
     }
+    
+	public function getRole(): ?Role
+	{
+		return $this->role;
+	}
 }
