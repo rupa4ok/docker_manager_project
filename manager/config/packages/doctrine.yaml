@@ -8,6 +8,11 @@ doctrine:
             charset: utf8
             collate:
 
+        types:
+            user_user_id: 'App\Model\User\Entity\IdType'
+            user_user_email: 'App\Model\User\Entity\EmailType'
+            user_user_role: 'App\Model\User\Entity\RoleType'
+
         url: '%env(resolve:DATABASE_URL)%'
     orm:
         auto_generate_proxy_classes: true
