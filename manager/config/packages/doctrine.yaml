@@ -9,9 +9,9 @@ doctrine:
             collate:
 
         types:
-            user_user_id: 'App\Model\User\Entity\IdType'
-            user_user_email: 'App\Model\User\Entity\EmailType'
-            user_user_role: 'App\Model\User\Entity\RoleType'
+            user_user_id: 'App\Model\User\Entity\Type\IdType'
+            user_user_email: 'App\Model\User\Entity\Type\EmailType'
+            user_user_role: 'App\Model\User\Entity\Type\RoleType'
 
         url: '%env(resolve:DATABASE_URL)%'
     orm:
