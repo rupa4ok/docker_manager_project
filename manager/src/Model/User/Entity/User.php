@@ -213,4 +213,14 @@ class User
 	{
 		return $this->role;
 	}
+	
+	/**
+	 * @ORM\PostLoad()
+	 */
+	public function checkEmbed(): void
+	{
+		if ($this->resetToken->isEmpty()) {
+			$this->resetToken = null;
+		}
+	}
 }
