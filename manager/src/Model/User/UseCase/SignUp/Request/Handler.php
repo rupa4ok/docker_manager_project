@@ -39,6 +39,8 @@ class Handler
     {
         $email = new Email($command->email);
 
+        var_dump($this->users->hasByEmail($email));
+
         if ($this->users->hasByEmail($email)) {
             throw new \DomainException('Пользователь уже существует.');
         }

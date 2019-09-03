@@ -40,7 +40,7 @@ class SignUpController extends AbstractController
 			try {
 				$handler->handle($command);
 				$this->addFlash('succes', 'Проверьте вашу почту');
-				return $this->redirectToRoute('/');
+				return $this->redirectToRoute('home');
 			} catch (\DomainException $e) {
 				$this->logger->error($e->getMessage(), ['exception' => $e]);
 				$this->addFlash('error', $e->getMessage());
