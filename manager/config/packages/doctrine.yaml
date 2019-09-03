@@ -17,7 +17,6 @@ doctrine:
                 commented: false
             user_user_role:
                 class: 'App\Model\User\Entity\Type\RoleType'
-                commented: false
 
         url: '%env(resolve:DATABASE_URL)%'
     orm:
