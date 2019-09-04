@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\User\UseCase\Reset\Reset;
+namespace App\Model\User\UseCase\ResetPassword\Reset;
 
 use App\Model\Flusher;
 use App\Model\User\Entity\UserRepository;
