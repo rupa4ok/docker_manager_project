@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Model\User\UseCase\SignUp\Request;
+declare(strict_types=1);
+
+namespace App\Model\User\UseCase\ResetPassword\Request;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
@@ -9,14 +11,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Form extends AbstractType
 {
-	
 	public function buildForm(FormBuilderInterface $builder, array $options): void
 	{
 		$builder
-			->add('firstName', Type\TextType::class, ['required' => false])
-			->add('lastName', Type\TextType::class, ['required' => false])
-			->add('email', Type\EmailType::class)
-			->add('password', Type\PasswordType::class);
+			->add('email', Type\EmailType::class);
 	}
 	
 	public function configureOptions(OptionsResolver $resolver): void
