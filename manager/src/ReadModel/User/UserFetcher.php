@@ -18,10 +18,10 @@ class UserFetcher
     public function existsByResetToken(string $token): bool
     {
         return $this->connection->createQueryBuilder()
-                ->select('COUNT (*)')
-                ->from('user_users')
-                ->where('reset_token_token = :token')
-                ->setParameter(':token', $token)
-                ->execute()->fetchColumn() > 0;
+            ->select('COUNT (*)')
+            ->from('user_users')
+            ->where('reset_token_token = :token')
+            ->setParameter(':token', $token)
+            ->execute()->fetchColumn() > 0;
     }
 }

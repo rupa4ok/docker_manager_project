@@ -6,12 +6,13 @@ namespace App\Model\User\Entity;
 
 use App\Model\EntityNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 class UserRepository
 {
     private $em;
     /**
-     * @var \Doctrine\ORM\EntityRepository
+     * @var EntityRepository
      */
     private $repo;
 
@@ -60,21 +61,21 @@ class UserRepository
     public function hasByEmail(Email $email): bool
     {
         return $this->repo->createQueryBuilder('t')
-                ->select('COUNT(t.id)')
-                ->andWhere('t.email = :email')
-                ->setParameter(':email', $email->getValue())
-                ->getQuery()->getSingleScalarResult() > 0;
+            ->select('COUNT(t.id)')
+            ->andWhere('t.email = :email')
+            ->setParameter(':email', $email->getValue())
+            ->getQuery()->getSingleScalarResult() > 0;
     }
 
     public function hasByNetworkIdentity(string $network, string $identity): bool
     {
         return $this->repo->createQueryBuilder('t')
-                ->select('COUNT(t.id)')
-                ->innerJoin('t.networks', 'n')
-                ->andWhere('n.network = :network and n.identity = :identity')
-                ->setParameter(':network', $network)
-                ->setParameter(':identity', $identity)
-                ->getQuery()->getSingleScalarResult() > 0;
+            ->select('COUNT(t.id)')
+            ->innerJoin('t.networks', 'n')
+            ->andWhere('n.network = :network and n.identity = :identity')
+            ->setParameter(':network', $network)
+            ->setParameter(':identity', $identity)
+            ->getQuery()->getSingleScalarResult() > 0;
     }
 
     public function add(User $user): void
