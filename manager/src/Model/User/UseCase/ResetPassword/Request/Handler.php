@@ -1,32 +1,46 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\User\UseCase\ResetPassword\Request;
 
 use App\Model\Flusher;
+use App\Model\User\Entity\Email;
 use App\Model\User\Entity\UserRepository;
-use App\Model\User\Service\PasswordHasher;
+use App\Model\User\Service\ResetTokenizer;
+use App\Model\User\Service\ResetTokenSender;
 
 class Handler
 {
     private $users;
-    private $hasher;
+    private $tokenizer;
     private $flusher;
-    public function __construct(UserRepository $users, PasswordHasher $hasher, Flusher $flusher)
+    private $sender;
+
+    public function __construct(
+        UserRepository $users,
+        ResetTokenizer $tokenizer,
+        Flusher $flusher,
+        ResetTokenSender $sender
+    )
     {
         $this->users = $users;
-        $this->hasher = $hasher;
+        $this->tokenizer = $tokenizer;
         $this->flusher = $flusher;
+        $this->sender = $sender;
     }
+
     public function handle(Command $command): void
     {
-        if (!$user = $this->users->findByResetToken($command->token)) {
-            throw new \DomainException('Incorrect or confirmed token.');
-        }
-        $user->passwordReset(
-            new \DateTimeImmutable(),
-            $this->hasher->hash($command->password)
+        $user = $this->users->getByEmail(new Email($command->email));
+
+        $user->requestPasswordReset(
+            $this->tokenizer->generate(),
+            new \DateTimeImmutable()
         );
+
         $this->flusher->flush();
+
+        $this->sender->send($user->getEmail(), $user->getResetToken());
     }
 }
