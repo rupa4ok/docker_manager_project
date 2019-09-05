@@ -153,6 +153,7 @@ class User
     {
         return $this->status === self::STATUS_WAIT;
     }
+
     public function isActive(): bool
     {
         return $this->status === self::STATUS_ACTIVE;
@@ -162,6 +163,7 @@ class User
     {
         return $this->id;
     }
+
     /**
      * @return \DateTimeImmutable
      */
@@ -173,7 +175,6 @@ class User
     /**
      * @return Email|null
      */
-
     public function getEmail(): ?Email
     {
         return $this->email;
@@ -182,7 +183,6 @@ class User
     /**
      * @return string|null
      */
-
     public function getPasswordHash(): ?string
     {
         return $this->passwordHash;
