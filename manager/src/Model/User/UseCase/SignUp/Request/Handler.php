@@ -52,7 +52,7 @@ class Handler
         );
 
         $this->users->add($user);
-
+        $this->sender->send($email, $token);
         $this->flusher->flush();
     }
 }

@@ -37,7 +37,7 @@ services:
   mailer:
     image: mailhog/mailhog
     ports:
-      - "8082:8025"
+      - "8081:8025"
 volumes:
   manager-postgres:
   composer:

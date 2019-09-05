@@ -20,7 +20,7 @@ class SignUpConfirmTokenSender
 
     public function send(Email $email, string $token): void
     {
-        $message = (new \Swift_Message('ПОдтверждение регистрации'))
+        $message = (new \Swift_Message('Сайт CLEANTON.BY: Подтверждение регистрации'))
             ->setTo($email->getValue())
             ->setBody($this->twig->render('mail/user/signup.html.twig', [
                 'token' => $token
