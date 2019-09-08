@@ -73,7 +73,7 @@ class ResetController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
-                $this->addFlash('success', 'Password is successfully changed.');
+                $this->addFlash('success', 'Пароль успешно изменен.');
                 return $this->redirectToRoute('home');
             } catch (\DomainException $e) {
                 $this->logger->error($e->getMessage(), ['exception' => $e]);

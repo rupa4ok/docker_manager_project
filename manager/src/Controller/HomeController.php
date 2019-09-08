@@ -11,13 +11,9 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(UserFetcher $fetcher)
+    public function index()
     {
-        $users = $fetcher->existsByResetToken('sdefsfdsfs');
-
-        var_dump($users);
-
-        return $this->render('home/index.html.twig', [
+        return $this->render('app/home.html.twig', [
             'controller_name' => 'HomeController',
         ]);
     }
