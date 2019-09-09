@@ -1,5 +1,5 @@
 up: docker-up
-init: docker-down-clear docker-pull docker-build docker-up manager-init perm
+init: docker-down-clear docker-pull docker-build docker-up manager-prestissimo manager-init perm
 ps: docker-ps
 test: manager-test
 docker-up:
@@ -19,11 +19,15 @@ perm:
 	sudo chown -R rupak:rupak manager
 manager-test:
 	docker-compose run --rm manager-php-cli php bin/phpunit tests
+manager-prestissimo:
+	docker-compose run --rm manager-php-cli composer global require hirak/prestissimo
 manager-composer-install:
 	docker-compose run --rm manager-php-cli composer install
-manager-init: manager-composer-install manager-wait-db manager-migrations
+manager-init: manager-composer-install manager-wait-db manager-migrations manager-fixtures
 manager-migrations:
 	docker-compose run --rm manager-php-cli php bin/console doctrine:migrations:migrate --no-interaction
+manager-fixtures:
+	docker-compose run --rm manager-php-cli php bin/console doctrine:fixtures:load --no-interaction
 manager-wait-db:
 	until docker-compose exec -T manager-postgres pg_isready --timeout=0 --dbname=app ; do sleep 1 ; done
 cli:

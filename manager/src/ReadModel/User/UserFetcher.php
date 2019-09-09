@@ -34,6 +34,7 @@ class UserFetcher
 			    'email',
 			    'password_hash',
 			    'role',
+			    'name',
 			    'status'
 		    )
 		    ->from('user_users')
