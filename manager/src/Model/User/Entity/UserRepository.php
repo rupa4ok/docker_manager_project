@@ -20,6 +20,11 @@ class UserRepository
 		$this->em = $em;
 		$this->repo = $em->getRepository(User::class);
 	}
+
+	public function findAll()
+    {
+        return $this->repo->findAll();
+    }
 	
 	/**
 	 * @param string $token

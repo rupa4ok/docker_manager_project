@@ -11,11 +11,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-	/**
-	 * @Route("/login", name="app_login")
-	 * @param AuthenticationUtils $authenticationUtils
-	 * @return Response
-	 */
+    /**
+     * @Route("/login", name="app_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
+     */
 	public function login(AuthenticationUtils $authenticationUtils): Response
 	{
 		$error = $authenticationUtils->getLastAuthenticationError();

@@ -10,14 +10,15 @@
 
 {% block body %}
 
-
     <div class="row">
-        <div class="col-md-6">
-            123
+        {% for user in users %}
+        <div class="col-md-1">
+        {{ user.id }}
         </div>
-        <div class="col-md-6">
-
+        <div class="col-md-3">
+            {{ user.email.value }}
         </div>
+        {% endfor %}
     </div>
 
 {% endblock %}
