@@ -25,6 +25,7 @@ before_install:
   - sh -c "if [ '$DB_CONNECTION' = 'pgsql' ]; then psql -c 'CREATE DATABASE travis_ci_test;' -U postgres; fi"
 
 install:
+  - composer config extra.symfony.allow-contrib true
   - composer self-update
   - make init
   - make test
