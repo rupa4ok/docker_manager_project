@@ -8,7 +8,6 @@ use App\Model\User\Entity\User;
 use App\Model\User\Service\PasswordHasher;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
-use Faker\Generator;
 
 class UserFactoryFixtures extends BaseFixture
 {
