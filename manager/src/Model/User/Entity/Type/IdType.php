@@ -11,13 +11,13 @@ use Doctrine\DBAL\Types\StringType;
 class IdType extends StringType
 {
 	public const NAME = 'user_user_id';
+
+    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    {
+        return $value instanceof Id ? $value->getValue() : $value;
+    }
 	
-	public function convertToDatabaseValue($value, AbstractPlatform $platform): ?Id
-	{
-		return $value instanceof Id ? $value->getValue() : $value;
-	}
-	
-	public function convertToPHPValue($value, AbstractPlatform $platform): ?Id
+	public function convertToPHPValue($value, AbstractPlatform $platform)
 	{
 		return !empty($value) ? new Id($value) : null;
 	}
