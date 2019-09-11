@@ -1,5 +1,5 @@
 up: docker-up
-init: docker-down-clear docker-pull docker-build docker-up manager-prestissimo manager-recipe manager-init perm
+init: docker-down-clear manager-clear docker-pull docker-build docker-up manager-prestissimo manager-recipe manager-init perm
 init-travis: docker-down-clear docker-pull docker-build docker-up manager-recipe manager-init
 ps: docker-ps
 test: manager-test
@@ -22,11 +22,15 @@ perm:
 	sudo chown -R rupak:rupak manager
 manager-test:
 	docker-compose run --rm manager-php-cli php bin/phpunit tests
+manager-clear:
+	docker run --rm -v ${PWD}/manager:/app --workdir=/app alpine rm -f .ready
 manager-prestissimo:
 	docker-compose run --rm manager-php-cli composer global require hirak/prestissimo
 manager-composer-install:
 	docker-compose run --rm manager-php-cli composer install
-manager-init: manager-composer-install manager-assets-install manager-wait-db manager-migrations manager-fixtures
+manager-init: manager-composer-install manager-assets-install manager-wait-db manager-migrations manager-fixtures manager-ready
+manager-ready:
+	docker run --rm -v ${PWD}/manager:/app --workdir=/app alpine touch .ready
 manager-migrations:
 	docker-compose run --rm manager-php-cli php bin/console doctrine:migrations:migrate --no-interaction
 manager-fixtures:
