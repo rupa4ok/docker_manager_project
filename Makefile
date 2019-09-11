@@ -1,7 +1,9 @@
 up: docker-up
-init: docker-down-clear docker-pull docker-build docker-up manager-prestissimo manager-init perm
+init: docker-down-clear docker-pull docker-build docker-up manager-prestissimo manager-recipe manager-init perm
 ps: docker-ps
 test: manager-test
+manager-recipe:
+	docker-compose run --rm manager-php-cli composer config extra.symfony.allow-contrib true
 docker-up:
 	docker-compose up -d
 docker-down:
