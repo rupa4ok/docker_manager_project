@@ -1,0 +1,38 @@
+language: php
+php:
+  - '7.3'
+
+services:
+  - postgresql
+
+before_script:
+  - composer run-script post-root-package-install
+  - composer run-script post-create-project-cmd
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+env:
+  global:
+    - DB_CONNECTION=pgsql
+    - DB_DATABASE=travis_ci_test
+    - DB_USERNAME=postgres
+    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
+
+before_install:
+  - sh -c "if [ '$DB_CONNECTION' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS travis_ci_test;' -U postgres; fi"
+  - sh -c "if [ '$DB_CONNECTION' = 'pgsql' ]; then psql -c 'CREATE DATABASE travis_ci_test;' -U postgres; fi"
+
+install:
+  - composer self-update
+  - make install
+  - make env
+  - make key
+  - make lint
+
+after_script:
+  - vendor/bin/test-reporter
+
+script:
+  - make lint test
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
