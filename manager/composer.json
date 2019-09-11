@@ -48,9 +48,8 @@
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
-        "symfony/test-pack": "^1.0",
-        "zircote/swagger-php": "^3.0",
-        "vladahejda/phpunit-assert-exception": "*"
+        "symfony/test-pack": "*",
+        "zircote/swagger-php": "^3.0"
     },
     "config": {
         "preferred-install": {
