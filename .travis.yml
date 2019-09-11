@@ -25,7 +25,7 @@ before_install:
   - sh -c "if [ '$DB_CONNECTION' = 'pgsql' ]; then psql -c 'CREATE DATABASE travis_ci_test;' -U postgres; fi"
 
 install:
-  - composer self-update --no-scripts
+  - composer self-update
   - make init
   - make test
 
