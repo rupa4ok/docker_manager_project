@@ -49,6 +49,7 @@
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
+        "symfony/var-dumper": "4.3.*",
         "zircote/swagger-php": "^3.0"
     },
     "config": {
@@ -92,7 +93,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": "true",
             "require": "4.3.*"
         }
     }

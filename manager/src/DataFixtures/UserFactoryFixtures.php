@@ -21,7 +21,7 @@ class UserFactoryFixtures extends BaseFixture
         $this->manager = $manager;
     }
 
-    public function loadData(ObjectManager $manager)
+    public function loadData(ObjectManager $manager): void
     {
         $this->createUsers(100, function($user, $count) {});
         $manager->flush();

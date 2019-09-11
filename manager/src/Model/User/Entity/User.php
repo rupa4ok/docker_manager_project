@@ -191,7 +191,7 @@ class User
     /**
      * @return mixed
      */
-    public function getConfirmToken()
+    public function getConfirmToken(): ?string
     {
         return $this->confirmToken;
     }

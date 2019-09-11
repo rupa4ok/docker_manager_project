@@ -13,13 +13,13 @@ use Faker\Factory;
 
 abstract class BaseFixture extends Fixture
 {
-    private $manager;
+    private $baseManager;
 
-    abstract protected function loadData(ObjectManager $manager);
+    abstract protected function loadData(ObjectManager $baseManager): void;
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        $this->manager = $manager;
+        $this->baseManager = $manager;
         $this->loadData($manager);
     }
     protected function createMany(string $className, int $count, callable $factory)
@@ -28,7 +28,7 @@ abstract class BaseFixture extends Fixture
             $entity = new $className();
             $factory($entity, $i);
 
-            $this->manager->persist($entity);
+            $this->baseManager->persist($entity);
             $this->addReference($className . '_' . $i, $entity);
         }
     }

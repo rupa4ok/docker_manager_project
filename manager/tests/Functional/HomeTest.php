@@ -16,4 +16,16 @@ class HomeTest extends WebTestCase
 		$this->assertSame(302, $client->getResponse()->getStatusCode());
 		$this->assertSame('http://localhost/login', $client->getResponse()->headers->get('location'));
 	}
+
+    public function testSuccess(): void
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'test@mail.ru',
+            'PHP_AUTH_PW' => '123456'
+        ]);
+        $crawler = $client->request('GET', '/');
+
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertSame('Home', $crawler->filter('h1')->text());
+    }
 }
