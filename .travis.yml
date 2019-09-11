@@ -10,7 +10,6 @@ env:
     - DB_CONNECTION=pgsql
     - DB_DATABASE=travis_ci_test
     - DB_USERNAME=postgres
-    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
 
 before_install:
   - echo sdkman_auto_answer = true
@@ -27,4 +26,3 @@ after_script:
 
 script:
   - make test
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
