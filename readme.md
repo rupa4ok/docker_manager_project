@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/rupa4ok/symfony4_manager_project.svg?branch=master)](https://travis-ci.org/rupa4ok/symfony4_manager_project)
