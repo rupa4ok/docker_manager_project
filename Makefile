@@ -1,5 +1,6 @@
 up: docker-up
 init: docker-down-clear docker-pull docker-build docker-up manager-prestissimo manager-recipe manager-init perm
+init-travis: docker-down-clear docker-pull docker-build docker-up manager-recipe manager-init
 ps: docker-ps
 test: manager-test
 manager-recipe:
