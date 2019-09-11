@@ -25,10 +25,8 @@ before_install:
 
 install:
   - composer self-update
-  - make install
-  - make env
-  - make key
-  - make lint
+  - make init
+  - make test
 
 after_script:
   - vendor/bin/test-reporter
