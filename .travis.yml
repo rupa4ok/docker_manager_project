@@ -6,8 +6,8 @@ services:
   - postgresql
 
 before_script:
-  - composer run-script post-root-package-install --skip-flex
-  - composer run-script post-create-project-cmd --skip-flex
+  - composer run-script post-root-package-install --no-scripts
+  - composer run-script post-create-project-cmd --no-scripts
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
@@ -25,7 +25,7 @@ before_install:
   - sh -c "if [ '$DB_CONNECTION' = 'pgsql' ]; then psql -c 'CREATE DATABASE travis_ci_test;' -U postgres; fi"
 
 install:
-  - composer self-update --skip-flex
+  - composer self-update --no-scripts
   - make init
   - make test
 
