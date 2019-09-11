@@ -1,4 +1,4 @@
-@import "variables";
+@import "_variables";
 @import "~@coreui/coreui/scss/coreui";
 @import "~simple-line-icons/scss/simple-line-icons";
 @import "~font-awesome/scss/font-awesome";
@@ -108,7 +108,7 @@ pre {
 }
 }
 
-@import "chat";
+@import "_chat";
 
 .direct-chat-action {
     padding: 0 0 10px 50px;
