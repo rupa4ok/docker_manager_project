@@ -56,7 +56,7 @@ manager-assets-dev:
 	docker-compose run --rm manager-node npm run dev
 
 manager-test:
-	docker-compose run --rm manager-php-cli php bin/phpunit
+	docker-compose run --rm manager-php-cli php bin/phpunit tests
 
 manager-test-coverage:
 	docker-compose run --rm manager-php-cli php bin/phpunit --coverage-clover var/clover.xml --coverage-html var/coverage
