@@ -12,7 +12,7 @@ class HomeTest extends WebTestCase
 	{
 		$client = static::createClient();
 		$client->request('GET', '/');
-		
+
 		$this->assertSame(302, $client->getResponse()->getStatusCode());
 		$this->assertSame('http://localhost/login', $client->getResponse()->headers->get('location'));
 	}
