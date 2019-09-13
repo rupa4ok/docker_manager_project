@@ -57,7 +57,12 @@ class AddCommand extends Command
         }
 
         $password = $helper->ask($input, $output, new Question('Password: '));
+        $this->create($email, $password);
+        $output->writeln('<info>Done!</info>');
+    }
 
+    private function create($email, $password)
+    {
         $command = new SignUp\Request\Command();
         $command->email = $email;
         $command->password = $this->hasher->hash($password);
@@ -66,7 +71,5 @@ class AddCommand extends Command
         $user = $this->users->findByEmail($email);
         $command = new Confirm\Manual\Command($user->id);
         $this->signup->handle($command);
-
-        $output->writeln('<info>Done!</info>');
     }
 }
