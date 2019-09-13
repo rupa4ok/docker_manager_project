@@ -10,7 +10,9 @@
                     <div class="card-body p-4">
                         {% include '_flashes.html.twig' %}
 
-                        <h1>Password Reset</h1>
+                        <h1>Сброс пароля</h1>
+
+                        <h4>Введите Ваш email, туда будут отправлены инструкции по восстановлению пароля.</h4>
 
                         {{ form_start(form) }}
 
@@ -18,11 +20,15 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">@</span>
                             </div>
-                            {{ form_widget(form.email, {'attr': {'placeholder': 'Email'}}) }}
+                            {{ form_widget(form.email, {'attr': {'placeholder': 'Введите Email'}}) }}
                             {{ form_errors(form.email) }}
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-success">Reset Password</button>
+                        <div class="input-group mb-4">
+                        <a href="{{ path('home') }}">Вспомнил пароль</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-block btn-success">Восстановить пароль</button>
 
                         {{ form_end(form) }}
                     </div>
