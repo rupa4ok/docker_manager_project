@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\User\UseCase\SignUp\Confirm\ByToken;
 
 use App\Model\Flusher;
+use App\Model\User\Entity\Id;
 use App\Model\User\Entity\UserRepository;
 
 class Handler
@@ -23,9 +24,12 @@ class Handler
 
     public function handle(Command $command): void
     {
-        if (!$user = $this->users->findByConfirmToken($command->token)) {
-            throw new \DomainException('Неправильный код подтверждения');
-        }
+        $this->create(new Id($command->token));
+    }
+
+    public function create($param)
+    {
+        $user = $this->users->get($param);
 
         $user->confirmSignUp();
 

@@ -5,30 +5,29 @@ declare(strict_types=1);
 namespace App\Model\User\UseCase\SignUp\Confirm\Manual;
 
 use App\Model\Flusher;
+use App\Model\User\Entity\Id;
 use App\Model\User\Entity\UserRepository;
+use App\Model\User\UseCase\SignUp\Confirm\ByToken\Handler as Confirm;
 
 class Handler
 {
     private $users;
     private $flusher;
+    private $confirm;
 
     public function __construct(
         UserRepository $users,
-        Flusher $flusher
+        Flusher $flusher,
+        Confirm $confirm
     )
     {
         $this->users = $users;
         $this->flusher = $flusher;
+        $this->confirm = $confirm;
     }
 
     public function handle(Command $command): void
     {
-        if (!$user = $this->users->findByConfirmToken($command->id)) {
-            throw new \DomainException('Неправильный id пользователя');
-        }
-
-        $user->confirmSignUp();
-
-        $this->flusher->flush();
+        $this->confirm->create(new Id($command->id));
     }
 }

@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace App\ReadModel\User;
 
+use App\Model\User\Entity\User;
+use App\ReadModel\NotFoundException;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
+use Doctrine\ORM\EntityManagerInterface;
 
 class UserFetcher
 {
     private $connection;
+    private $repository;
 
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, EntityManagerInterface $em)
     {
         $this->connection = $connection;
+        $this->repository = $em->getRepository(User::class);
     }
 
     public function existsByResetToken(string $token): bool
