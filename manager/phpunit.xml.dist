@@ -7,13 +7,11 @@
          colors="true"
          bootstrap="config/bootstrap.php"
 >
-    <server name="KERNEL_CLASS" value="AppKernel" />
-
     <php>
         <ini name="error_reporting" value="-1" />
         <env name="APP_ENV" value="test" />
         <env name="SHELL_VERBOSITY" value="-1" />
-        <server name="KERNEL_CLASS" value="App\Kernel" />
+
     </php>
 
     <testsuites>

@@ -1,6 +1,6 @@
 {% extends 'auth.html.twig' %}
 
-{% block title %}Сброс пароля{% endblock %}
+{% block title %}Password Reset{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -10,7 +10,7 @@
                     <div class="card-body p-4">
                         {% include '_flashes.html.twig' %}
 
-                        <h1>Восстановление пароля</h1>
+                        <h1>Password Reset</h1>
 
                         {{ form_start(form) }}
 
@@ -18,15 +18,11 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="icon-lock"></i></span>
                             </div>
-                            {{ form_widget(form.password, {'attr': {'placeholder': 'Введите новый пароль'}}) }}
+                            {{ form_widget(form.password, {'attr': {'placeholder': 'Password'}}) }}
                             {{ form_errors(form.password) }}
                         </div>
 
-                        <div class="input-group mb-4">
-                            <a href="{{ path('home') }}">Вспомнил пароль</a>
-                        </div>
-
-                        <button type="submit" class="btn btn-block btn-success">Изменить пароль</button>
+                        <button type="submit" class="btn btn-block btn-success">Set Password</button>
 
                         {{ form_end(form) }}
                     </div>

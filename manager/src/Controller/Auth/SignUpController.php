@@ -48,16 +48,16 @@ class SignUpController extends AbstractController
 			'form' => $form->createView()
 		]);
 	}
-
-    /**
-     * @Route("/signup/{token}", name="auth.signup.confirm")
-     * @param string $token
-     * @param SignUp\Confirm\ByToken\Handler $handler
-     * @return Response
-     */
-	public function confirm(string $token, SignUp\Confirm\ByToken\Handler $handler): Response
+	
+	/**
+	 * @Route("/signup/{token}", name="auth.signup.confirm")
+	 * @param string $token
+	 * @param SignUp\Confirm\Handler $handler
+	 * @return Response
+	 */
+	public function confirm(string $token, SignUp\Confirm\Handler $handler): Response
 	{
-		$command = new SignUp\Confirm\ByToken\Command($token);
+		$command = new SignUp\Confirm\Command($token);
 		
 		try {
 			$handler->handle($command);
