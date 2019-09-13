@@ -26,7 +26,7 @@ class UserFetcher
             ->execute()->fetchColumn() > 0;
     }
     
-    public function findForAuth(string $email): ?AuthView
+    public function findForAuthByEmail(string $email): ?AuthView
     {
     	$stmt = $this->connection->createQueryBuilder()
 		    ->select(
@@ -44,5 +44,23 @@ class UserFetcher
     	$result = $stmt->fetch();
     	
     	return $result ?: null;
+    }
+
+    public function findByEmail(string $email): ?ShortView
+    {
+        $stmt = $this->connection->createQueryBuilder()
+            ->select(
+                'id',
+                'email',
+                'role',
+                'status'
+            )
+            ->from('user_users')
+            ->where('email = :email')
+            ->setParameter(':email', $email)
+            ->execute();
+        $stmt->setFetchMode(FetchMode::CUSTOM_OBJECT, ShortView::class);
+        $result = $stmt->fetch();
+        return $result ?: null;
     }
 }
