@@ -8,10 +8,17 @@ class Command
 {
     /**
      * @var string
+     * @Assert\NotBlank()
      */
     public $id;
-	/**
-	 * @var string
-	 */
-	public $role;
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     */
+    public $role;
+
+    public function __construct(string $id)
+    {
+        $this->id = $id;
+    }
 }
