@@ -20,7 +20,6 @@ class HomeController extends AbstractController
         $user = $users->findAll();
 
         return $this->render('app/home.html.twig', [
-            'controller_name' => 'HomeController',
             'users' => $user
         ]);
     }

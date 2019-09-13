@@ -21,14 +21,14 @@ class ResetTokenSender
 
     public function send(Email $email, ResetToken $token): void
     {
-        $message = (new \Swift_Message('Password resetting'))
+        $message = (new \Swift_Message('Сброс пароля'))
             ->setTo($email->getValue())
             ->setBody($this->twig->render('mail/user/reset.html.twig', [
                 'token' => $token->getToken()
             ]), 'text/html');
 
         if (!$this->mailer->send($message)) {
-            throw new \RuntimeException('Unable to send message.');
+            throw new \RuntimeException('Невозможно отправить сообщение, обратитесь к администратору.');
         }
     }
 }

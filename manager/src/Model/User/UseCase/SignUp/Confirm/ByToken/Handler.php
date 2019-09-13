@@ -24,15 +24,10 @@ class Handler
 
     public function handle(Command $command): void
     {
-        $this->create(new Id($command->token));
-    }
-
-    public function create($param)
-    {
-        $user = $this->users->get($param);
-
+        if (!$user = $this->users->findByConfirmToken($command->token)) {
+            throw new \DomainException('Incorrect or confirmed token.');
+        }
         $user->confirmSignUp();
-
         $this->flusher->flush();
     }
 }
