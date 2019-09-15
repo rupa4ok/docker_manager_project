@@ -236,6 +236,16 @@ class User
 		return $this->role;
 	}
 	
+	public function getNewEmail(): ?Email
+	{
+		return $this->newEmail;
+	}
+	
+	public function getNewEmailToken(): ?string
+	{
+		return $this->newEmailToken;
+	}
+	
 	/**
 	 * @ORM\PostLoad()
 	 */
