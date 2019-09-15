@@ -42,7 +42,7 @@ class User
 	private $confirmToken;
 	/**
 	 * @var Email|null
-	 * @ORM\Column(type="new_email", nullable=true)
+	 * @ORM\Column(type="user_user_email", name="new_email", nullable=true)
 	 */
 	private $newEmail;
 	/**
@@ -149,6 +149,19 @@ class User
         }
         $this->passwordHash = $hash;
         $this->resetToken = null;
+    }
+    
+    public function confirmEmailChanging(string $token): void
+    {
+	    if (!$this->newEmailToken) {
+		    throw new \DomainException('Запрос смены email не найден.');
+	    }
+	    if ($this->newEmailToken !== $token) {
+		    throw new \DomainException('Неправильный запрос смены email.');
+	    }
+	    $this->email = $this->newEmail;
+	    $this->newEmail = null;
+	    $this->newEmailToken = null;
     }
 	
 	public function requestEmailChanging(Email $email, string $token): void

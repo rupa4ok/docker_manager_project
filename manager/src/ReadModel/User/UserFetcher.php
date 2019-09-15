@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\ReadModel\User;
 
 use App\Model\User\Entity\User;
-use App\ReadModel\NotFoundException;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\ORM\EntityManagerInterface;
@@ -102,4 +101,22 @@ class UserFetcher
 
         return $view;
     }
+	
+	public function findBySignUpConfirmToken(string $token): ?ShortView
+	{
+		$stmt = $this->connection->createQueryBuilder()
+			->select(
+				'id',
+				'email',
+				'role',
+				'status'
+			)
+			->from('user_users')
+			->where('confirm_token = :token')
+			->setParameter(':token', $token)
+			->execute();
+		$stmt->setFetchMode(FetchMode::CUSTOM_OBJECT, ShortView::class);
+		$result = $stmt->fetch();
+		return $result ?: null;
+	}
 }
