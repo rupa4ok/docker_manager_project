@@ -37,14 +37,24 @@ class User
     private $email;
 	/**
 	 * @var string|null
+	 * @ORM\Column(type="string", name="confirm_token", nullable=true)
+	 */
+	private $confirmToken;
+	/**
+	 * @var Email|null
+	 * @ORM\Column(type="new_email", nullable=true)
+	 */
+	private $newEmail;
+	/**
+	 * @var string|null
+	 * @ORM\Column(type="string", name="new_email_token", nullable=true)
+	 */
+	private $newEmailToken;
+	/**
+	 * @var string|null
 	 * @ORM\Column(type="string", name="password_hash", nullable=true)
 	 */
     private $passwordHash;
-	/**
-	 * @var string|null
-	 * @ORM\Column(type="string", name="confirm_token", nullable=true)
-	 */
-    private $confirmToken;
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=16)
@@ -140,6 +150,18 @@ class User
         $this->passwordHash = $hash;
         $this->resetToken = null;
     }
+	
+	public function requestEmailChanging(Email $email, string $token): void
+	{
+		if (!$this->isActive()) {
+			throw new \DomainException('Пользователь не активен.');
+		}
+		if ($this->email && $this->email->isEqual($email)) {
+			throw new \DomainException('Email уже сменен.');
+		}
+		$this->newEmail = $email;
+		$this->newEmailToken = $token;
+	}
 	
 	public function changeRole(Role $role): void
 	{

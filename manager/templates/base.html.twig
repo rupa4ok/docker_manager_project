@@ -38,7 +38,38 @@
 <div class="app-body">
     <div class="sidebar">
         <nav class="sidebar-nav">
-
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('home') }}">
+                        <i class="nav-icon icon-home"></i> Рабочий стол
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('profile') }}">
+                        <i class="nav-icon icon-user"></i> Профиль
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">
+                        <i class="nav-icon icon-basket-loaded"></i> Корзина
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">
+                        <i class="nav-icon icon-note"></i> История заказов
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">
+                        <i class="nav-icon icon-note"></i> Помощь
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">
+                        <i class="nav-icon icon-note"></i> Выход
+                    </a>
+                </li>
+            </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
     </div>
