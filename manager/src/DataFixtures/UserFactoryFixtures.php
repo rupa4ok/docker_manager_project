@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Model\User\Entity\Email;
 use App\Model\User\Entity\Id;
+use App\Model\User\Entity\Name;
 use App\Model\User\Entity\User;
 use App\Model\User\Service\PasswordHasher;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -35,6 +36,7 @@ class UserFactoryFixtures extends BaseFixture
             $user = User::signUpByEmail(
                 Id::next(),
                 new \DateTimeImmutable(),
+                new Name($faker->firstName(), $faker->lastName),
                 new Email($faker->email),
                 $hasher->hash($faker->numberBetween(6, 10)),
                 'token'

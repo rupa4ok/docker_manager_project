@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Builder\User;
 
 use App\Model\User\Entity\Email;
+use App\Model\User\Entity\Name;
+use App\Model\User\Entity\Role;
 use App\Model\User\Entity\User;
 use App\Model\User\Entity\Id;
 
@@ -12,6 +14,7 @@ class UserBuilder
 {
     private $id;
     private $date;
+	private $name;
 
     private $email;
     private $hash;
@@ -24,6 +27,7 @@ class UserBuilder
     public function __construct()
     {
         $this->id = Id::next();
+        $this->name = new Name('First', 'Last');
         $this->date = new \DateTimeImmutable();
     }
 
@@ -50,13 +54,26 @@ class UserBuilder
         $clone->identity = $identity ?? '0001';
         return $clone;
     }
-
-    public function withId(Id $id): self
-    {
-        $clone = clone $this;
-        $clone->id = $id;
-        return $clone;
-    }
+	
+	public function withId(Id $id): self
+	{
+		$clone = clone $this;
+		$clone->id = $id;
+		return $clone;
+	}
+	public function withName(Name $name): self
+	{
+		$clone = clone $this;
+		$clone->name = $name;
+		return $clone;
+	}
+	
+	public function withRole(Role $role): self
+	{
+		$clone = clone $this;
+		$clone->role = $role;
+		return $clone;
+	}
 
     public function build(): User
     {
@@ -66,6 +83,7 @@ class UserBuilder
             $user = User::signUpByEmail(
                 $this->id,
                 $this->date,
+                $this->name,
                 $this->email,
                 $this->hash,
                 $this->token
@@ -80,6 +98,7 @@ class UserBuilder
             $user = User::signUpByNetwork(
                 $this->id,
                 $this->date,
+                $this->name,
                 $this->network,
                 $this->identity
             );
