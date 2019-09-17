@@ -25,22 +25,6 @@ class User
 	 * @ORM\Id
 	 */
     private $id;
-	
-	/**
-	 * @return Name
-	 */
-	public function getName(): Name
-	{
-		return $this->name;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getStatus(): string
-	{
-		return $this->status;
-	}
 	/**
 	 * @var \DateTimeImmutable
 	 * @ORM\Column(type="datetime_immutable")
@@ -292,6 +276,22 @@ class User
 	{
 		return $this->newEmailToken;
 	}
+
+    /**
+     * @return Name
+     */
+    public function getName(): Name
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
 	
 	/**
 	 * @ORM\PostLoad()

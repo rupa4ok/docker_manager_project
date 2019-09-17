@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190916064957 extends AbstractMigration
+final class Version20190917065950 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -24,6 +24,8 @@ final class Version20190916064957 extends AbstractMigration
 
         $this->addSql('ALTER TABLE user_users ADD new_email VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE user_users ADD new_email_token VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE user_users ADD name_first VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE user_users ADD name_last VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -34,5 +36,7 @@ final class Version20190916064957 extends AbstractMigration
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE user_users DROP new_email');
         $this->addSql('ALTER TABLE user_users DROP new_email_token');
+        $this->addSql('ALTER TABLE user_users DROP name_first');
+        $this->addSql('ALTER TABLE user_users DROP name_last');
     }
 }
