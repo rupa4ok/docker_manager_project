@@ -1,7 +1,7 @@
 up: docker-up
 down: docker-down
 restart: docker-down docker-up
-init: docker-down-clear manager-clear docker-pull docker-build docker-up manager-init
+init: docker-down-clear manager-clear memory docker-pull docker-build docker-up manager-init elastic
 test: manager-test
 test-coverage: manager-test-coverage
 test-unit: manager-test-unit
@@ -63,6 +63,12 @@ manager-test-coverage:
 
 manager-test-unit:
 	docker-compose run --rm manager-php-cli php bin/phpunit --testsuite=unit
+
+memory:
+	sudo sysctl -w vm.max_map_count=262144
+
+elastic:
+	docker-compose run --rm manager-php-cli php bin/console fos:elastica:populate
 
 manager-test-unit-coverage:
 	docker-compose run --rm manager-php-cli php bin/phpunit --testsuite=unit --coverage-clover var/clover.xml --coverage-html var/coverage

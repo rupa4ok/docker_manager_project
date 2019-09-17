@@ -11,6 +11,7 @@
         "centrifugal/phpcent": "^3.0",
         "exercise/htmlpurifier-bundle": "^2.0",
         "finesse/swiftmailer-defaults-plugin": "^2.0",
+        "friendsofsymfony/elastica-bundle": "^5.1",
         "knplabs/knp-menu-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "^4.0",
         "knpuniversity/oauth2-client-bundle": "^1.28",
