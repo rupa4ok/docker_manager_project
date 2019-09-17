@@ -18,6 +18,7 @@ class HomeController extends AbstractController
     public function index(UserFetcher $users)
     {
         return $this->render('app/home.html.twig', [
+            'users' => ''
         ]);
     }
 }
