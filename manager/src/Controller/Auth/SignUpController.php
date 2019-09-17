@@ -57,43 +57,43 @@ class SignUpController extends AbstractController
 			'form' => $form->createView()
 		]);
 	}
-	
-	/**
-	 * @Route("/signup/{token}", name="auth.signup.confirm")
-	 * @param Request $request
-	 * @param string $token
-	 * @param SignUp\Confirm\ByToken\Handler $handler
-	 * @param UserProviderInterface $userProvider
-	 * @param GuardAuthenticatorHandler $guardHandler
-	 * @param LoginFormAuthenticator $authenticator
-	 * @return Response
-	 */
-	public function confirm(
-		Request $request,
-		string $token,
-		SignUp\Confirm\ByToken\Handler $handler,
-		UserProviderInterface $userProvider,
-		GuardAuthenticatorHandler $guardHandler,
-		LoginFormAuthenticator $authenticator
-	): Response
-	{
-		if (!$user = $this->users->findBySignUpConfirmToken($token)) {
-			$this->addFlash('error', 'Неправильный код смены email.');
-			return $this->redirectToRoute('auth.signup');
-		}
-		$command = new SignUp\Confirm\ByToken\Command($token);
-		try {
-			$handler->handle($command);
-			return $guardHandler->authenticateUserAndHandleSuccess(
-				$userProvider->loadUserByUsername($user->email),
-				$request,
-				$authenticator,
-				'main'
-			);
-		} catch (\DomainException $e) {
-			$this->logger->error($e->getMessage(), ['exception' => $e]);
-			$this->addFlash('error', $e->getMessage());
-			return $this->redirectToRoute('auth.signup');
-		}
-	}
+
+    /**
+     * @Route("/signup/{token}", name="auth.signup.confirm")
+     * @param Request $request
+     * @param string $token
+     * @param SignUp\Confirm\ByToken\Handler $handler
+     * @param UserProviderInterface $userProvider
+     * @param GuardAuthenticatorHandler $guardHandler
+     * @param LoginFormAuthenticator $authenticator
+     * @return Response
+     */
+    public function confirm(
+        Request $request,
+        string $token,
+        SignUp\Confirm\ByToken\Handler $handler,
+        UserProviderInterface $userProvider,
+        GuardAuthenticatorHandler $guardHandler,
+        LoginFormAuthenticator $authenticator
+    ): Response
+    {
+        if (!$user = $this->users->findBySignUpConfirmToken($token)) {
+            $this->addFlash('error', 'Incorrect or already confirmed token.');
+            return $this->redirectToRoute('auth.signup');
+        }
+        $command = new SignUp\Confirm\ByToken\Command($token);
+        try {
+            $handler->handle($command);
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $userProvider->loadUserByUsername($user->email),
+                $request,
+                $authenticator,
+                'main'
+            );
+        } catch (\DomainException $e) {
+            $this->logger->error($e->getMessage(), ['exception' => $e]);
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('auth.signup');
+        }
+    }
 }

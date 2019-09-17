@@ -61,10 +61,10 @@ class User
 	 * @ORM\Column(type="string", name="confirm_token", nullable=true)
 	 */
 	private $confirmToken;
-	/**
-	 * @var Email|null
-	 * @ORM\Column(type="user_user_email", name="new_email", nullable=true)
-	 */
+    /**
+     * @var Email|null
+     * @ORM\Column(type="user_user_email", name="new_email", nullable=true)
+     */
 	private $newEmail;
 	/**
 	 * @var string|null
