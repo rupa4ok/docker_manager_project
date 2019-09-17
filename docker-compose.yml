@@ -5,7 +5,7 @@ services:
       context: ./manager/docker/development
       dockerfile: nginx.docker
     volumes:
-      - ./:/app
+      - ./manager:/app
     depends_on:
       - manager-php-fpm
     ports:
@@ -16,13 +16,13 @@ services:
       context: ./manager/docker/development
       dockerfile: php-fpm.docker
     volumes:
-      - ./:/app
+      - ./manager:/app
   manager-php-cli:
     build:
       context: ./manager/docker/development
       dockerfile: php-cli.docker
     volumes:
-      - ./:/app
+      - ./manager:/app
       - composer:/root/.composer/cache
     tty: true
   manager-postgres:
@@ -38,12 +38,12 @@ services:
   manager-node:
     image: node:12.7-alpine
     volumes:
-      - ./:/app
+      - ./manager:/app
     working_dir: /app
   manager-node-watch:
     image: node:12.7-alpine
     volumes:
-      - ./:/app
+      - ./manager:/app
     working_dir: /app
     command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && npm run watch"
   manager-redis:
@@ -82,17 +82,9 @@ services:
     ports:
       - 5605:5601
     restart: unless-stopped
-  logstash:
-    image: docker.elastic.co/logstash/logstash-oss:6.2.1
-    depends_on:
-      - elasticsearch
-    ports:
-      - 5044:5044
-    restart: unless-stopped
 volumes:
   manager-postgres:
   manager-redis:
   composer:
   elasticsearch:
     driver: local
-  logstash:

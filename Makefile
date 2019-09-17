@@ -1,7 +1,8 @@
 up: docker-up
 down: docker-down
 restart: docker-down docker-up
-init: docker-down-clear manager-clear memory docker-pull docker-build docker-up manager-init elastic
+init: docker-down-clear manager-clear memory docker-pull docker-build docker-up manager-init
+init-travis: docker-down-clear manager-clear memory docker-pull docker-build docker-up manager-init
 test: manager-test
 test-coverage: manager-test-coverage
 test-unit: manager-test-unit
