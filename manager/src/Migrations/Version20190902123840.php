@@ -16,9 +16,7 @@ final class Version20190902123840 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
-
         $this->addSql('CREATE TABLE user_user_networks (id UUID NOT NULL, user_id VARCHAR(255) NOT NULL, network VARCHAR(32) DEFAULT NULL, identity VARCHAR(32) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_D7BAFD7BA76ED395 ON user_user_networks (user_id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_D7BAFD7B608487BC6A95E9C4 ON user_user_networks (network, identity)');
