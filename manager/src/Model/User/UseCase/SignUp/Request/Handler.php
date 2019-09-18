@@ -20,19 +20,23 @@ class Handler
     private $hasher;
     private $tokenizer;
     private $sender;
+	private $flusher;
+    
     public function __construct(
         UserRepository $users,
         PasswordHasher $hasher,
         SignUpConfirmTokenizer $tokenizer,
-        SignUpConfirmTokenSender $sender
+        SignUpConfirmTokenSender $sender,
+        Flusher $flusher
     ) {
         $this->users = $users;
         $this->hasher = $hasher;
         $this->tokenizer = $tokenizer;
         $this->sender = $sender;
+        $this->flusher = $flusher;
     }
 
-    public function handle(Command $command, Flusher $flusher): void
+    public function handle(Command $command): void
     {
         $email = new Email($command->email);
 
@@ -51,6 +55,6 @@ class Handler
 
         $this->users->add($user);
         $this->sender->send($email, $token);
-        $flusher->flush();
+	    $this->flusher->flush();
     }
 }
