@@ -19,12 +19,9 @@ class HomeController extends AbstractController
     public function index(UserFetcher $users)
     {
 
-        $finder = $this->container->get('fos_elastica.finder.user.theme');
-        $query = new Query();
+        $users ='';
 
-        $users = $finder->find($boolQuery);
-
-        dump($finder);
+        phpinfo();
 
         return $this->render('app/home.html.twig', [
             'users' => $users

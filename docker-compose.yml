@@ -17,6 +17,9 @@ services:
       dockerfile: php-fpm.docker
     volumes:
       - ./manager:/app
+    environment:
+      PHP_XDEBUG_ENABLED: 1
+      XDEBUG_CONFIG: remote_host=127.0.0.1
   manager-php-cli:
     build:
       context: ./manager/docker/development
