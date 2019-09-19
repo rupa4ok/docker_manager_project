@@ -34,14 +34,14 @@ class UsersController extends AbstractController
 		
 		return $this->render('app/users/index.html.twig', compact('users'));
 	}
-	
-	/**
-	 * @Route("/{id}", name="users.show")
-	 * @param User $user
-	 * @return Response
-	 */
+
+    /**
+     * @Route("/{id}", name="users.show")
+     * @param User $user
+     * @return Response
+     */
 	public function show(User $user): Response
 	{
-		return $this->render('app/users/show.html.twig', compact('users'));
+		return $this->render('app/users/show.html.twig', compact('user'));
 	}
 }

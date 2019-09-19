@@ -5,50 +5,62 @@ services:
       context: ./manager/docker/development
       dockerfile: nginx.docker
     volumes:
-      - ./manager:/app
+      - ./manager:/app:cached
     depends_on:
       - manager-php-fpm
     ports:
       - "8090:80"
       - "8099:80"
+    networks:
+      - internal1
   manager-php-fpm:
     build:
       context: ./manager/docker/development
       dockerfile: php-fpm.docker
     volumes:
-      - ./manager:/app
+      - ./manager:/app:cached
     environment:
-      PHP_XDEBUG_ENABLED: 1
-      XDEBUG_CONFIG: remote_host=127.0.0.1
+      XDEBUG_CONFIG: "remote_host=192.168.220.1 remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=Docker"
+    networks:
+      - internal1
   manager-php-cli:
     build:
       context: ./manager/docker/development
       dockerfile: php-cli.docker
     volumes:
-      - ./manager:/app
+      - ./manager:/app:cached
       - composer:/root/.composer/cache
     tty: true
+    networks:
+      - internal1
   manager-postgres:
     image: postgres:11.2-alpine
     volumes:
-      - manager-postgres:/var/lib/postgresql/data
+      - manager-postgres:/var/lib/postgresql/data:cached
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: app
     ports:
       - "54322:5432"
+    networks:
+      - internal1
   manager-node:
     image: node:12.7-alpine
     volumes:
-      - ./manager:/app
+      - ./manager:/app:cached
     working_dir: /app
+    networks:
+      - internal1
   manager-node-watch:
     image: node:12.7-alpine
     volumes:
-      - ./manager:/app
+      - ./manager:/app:cached
     working_dir: /app
     command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && npm run watch"
+    networks:
+      - internal1
   manager-redis:
     image: redis:5.0-alpine
     volumes:
@@ -60,10 +72,14 @@ services:
       - '--save 300 10'
       - '--save 60 10000'
       - '--requirepass secret'
+    networks:
+      - internal1
   mailer:
     image: mailhog/mailhog
     ports:
       - "8081:8025"
+    networks:
+      - internal1
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.2.1
     container_name: es01
@@ -74,6 +90,8 @@ services:
     ports:
       - 9203:9200
     restart: unless-stopped
+    networks:
+      - internal1
   kibana:
     depends_on:
       - elasticsearch
@@ -85,9 +103,18 @@ services:
     ports:
       - 5605:5601
     restart: unless-stopped
+    networks:
+      - internal1
 volumes:
   manager-postgres:
   manager-redis:
   composer:
   elasticsearch:
     driver: local
+networks:
+  internal1:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.17.0/28
