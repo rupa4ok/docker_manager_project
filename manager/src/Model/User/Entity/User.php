@@ -6,7 +6,6 @@ namespace App\Model\User\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Self_;
 
 /**
  * @ORM\Entity
@@ -92,7 +91,7 @@ class User
         $this->id = $id;
         $this->date = $date;
         $this->name = $name;
-        $this->role = Role::user();
+        $this->role = Role::USER;
         $this->networks = new ArrayCollection();
     }
 
@@ -113,11 +112,12 @@ class User
         $user->status = self::STATUS_ACTIVE;
         return $user;
     }
-
-    public function edit()
-    {
-
-    }
+	
+	public function edit(Email $email, Name $name): void
+	{
+		$this->name = $name;
+		$this->email = $email;
+	}
 
     public static function signUpByEmail(
     	Id $id,
@@ -186,7 +186,7 @@ class User
     
     public function confirmEmailChanging(string $token): void
     {
-	    if (!$this->newEmailToken) {
+	    if ($this->newEmailToken === null) {
 		    throw new \DomainException('Запрос смены email не найден.');
 	    }
 	    if ($this->newEmailToken !== $token) {
@@ -257,7 +257,7 @@ class User
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getConfirmToken(): ?string
     {
