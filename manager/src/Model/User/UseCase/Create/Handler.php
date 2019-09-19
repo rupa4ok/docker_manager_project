@@ -17,7 +17,6 @@ class Handler
 {
     private $users;
     private $hasher;
-    private $tokenizer;
 	private $flusher;
     private $generator;
 
@@ -31,7 +30,6 @@ class Handler
         $this->hasher = $hasher;
         $this->generator = $generator;
         $this->flusher = $flusher;
-        $this->generator = $generator;
     }
 
     public function handle(Command $command): void

@@ -114,6 +114,11 @@ class User
         return $user;
     }
 
+    public function edit()
+    {
+
+    }
+
     public static function signUpByEmail(
     	Id $id,
 	    \DateTimeImmutable $date,
