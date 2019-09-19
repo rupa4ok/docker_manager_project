@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\User\UseCase\Network\Auth;
 
 use App\Model\Flusher;
+use App\Model\User\Entity\Name;
 use App\Model\User\Entity\Id;
 use App\Model\User\Entity\User;
 use App\Model\User\Entity\UserRepository;
@@ -28,13 +29,17 @@ class Handler
         if ($user = $this->users->hasByNetworkIdentity($command->network, $command->identity)) {
             throw new \DomainException('Пользователь уже существует');
         }
-
-        $user = User::signUpByNetwork(
-            Id::next(),
-            new \DateTimeImmutable(),
-            $command->network,
-            $command->identity
-        );
+	
+	    $user = User::signUpByNetwork(
+		    Id::next(),
+		    new \DateTimeImmutable(),
+		    new Name(
+			    $command->firstName,
+			    $command->lastName
+		    ),
+		    $command->network,
+		    $command->identity
+	    );
 
         $this->users->add($user);
 

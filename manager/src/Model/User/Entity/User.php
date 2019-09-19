@@ -91,7 +91,7 @@ class User
         $this->id = $id;
         $this->date = $date;
         $this->name = $name;
-        $this->role = Role::USER;
+        $this->role = Role::user();
         $this->networks = new ArrayCollection();
     }
 
