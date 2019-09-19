@@ -6,6 +6,7 @@ namespace App\Model\User\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Self_;
 
 /**
  * @ORM\Entity
@@ -102,6 +103,15 @@ class User
         }
         $this->status= self::STATUS_ACTIVE;
         $this->confirmToken = null;
+    }
+
+    public static function create(Id $id, \DateTimeImmutable $date, Name $name, Email $email, string $hash): self
+    {
+        $user = new self($id, $date, $name);
+        $user->email = $email;
+        $user->passwordHash = $hash;
+        $user->status = self::STATUS_ACTIVE;
+        return $user;
     }
 
     public static function signUpByEmail(

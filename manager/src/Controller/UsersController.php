@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\User\Entity\User;
+use App\Model\User\UseCase\Create;
 use App\ReadModel\User\UserFetcher;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,22 +18,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UsersController extends AbstractController
 {
-	private $users;
+	private $logger;
 	
-	public function __construct(UserFetcher $users)
+	public function __construct(LoggerInterface $logger)
 	{
-		$this->users = $users;
+		$this->logger = $logger;
 	}
-	
-	/**
-	 * @Route("", name="users")
-	 * @return Response
-	 */
-	public function index(): Response
+
+    /**
+     * @Route("", name="users")
+     * @param UserFetcher $fetcher
+     * @return Response
+     */
+	public function index(UserFetcher $fetcher): Response
 	{
-		$users = $this->users->all();
-		
-		dump($users);
+		$users = $fetcher->all();
 		
 		return $this->render('app/users/index.html.twig', compact('users'));
 	}
@@ -44,4 +46,33 @@ class UsersController extends AbstractController
 	{
 		return $this->render('app/users/show.html.twig', compact('user'));
 	}
+
+    /**
+     * @Route("create", name="users.create")
+     * @param Request $request
+     * @param Create\Handler $handler
+     * @return Response
+     */
+	public function create(Request $request, Create\Handler $handler): Response
+    {
+        $command = new Create\Command();
+
+        $form = $this->createForm(Create\Form::class, $command);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $handler->handle($command);
+                $this->addFlash('success', 'Пользователь успешно создан');
+                return $this->redirectToRoute('users');
+            } catch (\DomainException $e) {
+                $this->logger->error($e->getMessage(), ['exception' => $e]);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
+
+        return $this->render('app/users/create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 }

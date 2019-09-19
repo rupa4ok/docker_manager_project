@@ -18,7 +18,7 @@ class HomeController extends AbstractController
     public function index(UserFetcher $users)
     {
 
-        $user = $users->all();
+        $users = $users->all();
 
         return $this->render('app/home.html.twig', [
             'users' => $users
