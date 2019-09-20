@@ -8,7 +8,6 @@ use App\Model\User\Entity\User;
 use App\Model\User\UseCase\Create;
 use App\Model\User\UseCase\Edit;
 use App\ReadModel\User\UserFetcher;
-use Elastica\Document;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

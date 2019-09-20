@@ -6,12 +6,13 @@ namespace App\Model\User\Entity;
 
 use App\Model\EntityNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 class UserRepository
 {
 	private $em;
 	/**
-	 * @var \Doctrine\ORM\EntityRepository
+	 * @var EntityRepository
 	 */
 	private $repo;
 	

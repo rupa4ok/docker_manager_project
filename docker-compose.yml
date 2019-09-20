@@ -105,6 +105,13 @@ services:
     restart: unless-stopped
     networks:
       - internal1
+  blackfire:
+    image: blackfire/blackfire
+    environment:
+      - BLACKFIRE_SERVER_ID=0c6f7933-0ec1-4a7d-9468-c3d6ef6d7714
+      - BLACKFIRE_SERVER_TOKEN=1c289e050b3c0848bad55068a4e39d77c90d4c517c8cb4c01d93df189dc44b46
+    networks:
+      - internal1
 volumes:
   manager-postgres:
   manager-redis:
