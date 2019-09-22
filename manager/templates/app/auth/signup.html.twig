@@ -1,0 +1,65 @@
+{% extends 'auth.html.twig' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mx-4">
+                    <div class="card-body p-4">
+                        {% include '_flashes.html.twig' %}
+
+                        <h1>Регистрация</h1>
+
+                        {{ form_start(form) }}
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="icon-user"></i></span>
+                            </div>
+                            {{ form_widget(form.firstName, {'attr': {'placeholder': 'Имя'}}) }}
+                            {{ form_errors(form.firstName) }}
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="icon-user"></i></span>
+                            </div>
+                            {{ form_widget(form.lastName, {'attr': {'placeholder': 'Фамилия'}}) }}
+                            {{ form_errors(form.lastName) }}
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@</span>
+                            </div>
+                            {{ form_widget(form.email, {'attr': {'placeholder': 'Email'}}) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                        <div class="input-group mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="icon-lock"></i>
+                                </span>
+                            </div>
+                            {{ form_widget(form.password, {'attr': {'placeholder': 'Введите пароль'}}) }}
+                            {{ form_errors(form.password) }}
+                        </div>
+
+                        <button type="submit" class="btn btn-block btn-success">Create Account</button>
+
+                        {{ form_end(form) }}
+                    </div>
+                    <div class="card-footer p-4">
+                        <div class="row">
+                            <div class="col-12">
+                                <a class="btn btn-block btn-facebook" href="">
+                                    <span>facebook</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

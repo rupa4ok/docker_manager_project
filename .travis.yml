@@ -1,0 +1,28 @@
+language: php
+php:
+  - '7.3'
+
+services:
+  - postgresql
+
+env:
+  global:
+    - DB_CONNECTION=pgsql
+    - DB_DATABASE=travis_ci_test
+    - DB_USERNAME=postgres
+
+before_install:
+  - echo sdkman_auto_answer = true
+  - sh -c "if [ '$DB_CONNECTION' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS travis_ci_test;' -U postgres; fi"
+  - sh -c "if [ '$DB_CONNECTION' = 'pgsql' ]; then psql -c 'CREATE DATABASE travis_ci_test;' -U postgres; fi"
+
+install:
+  - composer self-update
+  - make init-travis
+  - make test
+
+after_script:
+  - vendor/bin/test-reporter
+
+script:
+  - make test

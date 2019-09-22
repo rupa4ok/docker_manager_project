@@ -1,0 +1,43 @@
+# Read the documentation: https://github.com/FriendsOfSymfony/FOSElasticaBundle/blob/master/Resources/doc/setup.md
+fos_elastica:
+    clients:
+        default: { host: elasticsearch, port: 9200 }
+    indexes:
+        user:
+            client: default
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            my_analyzer:
+                                type: snowball
+                                language: English
+            types:
+                theme:
+                    properties:
+                        name:
+                            type: "object"
+                            properties:
+                                first:
+                                last:
+                        email:
+                            type: "object"
+                            properties:
+                                value: { boost: 5 }
+                        date:
+                        confirmToken:
+                        status:
+                        networks:
+                            type: "object"
+                            properties:
+                                user: { boost: 5 }
+                                network:
+                                identity:
+                    persistence:
+                        elastica_to_model_transformer:
+                            ignore_missing: true
+                        driver: orm
+                        model:  App\Model\User\Entity\User
+                        provider: ~
+                        listener: ~
+                        finder: ~
