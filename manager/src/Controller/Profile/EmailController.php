@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/profile/email")
+ * @Route("/profile/email", name="profile")
  */
 class EmailController extends AbstractController
 {
@@ -24,7 +24,7 @@ class EmailController extends AbstractController
 	}
 	
 	/**
-	 * @Route("", name="profile.email")
+	 * @Route("", name=".email")
 	 * @param Request $request
 	 * @param NewEmail\Request\Handler $handler
 	 * @return Response
@@ -53,7 +53,7 @@ class EmailController extends AbstractController
 	}
 
     /**
-     * @Route("/{token}", name="profile.email.confirm")
+     * @Route("/{token}", name=".email.confirm")
      * @param string $token
      * @param NewEmail\Confirm\Handler $handler
      * @return Response

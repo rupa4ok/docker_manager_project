@@ -9,6 +9,7 @@ use App\Model\User\UseCase\Create;
 use App\Model\User\UseCase\Role;
 use App\Model\User\UseCase\SignUp\Confirm;
 use App\Model\User\UseCase\Edit;
+use App\ReadModel\User\Filter;
 use App\ReadModel\User\UserFetcher;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,31 +18,45 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/users")
+ * @Route("/users", name="users")
  */
 class UsersController extends AbstractController
 {
+	private const PER_PAGE = 10;
+	
 	private $logger;
 	
 	public function __construct(LoggerInterface $logger)
 	{
 		$this->logger = $logger;
 	}
-
-    /**
-     * @Route("", name="users")
-     * @param UserFetcher $fetcher
-     * @return Response
-     */
-	public function index(UserFetcher $fetcher): Response
+	
+	/**
+	 * @Route("", name="")
+	 * @param Request $request
+	 * @param UserFetcher $fetcher
+	 * @return Response
+	 */
+	public function index(Request $request, UserFetcher $fetcher): Response
 	{
-		$users = $fetcher->all();
-		
-		return $this->render('app/users/index.html.twig', compact('users'));
+		$filter = new Filter\Filter();
+		$form = $this->createForm(Filter\Form::class, $filter);
+		$form->handleRequest($request);
+		$pagination = $fetcher->all(
+			$filter,
+			$request->query->getInt('page', 1),
+			self::PER_PAGE,
+			$request->query->get('sort', 'date'),
+			$request->query->get('direction', 'desc')
+		);
+		return $this->render('app/users/index.html.twig', [
+			'pagination' => $pagination,
+			'form' => $form->createView(),
+		]);
 	}
 
     /**
-     * @Route("/{id}", name="users.show")
+     * @Route("/{id}", name=".show")
      * @param User $user
      * @return Response
      */
@@ -51,7 +66,7 @@ class UsersController extends AbstractController
 	}
 
     /**
-     * @Route("create", name="users.create")
+     * @Route("create", name=".create")
      * @param Request $request
      * @param Create\Handler $handler
      * @return Response
@@ -80,7 +95,7 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="users.edit")
+     * @Route("/{id}/edit", name=".edit")
      * @param User $user
      * @param Request $request
      * @param Edit\Handler $handler
@@ -111,7 +126,7 @@ class UsersController extends AbstractController
     }
 	
 	/**
-	 * @Route("/{id}/role", name="users.role")
+	 * @Route("/{id}/role", name=".role")
 	 * @param User $user
 	 * @param Request $request
 	 * @param Role\Handler $handler
@@ -148,7 +163,7 @@ class UsersController extends AbstractController
 
 
     /**
-     * @Route("/{id}/confirm", name="users.confirm", methods={"POST"})
+     * @Route("/{id}/confirm", name=".confirm", methods={"POST"})
      * @param User $user
      * @param Request $request
      * @param Confirm\Manual\Handler $handler

@@ -5,20 +5,39 @@ declare(strict_types=1);
 namespace App\ReadModel\User;
 
 use App\Model\User\Entity\User;
+use App\ReadModel\NotFoundException;
+use App\ReadModel\User\Filter\Filter;
+use App\ReadModel\User\View\AuthView;
+use App\ReadModel\User\View\DetailView;
+use App\ReadModel\User\View\NetworkView;
+use App\ReadModel\User\View\ShortView;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 class UserFetcher
 {
     private $connection;
     private $repository;
+    private $paginator;
 
-    public function __construct(Connection $connection, EntityManagerInterface $em)
+    public function __construct(Connection $connection, EntityManagerInterface $em, PaginatorInterface $paginator)
     {
         $this->connection = $connection;
+	    $this->paginator = $paginator;
         $this->repository = $em->getRepository(User::class);
     }
+	
+	public function get(string $id): User
+	{
+		if (!$user = $this->repository->find($id)) {
+			throw new NotFoundException('Пользователь не найден');
+		}
+		return $user;
+	}
 
     public function existsByResetToken(string $token): bool
     {
@@ -74,6 +93,7 @@ class UserFetcher
             ->select(
                 'id',
                 'date',
+	            'TRIM(CONCAT(name_first, \' \', name_last)) AS name',
                 'email',
                 'role',
                 'status'
@@ -120,9 +140,17 @@ class UserFetcher
 		return $result ?: null;
 	}
 	
-	public function all(): array
+	/**
+	 * @param Filter $filter
+	 * @param int $page
+	 * @param int $size
+	 * @param string $sort
+	 * @param string $direction
+	 * @return PaginationInterface
+	 */
+	public function all(Filter $filter, int $page, int $size, string $sort, string $direction): PaginationInterface
 	{
-		$stmt = $this->connection->createQueryBuilder()
+		$qb = $this->connection->createQueryBuilder()
 			->select(
 				'id',
 				'date',
@@ -131,10 +159,27 @@ class UserFetcher
 				'role',
 				'status'
 			)
-			->from('user_users')
-			->orderBy('date', 'desc')
-			->execute();
-		
-		return $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+			->from('user_users');
+		if ($filter->name) {
+			$qb->andWhere($qb->expr()->like('LOWER(CONCAT(name_first, \' \', name_last))', ':name'));
+			$qb->setParameter(':name', '%' . mb_strtolower($filter->name) . '%');
+		}
+		if ($filter->email) {
+			$qb->andWhere($qb->expr()->like('LOWER(email)', ':email'));
+			$qb->setParameter(':email', '%' . mb_strtolower($filter->email) . '%');
+		}
+		if ($filter->status) {
+			$qb->andWhere('status = :status');
+			$qb->setParameter(':status', $filter->status);
+		}
+		if ($filter->role) {
+			$qb->andWhere('role = :role');
+			$qb->setParameter(':role', $filter->role);
+		}
+		if (!\in_array($sort, ['date', 'name', 'email', 'role', 'status'], true)) {
+			throw new \UnexpectedValueException('Cannot sort by ' . $sort);
+		}
+		$qb->orderBy($sort, $direction === 'desc' ? 'desc' : 'asc');
+		return $this->paginator->paginate($qb, $page, $size);
 	}
 }

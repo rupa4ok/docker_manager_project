@@ -209,6 +209,11 @@ class User
 		$this->newEmailToken = $token;
 	}
 	
+	public function changeName(Name $name): void
+	{
+		$this->name = $name;
+	}
+	
 	public function changeRole(Role $role): void
 	{
 		if ($this->role->isEqual($role)) {
