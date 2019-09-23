@@ -25,9 +25,7 @@ class RoleTest extends TestCase
     public function testAlready(): void
     {
 	    $user = (new UserBuilder())->viaEmail()->build();
-	    
 	    $this->expectExceptionMessage('Роль уже установлена.');
-	    
 	    $user->changeRole(Role::user());
     }
 }
