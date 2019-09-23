@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\ReadModel\User;
 
 use App\Model\User\Entity\User;
+use App\ReadModel\NotFoundException;
 use App\ReadModel\User\Filter\Filter;
 use App\ReadModel\User\View\AuthView;
 use App\ReadModel\User\View\DetailView;
@@ -29,6 +30,14 @@ class UserFetcher
 	    $this->paginator = $paginator;
         $this->repository = $em->getRepository(User::class);
     }
+	
+	public function get(string $id): User
+	{
+		if (!$user = $this->repository->find($id)) {
+			throw new NotFoundException('Пользователь не найден');
+		}
+		return $user;
+	}
 
     public function existsByResetToken(string $token): bool
     {
@@ -84,6 +93,7 @@ class UserFetcher
             ->select(
                 'id',
                 'date',
+	            'TRIM(CONCAT(name_first, \' \', name_last)) AS name',
                 'email',
                 'role',
                 'status'
