@@ -12,6 +12,9 @@ doctrine:
             user_user_id:
                 class: 'App\Model\User\Entity\Type\IdType'
                 commented: false
+            user_company_id:
+                class: 'App\Model\User\Entity\Type\IdType'
+                commented: false
             user_user_email:
                 class: 'App\Model\User\Entity\Type\EmailType'
                 commented: false
@@ -32,4 +35,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Model/User/Entity'
                 prefix: 'App\Model\User\Entity'
                 alias: User
-
+            Company:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Model/Company/Entity'
+                prefix: 'App\Model\Company\Entity'
+                alias: Company

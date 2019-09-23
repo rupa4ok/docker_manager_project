@@ -17,5 +17,5 @@ class DetailView
     /**
      * @var Network
      */
-    public $network;
+    public $networks;
 }

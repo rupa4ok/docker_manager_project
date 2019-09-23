@@ -24,6 +24,12 @@ class UserFetcher
     private $repository;
     private $paginator;
 
+    /**
+     * UserFetcher constructor.
+     * @param Connection $connection
+     * @param EntityManagerInterface $em
+     * @param PaginatorInterface $paginator
+     */
     public function __construct(Connection $connection, EntityManagerInterface $em, PaginatorInterface $paginator)
     {
         $this->connection = $connection;
@@ -87,6 +93,10 @@ class UserFetcher
         return $result ?: null;
     }
 
+    /**
+     * @param string $id
+     * @return DetailView|null
+     */
     public function findDetail(string $id): ?DetailView
     {
         $stmt = $this->connection->createQueryBuilder()
@@ -121,7 +131,7 @@ class UserFetcher
 
         return $view;
     }
-	
+
 	public function findBySignUpConfirmToken(string $token): ?ShortView
 	{
 		$stmt = $this->connection->createQueryBuilder()
