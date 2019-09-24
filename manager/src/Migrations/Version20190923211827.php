@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190917065950 extends AbstractMigration
+final class Version20190923211827 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,6 +22,9 @@ final class Version20190917065950 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
+        $this->addSql('CREATE TABLE user_company (id VARCHAR(255) NOT NULL, inn INT NOT NULL, name_full VARCHAR(255) NOT NULL, name_short VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_17B21745A7C90ED7 ON user_company (name_full)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_17B21745E93323CB ON user_company (inn)');
         $this->addSql('ALTER TABLE user_users ADD new_email VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE user_users ADD new_email_token VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE user_users ADD name_first VARCHAR(255) NOT NULL');
@@ -34,6 +37,7 @@ final class Version20190917065950 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
         $this->addSql('CREATE SCHEMA public');
+        $this->addSql('DROP TABLE user_company');
         $this->addSql('ALTER TABLE user_users DROP new_email');
         $this->addSql('ALTER TABLE user_users DROP new_email_token');
         $this->addSql('ALTER TABLE user_users DROP name_first');

@@ -13,7 +13,7 @@ doctrine:
                 class: 'App\Model\User\Entity\Type\IdType'
                 commented: false
             user_company_id:
-                class: 'App\Model\User\Entity\Type\IdType'
+                class: 'App\Model\Company\Entity\Type\IdType'
                 commented: false
             user_user_email:
                 class: 'App\Model\User\Entity\Type\EmailType'

@@ -48,9 +48,4 @@ class Name
 	{
 		return $this->first . ' ' . $this->last;
 	}
-	
-	public function getSex(): string
-	{
-		return $this->first . ' sex ';
-	}
 }
