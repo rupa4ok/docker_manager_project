@@ -22,7 +22,7 @@ class Id
         return new self(Uuid::uuid4()->toString());
     }
 
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }

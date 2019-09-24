@@ -17,16 +17,18 @@ class HomeController extends AbstractController
     public function index(CompanyRepository $company)
     {
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('GET', 'http://www.portal.nalog.gov.by/grp/getData?unp=100582333&charset=UTF-8&type=json');
+        $response = $httpClient->request('GET', 'http://www.portal.nalog.gov.by/grp/getData?unp=390325329&charset=UTF-8&type=json');
 
         $inn = $response->getContent();
+        $inn = json_decode($inn);
 
         dump($inn);
 
         $company = $company->findAll();
         
         return $this->render('app/home.html.twig', [
-            'companies' => $company
+            'companies' => $company,
+            'inn' => $inn
         ]);
     }
 }

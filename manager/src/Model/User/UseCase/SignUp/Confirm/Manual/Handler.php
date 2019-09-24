@@ -28,6 +28,8 @@ class Handler
 
     public function handle(Command $command): void
     {
-        $this->confirm->create(new Id($command->id));
+        $user = $this->users->get(new Id($command->id));
+        $user->confirmSignUp();
+        $this->flusher->flush();
     }
 }

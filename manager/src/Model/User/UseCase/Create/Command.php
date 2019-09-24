@@ -18,7 +18,6 @@ class Command
     public $lastName;
     /**
      * @var string
-     * @Assert\NotBlank()
      * @Assert\Email()
      */
     public $email;

@@ -86,7 +86,7 @@ class User
 	 * @param \DateTimeImmutable $date
 	 * @param Name $name
 	 */
-    public function __construct(Id $id, \DateTimeImmutable $date, Name $name)
+    private function __construct(Id $id, \DateTimeImmutable $date, Name $name)
     {
         $this->id = $id;
         $this->date = $date;
