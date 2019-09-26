@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use App\Model\User\Entity\Email;
+
+use App\Model\User\Entity\User\ValueObject\Email;
 use Twig\Environment;
 
 class BaseSender

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command\User;
 
-use App\Model\User\Entity\UserRepository;
+use App\Model\User\Entity\User\UserRepository;
 use App\Model\User\Service\PasswordHasher;
 use App\Model\User\UseCase\SignUp\Confirm;
 use App\Model\User\UseCase\SignUp;

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Model\User\Entity\User\Network;
 
-use App\Model\User\Entity\Id;
-use App\Model\User\Entity\Name;
-use App\Model\User\Entity\Network;
-use App\Model\User\Entity\User;
+use App\Model\User\Entity\Network\Network;
+use App\Model\User\Entity\User\User;
+use App\Model\User\Entity\User\ValueObject\Id;
+use App\Model\User\Entity\User\ValueObject\Name;
 use PHPUnit\Framework\TestCase;
 
 class AuthTest extends TestCase

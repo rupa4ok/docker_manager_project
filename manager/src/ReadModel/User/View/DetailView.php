@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ReadModel\User\View;
 
-use App\Model\User\Entity\Network;
+use App\Model\User\Entity\User\Network;
 
 class DetailView
 {

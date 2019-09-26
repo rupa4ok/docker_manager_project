@@ -1,21 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Главная{% endblock %}
 
 {% block breadcrumbs %}
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active">Home</li>
+        <li class="breadcrumb-item active">Главная</li>
     </ol>
 {% endblock %}
 
 {% block body %}
-<h1>Home</h1>
-    <div class="row">
-        {% for company in companies %}
-        <div class="col-md-1">
-        {{ company.id }} - {{ inn.ROW.VUNP }}
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-header">Активные заказы</div>
+            <div class="card-body">
+                <div class="card mt-3">
+                    <div class="card-body pt-3">
+                        <div class="center">У вас пока нету заказов в обработке</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        {% endfor %}
+
+        <div class="card">
+            <div class="card-header">График истории заказов</div>
+            <div class="card-body">
+            </div>
+        </div>
+
     </div>
 
 {% endblock %}

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Model\User\Entity\Type;
+namespace App\Model\User\Entity\User\Type;
 
-use App\Model\User\Entity\Email;
+use App\Model\User\Entity\User\ValueObject\Email;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 

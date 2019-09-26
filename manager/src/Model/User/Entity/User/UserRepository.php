@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Model\User\Entity;
+namespace App\Model\User\Entity\User;
 
 use App\Model\EntityNotFoundException;
+use App\Model\User\Entity\User\ValueObject\Email;
+use App\Model\User\Entity\User\ValueObject\Id;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 

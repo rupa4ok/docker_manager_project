@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\User\Entity\User;
+use App\Model\Company\Entity\Company;
+use App\Model\User\Entity\User\User;
 use App\Model\User\UseCase\Create;
 use App\Model\User\UseCase\Role;
 use App\Model\User\UseCase\SignUp\Confirm;
@@ -62,15 +63,15 @@ class CompanyController extends AbstractController
 			'form' => $form->createView(),
 		]);
 	}
-
-    /**
-     * @Route("/{id}", name=".show")
-     * @param User $user
-     * @return Response
-     */
-	public function show(User $user): Response
+	
+	/**
+	 * @Route("/{id}", name=".show")
+	 * @param Company $company
+	 * @return Response
+	 */
+	public function show(Company $company): Response
 	{
-		return $this->render('app/users/show.html.twig', compact('user'));
+		return $this->render('app/users/show.html.twig', compact('company'));
 	}
 
     /**

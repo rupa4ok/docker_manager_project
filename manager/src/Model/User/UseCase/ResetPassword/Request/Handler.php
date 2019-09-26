@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Model\User\UseCase\ResetPassword\Request;
 
 use App\Model\Flusher;
-use App\Model\User\Entity\Email;
-use App\Model\User\Entity\UserRepository;
+use App\Model\User\Entity\User\ValueObject\Email;
+use App\Model\User\Entity\User\UserRepository;
 use App\Model\User\Service\ResetTokenizer;
 use App\Model\User\Service\ResetTokenSender;
 

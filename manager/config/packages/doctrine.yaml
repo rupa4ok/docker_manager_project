@@ -10,21 +10,19 @@ doctrine:
 
         types:
             user_user_id:
-                class: 'App\Model\User\Entity\Type\IdType'
+                class: 'App\Model\User\Entity\User\Type\IdType'
                 commented: false
             user_company_id:
                 class: 'App\Model\Company\Entity\Type\IdType'
                 commented: false
             user_user_email:
-                class: 'App\Model\User\Entity\Type\EmailType'
+                class: 'App\Model\User\Entity\User\Type\EmailType'
                 commented: false
             user_user_role:
-                class: 'App\Model\User\Entity\Type\RoleType'
+                class: 'App\Model\User\Entity\User\Type\RoleType'
 
         url: '%env(resolve:DATABASE_URL)%'
     orm:
-        second_level_cache:
-            enabled: true
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true

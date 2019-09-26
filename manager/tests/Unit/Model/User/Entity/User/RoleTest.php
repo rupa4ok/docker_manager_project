@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Model\Entity\User\SignUp;
 
-use App\Model\User\Entity\Role;
+use App\Model\User\Entity\User\ValueObject\Role;
 use App\Tests\Builder\User\UserBuilder;
 use PHPUnit\Framework\TestCase;
 

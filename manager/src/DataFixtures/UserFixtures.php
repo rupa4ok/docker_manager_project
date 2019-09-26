@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Model\User\Entity\Email;
-use App\Model\User\Entity\Id;
-use App\Model\User\Entity\Name;
-use App\Model\User\Entity\Role;
-use App\Model\User\Entity\User;
+use App\Model\User\Entity\User\ValueObject\Email;
+use App\Model\User\Entity\User\ValueObject\Name;
+use App\Model\User\Entity\User\User;
+use App\Model\User\Entity\User\ValueObject\Id;
+use App\Model\User\Entity\User\ValueObject\Role;
 use App\Model\User\Service\PasswordHasher;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;

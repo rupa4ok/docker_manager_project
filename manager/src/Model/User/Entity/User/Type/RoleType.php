@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Model\User\Entity\Type;
+namespace App\Model\User\Entity\User\Type;
 
-use App\Model\User\Entity\Role;
+use App\Model\User\Entity\User\ValueObject\Role;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 

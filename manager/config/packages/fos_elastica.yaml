@@ -37,7 +37,7 @@ fos_elastica:
                         elastica_to_model_transformer:
                             ignore_missing: true
                         driver: orm
-                        model:  App\Model\User\Entity\User
+                        model:  App\Model\User\Entity\User\User
                         provider: ~
                         listener: ~
                         finder: ~

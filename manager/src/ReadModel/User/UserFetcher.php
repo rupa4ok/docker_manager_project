@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ReadModel\User;
 
-use App\Model\User\Entity\User;
+use App\Model\User\Entity\User\User;
 use App\ReadModel\NotFoundException;
 use App\ReadModel\User\Filter\Filter;
 use App\ReadModel\User\View\AuthView;
@@ -120,7 +120,7 @@ class UserFetcher
 
         $stmt = $this->connection->createQueryBuilder()
             ->select('network', 'identity')
-            ->from('user_user_networks')
+            ->from('user_network_networks')
             ->where('user_id = :id')
             ->setParameter(':id', $id)
             ->execute();

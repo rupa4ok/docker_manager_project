@@ -2,7 +2,7 @@
 
 namespace App\Model\User\UseCase\Role;
 
-use App\Model\User\Entity\Role;
+use App\Model\User\Entity\User\ValueObject\Role;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;

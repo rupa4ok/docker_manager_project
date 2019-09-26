@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Model\Entity\User\SignUp;
 
-use App\Model\User\Entity\Email;
-use App\Model\User\Entity\Id;
-use App\Model\User\Entity\Name;
-use App\Model\User\Entity\User;
+use App\Model\User\Entity\User\User;
+use App\Model\User\Entity\User\ValueObject\Email;
+use App\Model\User\Entity\User\ValueObject\Id;
+use App\Model\User\Entity\User\ValueObject\Name;
 use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase

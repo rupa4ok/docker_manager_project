@@ -26,6 +26,6 @@ class HomeTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
-        $this->assertSame('Home', $crawler->filter('h1')->text());
+        $this->assertSame('Активные заказы', $crawler->filter('div.card-header')->text(''));
     }
 }

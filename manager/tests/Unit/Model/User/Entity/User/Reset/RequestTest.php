@@ -2,7 +2,7 @@
 
 namespace App\Tests\Unit\Model\Entity\User\Reset;
 
-use App\Model\User\Entity\ResetToken;
+use App\Model\User\Entity\User\ValueObject\ResetToken;
 use App\Tests\Builder\User\UserBuilder;
 use PHPUnit\Framework\TestCase;
 
