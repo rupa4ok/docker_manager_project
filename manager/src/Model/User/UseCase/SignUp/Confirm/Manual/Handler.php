@@ -19,8 +19,7 @@ class Handler
         UserRepository $users,
         Flusher $flusher,
         Confirm $confirm
-    )
-    {
+    ) {
         $this->users = $users;
         $this->flusher = $flusher;
         $this->confirm = $confirm;

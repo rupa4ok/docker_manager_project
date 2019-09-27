@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Command
 {
     /**
-     * @var string
+     * @var               string
      * @Assert\NotBlank()
      * @Assert\Email()
      */

@@ -6,7 +6,7 @@ namespace App\ReadModel\Company\Filter;
 
 class Filter
 {
-	public $name;
-	public $date;
-	public $inn;
+    public $name;
+    public $date;
+    public $inn;
 }

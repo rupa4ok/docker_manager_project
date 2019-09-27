@@ -17,7 +17,7 @@ class Handler
 {
     private $users;
     private $hasher;
-	private $flusher;
+    private $flusher;
     private $generator;
 
     public function __construct(
@@ -49,6 +49,6 @@ class Handler
         );
 
         $this->users->add($user);
-	    $this->flusher->flush();
+        $this->flusher->flush();
     }
 }

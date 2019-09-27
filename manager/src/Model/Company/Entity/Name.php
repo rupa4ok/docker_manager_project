@@ -11,36 +11,36 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Name
 {
-	/**
-	 * @var string
-	 * @ORM\Column(type="string")
-	 */
-	private $full;
-	/**
-	 * @var string
-	 * @ORM\Column(type="string")
-	 */
-	private $short;
-	
-	public function __construct(string $full, string $short)
-	{
-		$this->full = $full;
-		$this->short = $short;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getFull(): string
-	{
-		return $this->full;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getShort(): string
-	{
-		return $this->short;
-	}
+    /**
+     * @var                       string
+     * @ORM\Column(type="string")
+     */
+    private $full;
+    /**
+     * @var                       string
+     * @ORM\Column(type="string")
+     */
+    private $short;
+    
+    public function __construct(string $full, string $short)
+    {
+        $this->full = $full;
+        $this->short = $short;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getFull(): string
+    {
+        return $this->full;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getShort(): string
+    {
+        return $this->short;
+    }
 }

@@ -22,7 +22,7 @@ class Command
      */
     public $lastName;
     /**
-     * @var string
+     * @var               string
      * @Assert\NotBlank()
      * @Assert\Email()
      */

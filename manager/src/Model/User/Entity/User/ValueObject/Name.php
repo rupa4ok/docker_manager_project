@@ -11,41 +11,41 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Name
 {
-	/**
-	 * @var string
-	 * @ORM\Column(type="string")
-	 */
-	private $first;
-	/**
-	 * @var string
-	 * @ORM\Column(type="string")
-	 */
-	private $last;
-	
-	public function __construct(string $first, string $last)
-	{
-		$this->first = $first;
-		$this->last = $last;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getFirst(): string
-	{
-		return $this->first;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getLast(): string
-	{
-		return $this->last;
-	}
-	
-	public function getFull(): string
-	{
-		return $this->first . ' ' . $this->last;
-	}
+    /**
+     * @var                       string
+     * @ORM\Column(type="string")
+     */
+    private $first;
+    /**
+     * @var                       string
+     * @ORM\Column(type="string")
+     */
+    private $last;
+    
+    public function __construct(string $first, string $last)
+    {
+        $this->first = $first;
+        $this->last = $last;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getFirst(): string
+    {
+        return $this->first;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getLast(): string
+    {
+        return $this->last;
+    }
+    
+    public function getFull(): string
+    {
+        return $this->first . ' ' . $this->last;
+    }
 }

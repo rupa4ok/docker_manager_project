@@ -16,60 +16,62 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EmailController extends AbstractController
 {
-	private $logger;
-	
-	public function __construct(LoggerInterface $logger)
-	{
-		$this->logger = $logger;
-	}
-	
-	/**
-	 * @Route("", name=".email")
-	 * @param Request $request
-	 * @param NewEmail\Request\Handler $handler
-	 * @return Response
-	 */
-	public function request(Request $request, NewEmail\Request\Handler $handler): Response
-	{
-		$command = new NewEmail\Request\Command($this->getUser()->getId());
-		
-		$form = $this->createForm(NewEmail\Request\Form::class, $command);
-		$form->handleRequest($request);
-		
-		if ($form->isSubmitted() && $form->isValid()) {
-			try {
-				$handler->handle($command);
-				$this->addFlash('success', 'Проверьте вашу почту');
-				return $this->redirectToRoute('profile');
-			} catch (\DomainException $e) {
-				$this->logger->error($e->getMessage(), ['exception' => $e]);
-				$this->addFlash('error', $e->getMessage());
-			}
-		}
-		
-		return $this->render('app/profile/email.html.twig', [
-			'form' => $form->createView()
-		]);
-	}
+    private $logger;
+    
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+    
+    /**
+     * @Route("", name=".email")
+     * @param     Request                  $request
+     * @param     NewEmail\Request\Handler $handler
+     * @return    Response
+     */
+    public function request(Request $request, NewEmail\Request\Handler $handler): Response
+    {
+        $command = new NewEmail\Request\Command($this->getUser()->getId());
+        
+        $form = $this->createForm(NewEmail\Request\Form::class, $command);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $handler->handle($command);
+                $this->addFlash('success', 'Проверьте вашу почту');
+                return $this->redirectToRoute('profile');
+            } catch (\DomainException $e) {
+                $this->logger->error($e->getMessage(), ['exception' => $e]);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
+        
+        return $this->render(
+            'app/profile/email.html.twig', [
+            'form' => $form->createView()
+            ]
+        );
+    }
 
     /**
      * @Route("/{token}", name=".email.confirm")
-     * @param string $token
-     * @param NewEmail\Confirm\Handler $handler
-     * @return Response
+     * @param             string                   $token
+     * @param             NewEmail\Confirm\Handler $handler
+     * @return            Response
      */
-	public function confirm(string $token, NewEmail\Confirm\Handler $handler): Response
-	{
-		$command = new NewEmail\Confirm\Command($this->getUser()->getId(), $token);
-		
-		try {
-			$handler->handle($command);
-			$this->addFlash('success', 'Email успешно подтвержден');
-			return $this->redirectToRoute('profile');
-		} catch (\DomainException $e) {
-			$this->logger->error($e->getMessage(), ['exception' => $e]);
-			$this->addFlash('error', $e->getMessage());
-			return $this->redirectToRoute('profile');
-		}
-	}
+    public function confirm(string $token, NewEmail\Confirm\Handler $handler): Response
+    {
+        $command = new NewEmail\Confirm\Command($this->getUser()->getId(), $token);
+        
+        try {
+            $handler->handle($command);
+            $this->addFlash('success', 'Email успешно подтвержден');
+            return $this->redirectToRoute('profile');
+        } catch (\DomainException $e) {
+            $this->logger->error($e->getMessage(), ['exception' => $e]);
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('profile');
+        }
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Company;
 
 use App\Model\Company\Entity\Company;
 use App\Model\Company\Entity\Id;
@@ -23,8 +23,8 @@ class CompanyFixtures extends Fixture
         $company = Company::signUp(
             Id::next(),
             new \DateTimeImmutable(),
-	        new Name('Test', 'test short'),
-	        '111111'
+            new Name('Test', 'test short'),
+            '111111'
         );
         
         $manager->persist($company);

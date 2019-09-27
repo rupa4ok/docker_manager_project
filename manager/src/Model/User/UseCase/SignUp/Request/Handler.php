@@ -20,7 +20,7 @@ class Handler
     private $hasher;
     private $tokenizer;
     private $sender;
-	private $flusher;
+    private $flusher;
     
     public function __construct(
         UserRepository $users,
@@ -55,6 +55,6 @@ class Handler
 
         $this->users->add($user);
         $this->sender->send($email, $token);
-	    $this->flusher->flush();
+        $this->flusher->flush();
     }
 }

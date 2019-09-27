@@ -18,8 +18,7 @@ class Handler
     public function __construct(
         UserRepository $users,
         Flusher $flusher
-    )
-    {
+    ) {
         $this->users = $users;
         $this->flusher = $flusher;
     }
@@ -29,17 +28,17 @@ class Handler
         if ($user = $this->users->hasByNetworkIdentity($command->network, $command->identity)) {
             throw new \DomainException('Пользователь уже существует');
         }
-	
-	    $user = User::signUpByNetwork(
-		    Id::next(),
-		    new \DateTimeImmutable(),
-		    new Name(
-			    $command->firstName,
-			    $command->lastName
-		    ),
-		    $command->network,
-		    $command->identity
-	    );
+    
+        $user = User::signUpByNetwork(
+            Id::next(),
+            new \DateTimeImmutable(),
+            new Name(
+                $command->firstName,
+                $command->lastName
+            ),
+            $command->network,
+            $command->identity
+        );
 
         $this->users->add($user);
 

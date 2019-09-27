@@ -11,16 +11,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Form extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options): void
-	{
-		$builder
-			->add('name', Type\TextType::class);
-	}
-	
-	public function configureOptions(OptionsResolver $resolver): void
-	{
-		$resolver->setDefaults(array(
-			'data_class' => Command::class,
-		));
-	}
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+        ->add('name', Type\TextType::class);
+    }
+    
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults(
+            array(
+            'data_class' => Command::class,
+            )
+        );
+    }
 }

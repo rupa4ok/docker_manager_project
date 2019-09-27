@@ -12,6 +12,6 @@ class ResetTokenSender extends BaseSender
 {
     public function send(Email $email, ResetToken $token): void
     {
-	    $this->push($email, $token, 'Сброс пароля', 'mail/user/reset.html.twig');
+        $this->push($email, $token, 'Сброс пароля', 'mail/user/reset.html.twig');
     }
 }

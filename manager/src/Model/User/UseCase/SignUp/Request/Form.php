@@ -9,20 +9,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Form extends AbstractType
 {
-	
-	public function buildForm(FormBuilderInterface $builder, array $options): void
-	{
-		$builder
-			->add('firstName', Type\TextType::class, ['required' => false])
-			->add('lastName', Type\TextType::class, ['required' => false])
-			->add('email', Type\EmailType::class)
-			->add('password', Type\PasswordType::class);
-	}
-	
-	public function configureOptions(OptionsResolver $resolver): void
-	{
-		$resolver->setDefaults([
-			'data_class' => Command::class,
-		]);
-	}
+    
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('firstName', Type\TextType::class, ['required' => false])
+            ->add('lastName', Type\TextType::class, ['required' => false])
+            ->add('email', Type\EmailType::class)
+            ->add('password', Type\PasswordType::class);
+    }
+    
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults(
+            [
+            'data_class' => Command::class,
+            ]
+        );
+    }
 }

@@ -17,56 +17,58 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class SignUpController extends AbstractController
 {
-	private $logger;
-	/**
-	 * @var UserFetcher
-	 */
-	private $users;
-	
-	public function __construct(LoggerInterface $logger, UserFetcher $users)
-	{
-		$this->users = $users;
-		$this->logger = $logger;
-	}
-	
-	/**
-	 * @Route("/signup", name="auth.signup")
-	 * @param Request $request
-	 * @param SignUp\Request\Handler $handler
-	 * @return Response
-	 */
-	public function request(Request $request, SignUp\Request\Handler $handler): Response
-	{
-		$command = new SignUp\Request\Command();
-		
-		$form = $this->createForm(SignUp\Request\Form::class, $command);
-		$form->handleRequest($request);
-		
-		if ($form->isSubmitted() && $form->isValid()) {
-			try {
-				$handler->handle($command);
-				$this->addFlash('success', 'Проверьте вашу почту');
-				return $this->redirectToRoute('home');
-			} catch (\DomainException $e) {
-				$this->logger->error($e->getMessage(), ['exception' => $e]);
-				$this->addFlash('error', $e->getMessage());
-			}
-		}
-		
-		return $this->render('app/auth/signup.html.twig', [
-			'form' => $form->createView()
-		]);
-	}
+    private $logger;
+    /**
+     * @var UserFetcher
+     */
+    private $users;
+    
+    public function __construct(LoggerInterface $logger, UserFetcher $users)
+    {
+        $this->users = $users;
+        $this->logger = $logger;
+    }
+    
+    /**
+     * @Route("/signup", name="auth.signup")
+     * @param            Request                $request
+     * @param            SignUp\Request\Handler $handler
+     * @return           Response
+     */
+    public function request(Request $request, SignUp\Request\Handler $handler): Response
+    {
+        $command = new SignUp\Request\Command();
+        
+        $form = $this->createForm(SignUp\Request\Form::class, $command);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $handler->handle($command);
+                $this->addFlash('success', 'Проверьте вашу почту');
+                return $this->redirectToRoute('home');
+            } catch (\DomainException $e) {
+                $this->logger->error($e->getMessage(), ['exception' => $e]);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
+        
+        return $this->render(
+            'app/auth/signup.html.twig', [
+            'form' => $form->createView()
+            ]
+        );
+    }
 
     /**
      * @Route("/signup/{token}", name="auth.signup.confirm")
-     * @param Request $request
-     * @param string $token
-     * @param SignUp\Confirm\ByToken\Handler $handler
-     * @param UserProviderInterface $userProvider
-     * @param GuardAuthenticatorHandler $guardHandler
-     * @param LoginFormAuthenticator $authenticator
-     * @return Response
+     * @param                    Request                        $request
+     * @param                    string                         $token
+     * @param                    SignUp\Confirm\ByToken\Handler $handler
+     * @param                    UserProviderInterface          $userProvider
+     * @param                    GuardAuthenticatorHandler      $guardHandler
+     * @param                    LoginFormAuthenticator         $authenticator
+     * @return                   Response
      */
     public function confirm(
         Request $request,
@@ -75,8 +77,7 @@ class SignUpController extends AbstractController
         UserProviderInterface $userProvider,
         GuardAuthenticatorHandler $guardHandler,
         LoginFormAuthenticator $authenticator
-    ): Response
-    {
+    ): Response {
         if (!$user = $this->users->findBySignUpConfirmToken($token)) {
             $this->addFlash('error', 'Incorrect or already confirmed token.');
             return $this->redirectToRoute('auth.signup');

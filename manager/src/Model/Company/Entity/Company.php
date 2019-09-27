@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="user_company", uniqueConstraints={
- *     @ORM\UniqueConstraint(columns={"name_full"}),
- *     @ORM\UniqueConstraint(columns={"inn"})
+ * @ORM\UniqueConstraint(columns={"name_full"}),
+ * @ORM\UniqueConstraint(columns={"inn"})
  * })
  */
 class Company
@@ -21,12 +21,12 @@ class Company
      * @ORM\Id
      */
     private $id;
-	/**
-	 * @var \DateTimeImmutable
-	 * @ORM\Column(type="datetime_immutable")
-	 */
-	private $date;
-	
+    /**
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $date;
+    
     /**
      * @var Name
      * @ORM\Embedded(class="Name")
@@ -37,51 +37,51 @@ class Company
      * @ORM\Column(type="integer", nullable=false)
      */
     private $inn;
-	
-	private function __construct(Id $id, \DateTimeImmutable $date, Name $name)
-	{
-		$this->id = $id;
-		$this->date = $date;
-		$this->name = $name;
-	}
-	
-	public static function signUp(Id $id, \DateTimeImmutable $date, Name $name, string $inn): self
-	{
-		$company = new self($id, $date, $name);
-		$company->inn = $inn;
+    
+    private function __construct(Id $id, \DateTimeImmutable $date, Name $name)
+    {
+        $this->id = $id;
+        $this->date = $date;
+        $this->name = $name;
+    }
+    
+    public static function signUp(Id $id, \DateTimeImmutable $date, Name $name, string $inn): self
+    {
+        $company = new self($id, $date, $name);
+        $company->inn = $inn;
 
-		return $company;
-	}
-	
-	/**
-	 * @return Id
-	 */
-	public function getId(): Id
-	{
-		return $this->id;
-	}
-	
-	/**
-	 * @return \DateTimeImmutable
-	 */
-	public function getDate(): \DateTimeImmutable
-	{
-		return $this->date;
-	}
-	
-	/**
-	 * @return Name
-	 */
-	public function getName(): Name
-	{
-		return $this->name;
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getInn(): int
-	{
-		return $this->inn;
-	}
+        return $company;
+    }
+    
+    /**
+     * @return Id
+     */
+    public function getId(): Id
+    {
+        return $this->id;
+    }
+    
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getDate(): \DateTimeImmutable
+    {
+        return $this->date;
+    }
+    
+    /**
+     * @return Name
+     */
+    public function getName(): Name
+    {
+        return $this->name;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getInn(): int
+    {
+        return $this->inn;
+    }
 }

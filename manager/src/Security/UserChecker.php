@@ -10,23 +10,23 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserChecker implements UserCheckerInterface
 {
-	public function checkPreAuth(UserInterface $identity): void
-	{
-		if (!$identity instanceof UserIdentity) {
-			return;
-		}
-		
-		if (!$identity->isActive()) {
-			$exception = new DisabledException('Данный аккаунт не подтвержден');
-			$exception->setUser($identity);
-			throw $exception;
-		}
-	}
-	
-	public function checkPostAuth(UserInterface $isentity)
-	{
-		if (!$isentity instanceof UserInterface) {
-			return;
-		}
-	}
+    public function checkPreAuth(UserInterface $identity): void
+    {
+        if (!$identity instanceof UserIdentity) {
+            return;
+        }
+        
+        if (!$identity->isActive()) {
+            $exception = new DisabledException('User account is disabled.');
+            $exception->setUser($identity);
+            throw $exception;
+        }
+    }
+    
+    public function checkPostAuth(UserInterface $identity): void
+    {
+        if (!$identity instanceof UserIdentity) {
+            return;
+        }
+    }
 }

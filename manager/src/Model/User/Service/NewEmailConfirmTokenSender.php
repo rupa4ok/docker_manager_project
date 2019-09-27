@@ -10,8 +10,8 @@ use App\Model\User\Entity\User\ValueObject\Email;
 
 class NewEmailConfirmTokenSender extends BaseSender
 {
-	public function send(Email $email, string $token): void
-	{
-		$this->push($email, $token, 'Смена Email', 'mail/user/email.html.twig');
-	}
+    public function send(Email $email, string $token): void
+    {
+        $this->push($email, $token, 'Смена Email', 'mail/user/email.html.twig');
+    }
 }

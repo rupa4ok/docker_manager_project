@@ -1,7 +1,8 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Users;
 
+use App\DataFixtures\BaseFixture;
 use App\Model\User\Entity\User\ValueObject\Email;
 use App\Model\User\Entity\User\ValueObject\Name;
 use App\Model\User\Entity\User\User;
@@ -23,7 +24,10 @@ class UserFactoryFixtures extends BaseFixture
 
     public function loadData(ObjectManager $manager): void
     {
-        $this->createUsers(15, function($user, $count) {});
+        $this->createUsers(
+            15, function ($user, $count) {
+            }
+        );
         $manager->flush();
     }
 
@@ -31,14 +35,13 @@ class UserFactoryFixtures extends BaseFixture
     {
         for ($i = 0; $i < $count; $i++) {
             $faker = Factory::create();
-            $hasher = new PasswordHasher();
 
             $user = User::signUpByEmail(
                 Id::next(),
                 new \DateTimeImmutable(),
                 new Name($faker->firstName(), $faker->lastName),
                 new Email($faker->email),
-                $hasher->hash($faker->numberBetween(6, 10)),
+                $this->hasher->hash($faker->numberBetween(6, 10)),
                 'token'
             );
 

@@ -9,8 +9,8 @@ use App\Model\User\Entity\User\ValueObject\Email;
 
 class SignUpConfirmTokenSender extends BaseSender
 {
-	public function send(Email $email, string $token): void
-	{
-		$this->push($email, $token, 'Сайт CLEANTON.BY: Подтверждение регистрации', 'mail/user/signup.html.twig');
-	}
+    public function send(Email $email, string $token): void
+    {
+        $this->push($email, $token, 'Сайт CLEANTON.BY: Подтверждение регистрации', 'mail/user/signup.html.twig');
+    }
 }

@@ -17,7 +17,7 @@ class Command
      */
     public $lastName;
     /**
-     * @var string
+     * @var            string
      * @Assert\Email()
      */
     public $email;

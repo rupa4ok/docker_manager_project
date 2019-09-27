@@ -17,13 +17,13 @@ class Command
      */
     public $lastName;
     /**
-     * @var string
+     * @var               string
      * @Assert\NotBlank()
      * @Assert\Email()
      */
     public $email;
     /**
-     * @var string
+     * @var                  string
      * @Assert\NotBlank()
      * @Assert\Length(min=6)
      */

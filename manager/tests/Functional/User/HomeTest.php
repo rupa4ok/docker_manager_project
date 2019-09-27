@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional;
+namespace App\Tests\Functional\User;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -20,7 +20,7 @@ class HomeTest extends WebTestCase
     public function testSuccess(): void
     {
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'test@mail.ru',
+            'PHP_AUTH_USER' => 'user@mail.ru',
             'PHP_AUTH_PW' => '123456'
         ]);
         $crawler = $client->request('GET', '/');

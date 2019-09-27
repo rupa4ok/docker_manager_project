@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Users;
 
 use App\Model\User\Entity\User\ValueObject\Email;
 use App\Model\User\Entity\User\ValueObject\Name;
@@ -23,18 +23,17 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $hash = $this->hasher->hash('123456');
-
+    
         $user = User::signUpByEmail(
             Id::next(),
             new \DateTimeImmutable(),
-	        new Name('Test', 'Admin'),
-            new Email('test@mail.ru'),
+            new Name('Test', 'User'),
+            new Email('user@mail.ru'),
             $hash,
             'token'
         );
-
+    
         $user->confirmSignUp();
-        $user->changeRole(Role::admin());
         $manager->persist($user);
         $manager->flush();
     }

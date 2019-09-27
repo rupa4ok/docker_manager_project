@@ -19,8 +19,10 @@ class StatusWidget extends AbstractExtension
 
     public function status(Environment $twig, string $status): string
     {
-        return $twig->render('widget/user/status.html.twig', [
+        return $twig->render(
+            'widget/user/status.html.twig', [
             'status' => $status
-        ]);
+            ]
+        );
     }
 }

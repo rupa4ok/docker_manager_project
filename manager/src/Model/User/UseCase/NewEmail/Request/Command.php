@@ -10,11 +10,11 @@ class Command
 {
     /**
      * @Assert\NotBlank()
-     * @var string
+     * @var               string
      */
     public $id;
     /**
-     * @var string
+     * @var               string
      * @Assert\NotBlank()
      * @Assert\Email()
      */
@@ -22,6 +22,6 @@ class Command
     
     public function __construct(string $id)
     {
-    	$this->id = $id;
+        $this->id = $id;
     }
 }

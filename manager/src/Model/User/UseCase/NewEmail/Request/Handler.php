@@ -22,8 +22,7 @@ class Handler
         NewEmailConfirmTokenizer $tokenizer,
         NewEmailConfirmTokenSender $sender,
         Flusher $flusher
-    )
-    {
+    ) {
         $this->users = $users;
         $this->tokenizer = $tokenizer;
         $this->sender = $sender;
@@ -32,7 +31,7 @@ class Handler
 
     public function handle(Command $command): void
     {
-    	$user = $this->users->get(new Id($command->id));
+        $user = $this->users->get(new Id($command->id));
         $email = new Email($command->email);
 
         if ($this->users->hasByEmail($email)) {
@@ -40,11 +39,11 @@ class Handler
         }
 
         $user->requestEmailChanging(
-        	$email,
-	        $token = $this->tokenizer->generate()
+            $email,
+            $token = $this->tokenizer->generate()
         );
         
         $this->flusher->flush();
-	    $this->sender->send($email, $token);
+        $this->sender->send($email, $token);
     }
 }

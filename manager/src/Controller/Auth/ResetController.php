@@ -14,18 +14,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ResetController extends AbstractController
 {
-	private $logger;
-	
-	public function __construct(LoggerInterface $logger)
-	{
-		$this->logger = $logger;
-	}
+    private $logger;
+    
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
 
     /**
      * @Route("/reset", name="auth.reset")
-     * @param Request $request
-     * @param ResetPassword\Request\Handler $handler
-     * @return Response
+     * @param           Request                       $request
+     * @param           ResetPassword\Request\Handler $handler
+     * @return          Response
      */
     public function request(Request $request, ResetPassword\Request\Handler $handler): Response
     {
@@ -45,18 +45,20 @@ class ResetController extends AbstractController
             }
         }
 
-        return $this->render('app/auth/reset/request.html.twig', [
+        return $this->render(
+            'app/auth/reset/request.html.twig', [
             'form' => $form->createView(),
-        ]);
+            ]
+        );
     }
 
     /**
      * @Route("/reset/{token}", name="auth.reset.reset")
-     * @param string $token
-     * @param Request $request
-     * @param ResetPassword\Reset\Handler $handler
-     * @param UserFetcher $users
-     * @return Response
+     * @param                   string                      $token
+     * @param                   Request                     $request
+     * @param                   ResetPassword\Reset\Handler $handler
+     * @param                   UserFetcher                 $users
+     * @return                  Response
      */
     public function reset(string $token, Request $request, ResetPassword\Reset\Handler $handler, UserFetcher $users): Response
     {
@@ -81,8 +83,10 @@ class ResetController extends AbstractController
             }
         }
 
-        return $this->render('app/auth/reset/reset.html.twig', [
+        return $this->render(
+            'app/auth/reset/reset.html.twig', [
             'form' => $form->createView(),
-        ]);
+            ]
+        );
     }
 }

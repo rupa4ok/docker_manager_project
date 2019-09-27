@@ -12,7 +12,7 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @return Response
+     * @return     Response
      */
     public function index(CompanyRepository $company)
     {
@@ -23,12 +23,14 @@ class HomeController extends AbstractController
         $inn = json_decode($inn);
         
         dump($inn);
-	    
+        
         $company = $company->findAll();
         
-        return $this->render('app/home.html.twig', [
+        return $this->render(
+            'app/home.html.twig', [
             'companies' => $company,
             'inn' => $inn
-        ]);
+            ]
+        );
     }
 }

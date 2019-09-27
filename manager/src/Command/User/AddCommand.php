@@ -29,8 +29,7 @@ class AddCommand extends Command
         PasswordHasher $hasher,
         UserRepository $repo,
         Confirm\Manual\Handler $signup
-    )
-    {
+    ) {
         $this->handler = $handler;
         $this->users = $users;
         $this->hasher = $hasher;
@@ -52,7 +51,7 @@ class AddCommand extends Command
         $output->writeln('<info>Регистрация нового пользователя</info>');
 
         $email = $helper->ask($input, $output, new Question('Email: '));
-        if ($user = $this->users->findByEmail($email)) {
+        if ($this->users->findByEmail($email)) {
             throw new LogicException('Пользователь с таким email уже существует.');
         }
 

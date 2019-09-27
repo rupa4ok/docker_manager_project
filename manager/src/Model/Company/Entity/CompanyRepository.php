@@ -10,20 +10,20 @@ use Doctrine\ORM\EntityRepository;
 
 class CompanyRepository
 {
-	private $em;
-	/**
-	 * @var EntityRepository
-	 */
-	private $repo;
-	
-	public function __construct(EntityManagerInterface $em)
-	{
-		$this->em = $em;
-		$this->repo = $em->getRepository(Company::class);
-	}
-	
-	public function findAll()
-	{
-		return $this->repo->findAll();
-	}
+    private $em;
+    /**
+     * @var EntityRepository
+     */
+    private $repo;
+    
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+        $this->repo = $em->getRepository(Company::class);
+    }
+    
+    public function findAll()
+    {
+        return $this->repo->findAll();
+    }
 }

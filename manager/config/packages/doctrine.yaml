@@ -20,6 +20,14 @@ doctrine:
                 commented: false
             user_user_role:
                 class: 'App\Model\User\Entity\User\Type\RoleType'
+            work_members_group_id:
+                class: 'App\Model\Work\Entity\Members\Group\IdType'
+            work_members_member_id:
+                class: 'App\Model\Work\Entity\Members\Member\IdType'
+            work_members_member_email:
+                class: 'App\Model\Work\Entity\Members\Member\EmailType'
+            work_members_member_status:
+                class: 'App\Model\Work\Entity\Members\Member\StatusType'
 
         url: '%env(resolve:DATABASE_URL)%'
     orm:
@@ -39,3 +47,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Model/Company/Entity'
                 prefix: 'App\Model\Company\Entity'
                 alias: Company
+            Work:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Model/Work/Entity'
+                prefix: 'App\Model\Work\Entity'
+                alias: Work

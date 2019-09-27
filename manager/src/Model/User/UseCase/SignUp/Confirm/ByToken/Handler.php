@@ -15,8 +15,7 @@ class Handler
     public function __construct(
         UserRepository $users,
         Flusher $flusher
-    )
-    {
+    ) {
         $this->users = $users;
         $this->flusher = $flusher;
     }

@@ -20,7 +20,7 @@ class ShowController extends AbstractController
 
     /**
      * @Route("/profile", name="profile")
-     * @return Response
+     * @return            Response
      */
     public function index()
     {
