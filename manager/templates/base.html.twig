@@ -70,21 +70,13 @@
                         </a>
                     </li>
                 {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="">
-                        <i class="nav-icon icon-basket-loaded"></i> Корзина
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">
-                        <i class="nav-icon icon-note"></i> История заказов
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">
-                        <i class="nav-icon icon-note"></i> Помощь
-                    </a>
-                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('work.members.groups') }}">
+                            <i class="nav-icon icon-user"></i> Группы
+                        </a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">
                         <i class="nav-icon icon-note"></i> Выход
