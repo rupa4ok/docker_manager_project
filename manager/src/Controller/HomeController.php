@@ -17,7 +17,7 @@ class HomeController extends AbstractController
     public function index(CompanyRepository $company)
     {
         $httpClient = HttpClient::create();
-        $response = $httpClient->request('GET', 'http://www.portal.nalog.gov.by/grp/getData?unp=390325329&charset=UTF-8&type=json');
+        $response = $httpClient->request('GET', 'http://www.portal.nalog.gov.by/grp/getData?unp=190275968&charset=UTF-8&type=json');
         
         $inn = $response->getContent();
         $inn = json_decode($inn);
@@ -27,7 +27,8 @@ class HomeController extends AbstractController
         $company = $company->findAll();
         
         return $this->render(
-            'app/home.html.twig', [
+            'app/home.html.twig',
+            [
             'companies' => $company,
             'inn' => $inn
             ]

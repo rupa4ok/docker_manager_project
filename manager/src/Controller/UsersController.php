@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/users",                name="users")
+ * @Route("/users", name="users")
  * @IsGranted("ROLE_MANAGE_USERS")
  */
 class UsersController extends AbstractController
@@ -52,7 +52,8 @@ class UsersController extends AbstractController
             $request->query->get('direction', 'desc')
         );
         return $this->render(
-            'app/users/index.html.twig', [
+            'app/users/index.html.twig',
+            [
             'pagination' => $pagination,
             'form' => $form->createView(),
             ]
@@ -94,7 +95,8 @@ class UsersController extends AbstractController
         }
 
         return $this->render(
-            'app/users/create.html.twig', [
+            'app/users/create.html.twig',
+            [
             'form' => $form->createView()
             ]
         );
@@ -126,7 +128,8 @@ class UsersController extends AbstractController
         }
 
         return $this->render(
-            'app/users/edit.html.twig', [
+            'app/users/edit.html.twig',
+            [
             'user' => $user,
             'form' => $form->createView()
             ]
@@ -164,7 +167,8 @@ class UsersController extends AbstractController
         }
         
         return $this->render(
-            'app/users/role.html.twig', [
+            'app/users/role.html.twig',
+            [
             'user' => $user,
             'form' => $form->createView()
             ]
