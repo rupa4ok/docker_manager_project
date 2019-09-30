@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\ReadModel\Work\Members\Member\Filter;
 
 use App\Model\Work\Entity\Members\Member\Status;
-use App\ReadModel\Work\Members\GroupFetcher;
+use App\ReadModel\Work\Members\Group\GroupFetcher;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;

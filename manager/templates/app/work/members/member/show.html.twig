@@ -5,7 +5,7 @@
 {% block breadcrumbs %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.members') }}">Work</a></li>
         <li class="breadcrumb-item"><a href="{{ path('work.members') }}">Members</a></li>
         <li class="breadcrumb-item active">{{ member.name.full }}</li>
     </ol>
@@ -13,7 +13,7 @@
 
 {% block body %}
 
-    {{ include('app/work/members/_tabs.html.twig') }}
+    {{ include('app/work/members/member/_tabs.html.twig') }}
 
     <div class="controls">
         <a href="{{ path('work.members.edit', {'id': member.id}) }}" class="btn btn-primary">Edit</a>
@@ -48,33 +48,8 @@
                 <th>Group</th>
                 <td>{{ member.group.name }}</td>
             </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ member_status(member.status.name) }}</td>
-            </tr>
             </tbody>
         </table>
     </div>
-
-    {% if departments %}
-        <div class="box">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Project</th>
-                    <th>Department</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for department in departments %}
-                    <tr>
-                        <td><a href="{{ path('work.projects.project.show', {'id': department.project_id}) }}">{{ department.project_name }}</a></td>
-                        <td>{{ department.department_name }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% endif %}
 
 {% endblock %}

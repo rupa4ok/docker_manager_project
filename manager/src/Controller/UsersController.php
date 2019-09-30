@@ -11,6 +11,7 @@ use App\Model\User\UseCase\SignUp\Confirm;
 use App\Model\User\UseCase\Edit;
 use App\ReadModel\User\Filter;
 use App\ReadModel\User\UserFetcher;
+use App\ReadModel\Work\Members\Member\MemberFetcher;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -59,15 +60,18 @@ class UsersController extends AbstractController
             ]
         );
     }
-
+    
     /**
      * @Route("/{id}", name=".show")
-     * @param          User $user
+     * @param User $user
+     * @param MemberFetcher $members
      * @return         Response
      */
-    public function show(User $user): Response
+    public function show(User $user, MemberFetcher $members): Response
     {
-        return $this->render('app/users/show.html.twig', compact('user'));
+        $member = $members->find($user->getId()->getValue());
+        
+        return $this->render('app/users/show.html.twig', compact('user', 'member'));
     }
 
     /**
@@ -174,8 +178,7 @@ class UsersController extends AbstractController
             ]
         );
     }
-
-
+    
     /**
      * @Route("/{id}/confirm", name=".confirm", methods={"POST"})
      * @param                  User                   $user
