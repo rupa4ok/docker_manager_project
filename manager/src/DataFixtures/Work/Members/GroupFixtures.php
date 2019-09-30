@@ -20,6 +20,9 @@ class GroupFixtures extends Fixture
             Id::next(),
             'Our Staff'
         );
+        
+        $this->setReference('staff', $staff);
+        
         $manager->persist($staff);
         $this->setReference(self::REFERENCE_STAFF, $staff);
         
@@ -27,6 +30,8 @@ class GroupFixtures extends Fixture
             Id::next(),
             'Customers'
         );
+    
+        $this->setReference('customers', $customers);
         
         $manager->persist($customers);
         $this->setReference(self::REFERENCE_CUSTOMERS, $customers);

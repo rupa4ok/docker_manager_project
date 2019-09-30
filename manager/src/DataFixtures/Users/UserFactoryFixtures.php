@@ -25,7 +25,8 @@ class UserFactoryFixtures extends BaseFixture
     public function loadData(ObjectManager $manager): void
     {
         $this->createUsers(
-            15, function ($user, $count) {
+            15,
+            function ($user, $count) {
             }
         );
         $manager->flush();
@@ -44,8 +45,11 @@ class UserFactoryFixtures extends BaseFixture
                 $this->hasher->hash($faker->numberBetween(6, 10)),
                 'token'
             );
-
-            $user->confirmSignUp();
+    
+            if (rand(1, 10) % 2 == 0) {
+                $user->confirmSignUp();
+            }
+            
             $factory($user, $i);
             $this->manager->persist($user);
             $this->addReference(User::class . '_' . $i, $user);
