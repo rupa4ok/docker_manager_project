@@ -13,17 +13,23 @@ class Handler
 {
     private $groups;
     private $flusher;
+    private $members;
     
-    public function __construct(GroupRepository $groups, Flusher $flusher)
+    public function __construct(GroupRepository $groups, MemberRepository $members, Flusher $flusher)
     {
         
         $this->groups = $groups;
         $this->flusher = $flusher;
+        $this->members = $members;
     }
     
     public function handle(Command $command): void
     {
         $group = $this->groups->get(new Id($command->id));
+        
+        if ($this->members->hasByGroup($group->getId())) {
+            throw new \DomainException('Нельзя удалить не пустую группу.');
+        }
         
         $this->groups->remove($group);
         

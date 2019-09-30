@@ -5,7 +5,7 @@
 {% block breadcrumbs %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('work') }}">Work</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('work.members') }}">Work</a></li>
         <li class="breadcrumb-item"><a href="{{ path('work.members') }}">Members</a></li>
         <li class="breadcrumb-item"><a href="{{ path('work.members.show', {'id': member.id}) }}">{{ member.name.full }}</a></li>
         <li class="breadcrumb-item active">Move</li>
@@ -14,7 +14,7 @@
 
 {% block body %}
 
-    {{ include('app/work/members/_tabs.html.twig') }}
+    {{ include('app/work/members/member/_tabs.html.twig') }}
 
     <div class="card">
         <div class="card-body">

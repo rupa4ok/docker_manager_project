@@ -38,51 +38,7 @@
 <div class="app-body">
     <div class="sidebar">
         <nav class="sidebar-nav">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('home') }}">
-                        <i class="nav-icon icon-home"></i> Рабочий стол
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('profile') }}">
-                        <i class="nav-icon icon-speedometer"></i> Профиль
-                    </a>
-                </li>
-                {% if is_granted('ROLE_MANAGE_USERS') %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('users') }}">
-                        <i class="nav-icon icon-user"></i> Пользователи
-                    </a>
-                </li>
-                {% endif %}
-                {% if is_granted('ROLE_MANAGE_USERS') %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('company') }}">
-                            <i class="nav-icon icon-user"></i> Компании
-                        </a>
-                    </li>
-                {% endif %}
-                {% if is_granted('ROLE_USER') %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('company') }}">
-                            <i class="nav-icon icon-user"></i> Моя компания
-                        </a>
-                    </li>
-                {% endif %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('work.members.groups') }}">
-                            <i class="nav-icon icon-user"></i> Группы
-                        </a>
-                    </li>
-                {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">
-                        <i class="nav-icon icon-note"></i> Выход
-                    </a>
-                </li>
-            </ul>
+            {{ knp_menu_render('sidebar', {'currentClass': 'active'}) }}
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
     </div>
