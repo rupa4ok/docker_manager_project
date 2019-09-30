@@ -83,7 +83,7 @@ class User
      */
     private $role;
     /**
-     * @var                                                                 Network[]|ArrayCollection
+     * @var Network[]|ArrayCollection
      * @ORM\OneToMany(targetEntity="App\Model\User\Entity\Network\Network",
      * mappedBy="user", orphanRemoval=true, cascade={"persist"})
      */

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Work\Members;
 
-use App\DataFixtures\Users\AdminFixtures;
 use App\DataFixtures\Users\UserFixtures;
 use App\Model\User\Entity\User\User;
 use App\Model\Work\Entity\Members\Group\Group;
@@ -52,7 +51,6 @@ class MemberFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
-            AdminFixtures::class,
             GroupFixtures::class,
         ];
     }

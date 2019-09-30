@@ -27,13 +27,6 @@ class UserFixtures extends Fixture
     {
         $hash = $this->hasher->hash('123456');
         
-        $network = $this->createSignedUpByNetwork(
-            new Name('Test', 'Network'),
-            'facebook',
-            '1000000'
-        );
-        $manager->persist($network);
-        
         $requested = $this->createSignUpRequestedByEmail(
             new Name('Test', 'NotConfirmed'),
             new Email('notconfirmed@app.test'),
@@ -83,17 +76,6 @@ class UserFixtures extends Fixture
             $email,
             $hash,
             'token'
-        );
-    }
-    
-    private function createSignedUpByNetwork(Name $name, string $network, string $identity): User
-    {
-        return User::signUpByNetwork(
-            Id::next(),
-            new \DateTimeImmutable(),
-            $name,
-            $network,
-            $identity
         );
     }
 }

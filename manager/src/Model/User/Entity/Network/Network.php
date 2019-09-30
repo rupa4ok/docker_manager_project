@@ -10,31 +10,31 @@ use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user_network_networks",  uniqueConstraints={
- * @ORM\UniqueConstraint(columns={"network", "identity"})
+ * @ORM\Table(name="user_user_networks", uniqueConstraints={
+ *     @ORM\UniqueConstraint(columns={"network", "identity"})
  * })
  */
 class Network
 {
     /**
-     * @var                     string
+     * @var string
      * @ORM\Column(type="guid")
      * @ORM\Id
      */
     private $id;
     /**
-     * @var                                                           User
+     * @var User
      * @ORM\ManyToOne(targetEntity="App\Model\User\Entity\User\User", inversedBy="networks")
-     * @ORM\JoinColumn(name="user_id",                                referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $user;
     /**
-     * @var                       string
+     * @var string
      * @ORM\Column(type="string", length=32, nullable=true)
      */
     private $network;
     /**
-     * @var                       string
+     * @var string
      * @ORM\Column(type="string", length=32, nullable=true)
      */
     private $identity;
