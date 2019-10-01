@@ -49,9 +49,7 @@ class UserRepository
     
     public function get(Id $id): User
     {
-        /**
- * @var User $user 
-*/
+        /*** @var User $user */
         if (!$user = $this->repo->find($id->getValue())) {
             throw new EntityNotFoundException('Пользователь не найден.');
         }
@@ -60,9 +58,7 @@ class UserRepository
     
     public function getByEmail(Email $email): User
     {
-        /**
- * @var User $user 
-*/
+        /*** @var User $user */
         if (!$user = $this->repo->findOneBy(['email' => $email->getValue()])) {
             throw new EntityNotFoundException('Пользователь с таким email не найден.');
         }

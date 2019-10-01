@@ -28,6 +28,8 @@ doctrine:
                 class: 'App\Model\Work\Entity\Members\Member\EmailType'
             work_members_member_status:
                 class: 'App\Model\Work\Entity\Members\Member\StatusType'
+            shop_product_products_id:
+                class: 'App\Model\Shop\Entity\Product\Type\IdType'
 
         url: '%env(resolve:DATABASE_URL)%'
     orm:
@@ -47,6 +49,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Model/Company/Entity'
                 prefix: 'App\Model\Company\Entity'
                 alias: Company
+            Shop:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Model/Shop/Entity'
+                prefix: 'App\Model\Shop\Entity'
+                alias: Shop
             Work:
                 is_bundle: false
                 type: annotation
