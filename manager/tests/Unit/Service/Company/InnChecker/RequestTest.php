@@ -22,10 +22,4 @@ class RequestTest extends TestCase
         $this->expectExceptionMessage('Expected a non-empty value');
         $inn = (new Checker())->check(new Inn($value = ''));
     }
-    
-    public function testIncorrect(): void
-    {
-        $this->expectExceptionMessage('Expected a non-empty value');
-        $inn = (new Checker())->check(new Inn($value = 'sdfdsfsdf'));
-    }
 }

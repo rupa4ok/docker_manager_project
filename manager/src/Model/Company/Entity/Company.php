@@ -49,7 +49,7 @@ class Company
     {
         $company = new self($id, $date, $name);
         $company->inn = $inn;
-
+        
         return $company;
     }
     

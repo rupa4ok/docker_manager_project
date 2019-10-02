@@ -6,6 +6,7 @@ namespace App\ReadModel\Shop\Product;
 
 use App\Model\Work\Entity\Members\Member\Member;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -24,7 +25,11 @@ class ProductFetcher
     
     public function insert(array $data): void
     {
-        $this->connection->insert('shop_product_products', $data);
+        try {
+            $this->connection->insert('shop_product_products', $data);
+        } catch (DBALException $e) {
+            return;
+        }
     }
     
     

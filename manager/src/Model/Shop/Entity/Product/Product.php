@@ -24,6 +24,25 @@ class Product
      * @ORM\Column(type="datetime_immutable")
      */
     private $date;
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $name;
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true, length=10)
+     */
+    private $articlePost;
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true, length=10)
+     */
+    private $article;
+    /**
+     * @var
+     */
+    private $brand;
     
     private function __construct(Id $id, \DateTimeImmutable $date)
     {
@@ -50,5 +69,29 @@ class Product
     public function getDate(): \DateTimeImmutable
     {
         return $this->date;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getArticle(): string
+    {
+        return $this->article;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getArticlePost(): string
+    {
+        return $this->articlePost;
     }
 }

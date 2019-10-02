@@ -16,11 +16,9 @@ class HomeController extends AbstractController
      * @param Checker $checker
      * @return     Response
      */
-    public function index(Checker $checker, ProductFetcher $fetcher)
+    public function index(Checker $checker)
     {
         $inn = $checker->check(new Inn(190275968));
-        
-        dump($fetcher->getProductList());
         
         return $this->render(
             'app/home.html.twig',

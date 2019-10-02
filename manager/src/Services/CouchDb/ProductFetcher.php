@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Services\CouchDb;
 
 use Doctrine\CouchDB\CouchDBClient;
-use Symfony\Component\HttpClient\HttpClient;
 
 class ProductFetcher
 {
-    public function getProductList()
+    public function getProductList($database)
     {
         $client = CouchDBClient::create(array(
-            'dbname' => 'ut_products',
+            'dbname' => $database,
             'ip' => '192.168.17.157',
             'port' => 41301,
             'user' => 'root',
@@ -20,6 +19,6 @@ class ProductFetcher
             'timeout' => 10
         ));
         
-        return $client->allDocs()->body;
+        return $client->allDocs(1000)->body;
     }
 }

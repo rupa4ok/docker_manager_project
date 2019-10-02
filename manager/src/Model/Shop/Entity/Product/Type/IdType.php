@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Shop\Entity\Product\Type;
 
-use App\Model\User\Entity\User\ValueObject\Id;
+use App\Model\Shop\Entity\Product\ValueObject\Id;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 

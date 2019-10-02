@@ -3,13 +3,41 @@ fos_elastica:
     clients:
         default: { host: elasticsearch, port: 9200 }
     indexes:
+        company:
+            client: default
+            settings:
+                index:
+                    max_result_window: 50000
+                    analysis:
+                        analyzer:
+                            my_analyzer1:
+                                type: snowball
+                                language: Russian
+            types:
+                theme1:
+                    properties:
+                        id:
+                        date:
+                        name:
+                            type: "object"
+                            properties:
+                                full: { boost: 5 }
+                                short:
+                    persistence:
+                        elastica_to_model_transformer:
+                            ignore_missing: true
+                        driver: orm
+                        model:  App\Model\Company\Entity\Company
+                        provider: ~
+                        listener: ~
+                        finder: ~
         user:
             client: default
             settings:
                 index:
                     analysis:
                         analyzer:
-                            my_analyzer:
+                            my_analyzer2:
                                 type: snowball
                                 language: English
             types:
@@ -38,6 +66,30 @@ fos_elastica:
                             ignore_missing: true
                         driver: orm
                         model:  App\Model\User\Entity\User\User
+                        provider: ~
+                        listener: ~
+                        finder: ~
+        product:
+            client: default
+            settings:
+                index:
+                    max_result_window: 50000
+                    analysis:
+                        analyzer:
+                            my_analyzer2:
+                                type: snowball
+                                language: Russian
+            types:
+                theme2:
+                    properties:
+                        id:
+                        date:
+                        name:
+                    persistence:
+                        elastica_to_model_transformer:
+                            ignore_missing: true
+                        driver: orm
+                        model:  App\Model\Shop\Entity\Product\Product
                         provider: ~
                         listener: ~
                         finder: ~

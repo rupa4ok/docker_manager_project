@@ -38,7 +38,7 @@ class User
      */
     private $date;
     /**
-     * @var                                Email|null
+     * @var Email|null
      * @ORM\Column(type="user_user_email", nullable=true)
      */
     private $email;
@@ -68,7 +68,7 @@ class User
      */
     private $newEmailToken;
     /**
-     * @var                                                                     ResetToken|null
+     * @var ResetToken|null
      * @ORM\Embedded(class="App\Model\User\Entity\User\ValueObject\ResetToken", columnPrefix="reset_token_")
      */
     private $resetToken;

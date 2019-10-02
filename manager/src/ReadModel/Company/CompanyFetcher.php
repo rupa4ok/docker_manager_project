@@ -8,6 +8,7 @@ use App\Model\Company\Entity\Company;
 use App\ReadModel\NotFoundException;
 use App\ReadModel\Company\Filter\Filter;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -63,5 +64,14 @@ class CompanyFetcher
         }
         $qb->orderBy($sort, $direction === 'desc' ? 'desc' : 'asc');
         return $this->paginator->paginate($qb, $page, $size);
+    }
+    
+    public function insert(array $data): void
+    {
+        try {
+            $this->connection->insert('user_company', $data);
+        } catch (DBALException $e) {
+            return;
+        }
     }
 }

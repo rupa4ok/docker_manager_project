@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Command\Product;
+namespace App\Command\Company;
 
 use App\Model\User\UseCase\SignUp\Confirm;
 use App\Model\User\UseCase\SignUp;
-use App\ReadModel\Shop\Product\ProductFetcher;
+use App\ReadModel\Company\CompanyFetcher;
 use App\Services\CouchDb\ProductFetcher as ProductList;
-use App\Model\Shop\UseCase\Create\ImportCommand as Product;
+use App\Model\Company\UseCase\Create\ImportCommand as Company;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,38 +23,38 @@ use Symfony\Component\Serializer\Serializer;
 
 class ImportCommand extends Command
 {
-    private $product;
+    private $companyFetcher;
     private $fetcher;
     
-    public function __construct(ProductFetcher $product, ProductList $fetcher)
+    public function __construct(CompanyFetcher $companyFetcher, ProductList $fetcher)
     {
         parent::__construct();
         $this->fetcher = $fetcher;
-        $this->product = $product;
+        $this->companyFetcher = $companyFetcher;
     }
     
     protected function configure(): void
     {
         $this
-            ->setName('product:import')
+            ->setName('company:import')
             ->setDescription('Import product list');
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');
-        $output->writeln('<info>Импорт товаров из couchdb</info>');
-    
-        $productList = $this->fetcher->getProductList('ut_products');
-    
+        $output->writeln('<info>Импорт компаний и пользователей из couchdb</info>');
+        
+        $productList = $this->fetcher->getProductList('ut_users');
+        
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
-    
+        
         $serializer = new Serializer(
             [new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter)],
             ['json' => new JsonEncoder()]
         );
-    
+        
         $progressBar = new ProgressBar($output, count($productList['rows']));
         $progressBar->setFormat('debug');
         $progressBar->start();
@@ -62,7 +62,7 @@ class ImportCommand extends Command
         foreach ($productList['rows'] as $item) {
             $progressBar->advance();
             $data = $serializer->serialize($item['doc']['data'], 'json');
-            $productList = $serializer->deserialize($data, Product::class, 'json');
+            $productList = $serializer->deserialize($data, Company::class, 'json');
             $this->create($productList);
         }
         
@@ -71,17 +71,18 @@ class ImportCommand extends Command
         $output->writeln('<info>Done!</info>');
     }
     
-    private function create(Product $product)
+    private function create(Company $company)
     {
         $date = '2019-10-01 09:13:37';
-
+        
         $products = [
-            'id' => $product->id,
+            'id' => 123,
             'date' => $date,
-            'name' => $product->name,
-            'article_post' => $product->articlePost
+            'inn' => $company->inn,
+            'name_full' => 'erert',
+            'name_short' => 'dfsdfdsfsdf'
         ];
-
-        $this->product->insert($products);
+        
+        $this->companyFetcher->insert($products);
     }
 }
