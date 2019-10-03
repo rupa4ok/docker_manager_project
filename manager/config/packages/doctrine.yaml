@@ -20,19 +20,14 @@ doctrine:
                 commented: false
             user_user_role:
                 class: 'App\Model\User\Entity\User\Type\RoleType'
-                commented: false
             work_members_group_id:
                 class: 'App\Model\Work\Entity\Members\Group\IdType'
-                commented: false
             work_members_member_id:
                 class: 'App\Model\Work\Entity\Members\Member\IdType'
-                commented: false
             work_members_member_email:
                 class: 'App\Model\Work\Entity\Members\Member\EmailType'
-                commented: false
             work_members_member_status:
                 class: 'App\Model\Work\Entity\Members\Member\StatusType'
-                commented: false
             shop_product_products_id:
                 class: 'App\Model\Shop\Entity\Product\Type\IdType'
                 commented: false

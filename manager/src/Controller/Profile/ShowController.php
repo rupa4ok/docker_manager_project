@@ -12,20 +12,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class ShowController extends AbstractController
 {
     private $users;
-
+    
     public function __construct(UserFetcher $users)
     {
         $this->users = $users;
     }
-
+    
     /**
      * @Route("/profile", name="profile")
-     * @return            Response
+     * @return Response
      */
-    public function index()
+    public function show(): Response
     {
-        $user = $this->users->findDetail($this->getUser()->getId());
-
+        $user = $this->users->get($this->getUser()->getId());
+        
         return $this->render('app/profile/show.html.twig', compact('user'));
     }
 }
