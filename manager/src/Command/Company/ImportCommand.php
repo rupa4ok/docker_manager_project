@@ -7,7 +7,7 @@ namespace App\Command\Company;
 use App\Model\User\UseCase\SignUp\Confirm;
 use App\Model\User\UseCase\SignUp;
 use App\ReadModel\Company\CompanyFetcher;
-use App\Services\CouchDb\ProductFetcher as ProductList;
+use App\Services\CouchDb\Connector as ProductList;
 use App\Model\Company\UseCase\Create\ImportCommand as Company;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Console\Helper\ProgressBar;
