@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ShowController extends AbstractController
 {
     private $users;
-    
+
     public function __construct(UserFetcher $users)
     {
         $this->users = $users;
@@ -22,10 +22,10 @@ class ShowController extends AbstractController
      * @Route("/profile", name="profile")
      * @return Response
      */
-    public function show(): Response
+    public function index()
     {
         $user = $this->users->get($this->getUser()->getId());
-        
+
         return $this->render('app/profile/show.html.twig', compact('user'));
     }
 }

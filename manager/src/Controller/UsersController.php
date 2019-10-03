@@ -36,9 +36,9 @@ class UsersController extends AbstractController
     
     /**
      * @Route("", name="")
-     * @param     Request     $request
-     * @param     UserFetcher $fetcher
-     * @return    Response
+     * @param Request $request
+     * @param UserFetcher $fetcher
+     * @return Response
      */
     public function index(Request $request, UserFetcher $fetcher): Response
     {
@@ -52,13 +52,10 @@ class UsersController extends AbstractController
             $request->query->get('sort', 'date'),
             $request->query->get('direction', 'desc')
         );
-        return $this->render(
-            'app/users/index.html.twig',
-            [
+        return $this->render('app/users/index.html.twig', [
             'pagination' => $pagination,
             'form' => $form->createView(),
-            ]
-        );
+        ]);
     }
     
     /**

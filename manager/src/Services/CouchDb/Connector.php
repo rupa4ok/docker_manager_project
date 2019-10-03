@@ -19,6 +19,6 @@ class Connector
             'timeout' => 10
         ]);
         
-        return $client->allDocs(1000)->body;
+        return $client->allDocs(1)->body;
     }
 }

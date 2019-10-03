@@ -20,7 +20,8 @@ class RoleWidget extends AbstractExtension
     public function role(Environment $twig, string $role): string
     {
         return $twig->render(
-            'widget/user/role.html.twig', [
+            'widget/user/role.html.twig',
+            [
             'role' => $role
             ]
         );
