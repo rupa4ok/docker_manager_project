@@ -24,7 +24,7 @@ class CompanyFixtures extends Fixture
             Id::next(),
             new \DateTimeImmutable(),
             new Name('Test', 'test short'),
-            '111111'
+            '190437290'
         );
         
         $manager->persist($company);

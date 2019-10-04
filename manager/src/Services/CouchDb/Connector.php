@@ -8,7 +8,7 @@ use Doctrine\CouchDB\CouchDBClient;
 
 class Connector
 {
-    public function getProductList($database)
+    public function getProductList($database): array
     {
         $client = CouchDBClient::create([
             'dbname' => $database,
@@ -19,6 +19,6 @@ class Connector
             'timeout' => 10
         ]);
         
-        return $client->allDocs(1)->body;
+        return $client->allDocs()->body;
     }
 }

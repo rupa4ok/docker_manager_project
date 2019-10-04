@@ -11,7 +11,6 @@ use App\Model\User\UseCase\SignUp\Confirm;
 use App\Model\User\UseCase\Edit;
 use App\ReadModel\User\Filter;
 use App\ReadModel\User\UserFetcher;
-use App\ReadModel\Work\Members\Member\MemberFetcher;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,9 +35,9 @@ class UsersController extends AbstractController
     
     /**
      * @Route("", name="")
-     * @param Request $request
-     * @param UserFetcher $fetcher
-     * @return Response
+     * @param     Request     $request
+     * @param     UserFetcher $fetcher
+     * @return    Response
      */
     public function index(Request $request, UserFetcher $fetcher): Response
     {
@@ -52,25 +51,25 @@ class UsersController extends AbstractController
             $request->query->get('sort', 'date'),
             $request->query->get('direction', 'desc')
         );
-        return $this->render('app/users/index.html.twig', [
-            'pagination' => $pagination,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'app/users/index.html.twig',
+            [
+                'pagination' => $pagination,
+                'form' => $form->createView(),
+            ]
+        );
     }
     
     /**
      * @Route("/{id}", name=".show")
-     * @param User $user
-     * @param MemberFetcher $members
+     * @param          User $user
      * @return         Response
      */
-    public function show(User $user, MemberFetcher $members): Response
+    public function show(User $user): Response
     {
-        $member = $members->find($user->getId()->getValue());
-        
-        return $this->render('app/users/show.html.twig', compact('user', 'member'));
+        return $this->render('app/users/show.html.twig', compact('user'));
     }
-
+    
     /**
      * @Route("create", name=".create")
      * @param           Request        $request
@@ -80,29 +79,29 @@ class UsersController extends AbstractController
     public function create(Request $request, Create\Handler $handler): Response
     {
         $command = new Create\Command();
-
+        
         $form = $this->createForm(Create\Form::class, $command);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
                 $this->addFlash('success', 'Пользователь успешно создан');
                 return $this->redirectToRoute('users');
             } catch (\DomainException $e) {
-                $this->logger->warning($e->getMessage(), ['exception' => $e]);
+                $this->logger->error($e->getMessage(), ['exception' => $e]);
                 $this->addFlash('error', $e->getMessage());
             }
         }
-
+        
         return $this->render(
             'app/users/create.html.twig',
             [
-            'form' => $form->createView()
+                'form' => $form->createView()
             ]
         );
     }
-
+    
     /**
      * @Route("/{id}/edit", name=".edit")
      * @param               User         $user
@@ -113,26 +112,26 @@ class UsersController extends AbstractController
     public function edit(User $user, Request $request, Edit\Handler $handler): Response
     {
         $command = Edit\Command::fromUser($user);
-
+        
         $form = $this->createForm(Edit\Form::class, $command);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
                 $this->addFlash('success', 'Пользователь успешно отредактирован');
                 return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
             } catch (\DomainException $e) {
-                $this->logger->warning($e->getMessage(), ['exception' => $e]);
+                $this->logger->error($e->getMessage(), ['exception' => $e]);
                 $this->addFlash('error', $e->getMessage());
             }
         }
-
+        
         return $this->render(
             'app/users/edit.html.twig',
             [
-            'user' => $user,
-            'form' => $form->createView()
+                'user' => $user,
+                'form' => $form->createView()
             ]
         );
     }
@@ -150,7 +149,7 @@ class UsersController extends AbstractController
             $this->addFlash('error', 'Невозможно изменить свою роль.');
             return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
         }
-
+        
         $command = Role\Command::fromUser($user);
         
         $form = $this->createForm(Role\Form::class, $command);
@@ -162,7 +161,7 @@ class UsersController extends AbstractController
                 $this->addFlash('success', 'Пользователь успешно отредактирован');
                 return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
             } catch (\DomainException $e) {
-                $this->logger->warning($e->getMessage(), ['exception' => $e]);
+                $this->logger->error($e->getMessage(), ['exception' => $e]);
                 $this->addFlash('error', $e->getMessage());
             }
         }
@@ -170,11 +169,12 @@ class UsersController extends AbstractController
         return $this->render(
             'app/users/role.html.twig',
             [
-            'user' => $user,
-            'form' => $form->createView()
+                'user' => $user,
+                'form' => $form->createView()
             ]
         );
     }
+    
     
     /**
      * @Route("/{id}/confirm", name=".confirm", methods={"POST"})
@@ -192,7 +192,7 @@ class UsersController extends AbstractController
         try {
             $handler->handle($command);
         } catch (\DomainException $e) {
-            $this->logger->warning($e->getMessage(), ['exception' => $e]);
+            $this->logger->error($e->getMessage(), ['exception' => $e]);
             $this->addFlash('error', $e->getMessage());
         }
         return $this->redirectToRoute('users.show', ['id' => $user->getId()]);

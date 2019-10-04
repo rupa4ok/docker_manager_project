@@ -6,7 +6,6 @@ namespace App\Command\Company;
 
 use App\Model\User\UseCase\SignUp\Confirm;
 use App\Model\User\UseCase\SignUp;
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use App\ReadModel\Company\CompanyFetcher;
 use App\Services\CouchDb\Connector as ProductList;
 use App\Model\Company\UseCase\Create\ImportCommand as Company;
@@ -19,7 +18,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
-use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -51,15 +49,11 @@ class ImportCommand extends Command
         
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
-    
-        $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor());
         
-//        $serializer = new Serializer(
-//            [new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter)],
-//            ['json' => new JsonEncoder()]
-//        );
-    
-        $serializer = new Serializer([new DateTimeNormalizer(), $normalizer]);
+        $serializer = new Serializer(
+            [new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter)],
+            ['json' => new JsonEncoder()]
+        );
         
         $progressBar = new ProgressBar($output, count($productList['rows']));
         $progressBar->setFormat('debug');
@@ -69,6 +63,9 @@ class ImportCommand extends Command
             $progressBar->advance();
             $data = $serializer->serialize($item['doc']['data'], 'json');
             $productList = $serializer->deserialize($data, Company::class, 'json');
+            
+            print_r($productList);
+            
             $this->create($productList);
         }
         
@@ -84,7 +81,7 @@ class ImportCommand extends Command
         $products = [
             'id' => 123,
             'date' => $date,
-            'inn' => 'test',
+            'inn' => $company->inn,
             'name_full' => 'erert',
             'name_short' => 'dfsdfdsfsdf'
         ];

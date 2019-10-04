@@ -5,31 +5,31 @@
 {% block breadcrumbs %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('company') }}">Company</a></li>
-        <li class="breadcrumb-item active">{{ company.name.full }}</li>
+        <li class="breadcrumb-item"><a href="{{ path('users') }}">Users</a></li>
+        <li class="breadcrumb-item active">234</li>
     </ol>
 {% endblock %}
 
 {% block body %}
 
     <div class="controls">
-        <a href="" class="btn btn-primary">Edit</a>
-        <a href="" class="btn btn-primary">Change Role</a>
+
     </div>
 
+    {% if company %}
     <div class="box">
         <table class="table table-bordered">
             <tbody>
             <tr>
-                <th>Наименование организации</th>
+                <th>Name</th>
                 <td></td>
             </tr>
             <tr>
-                <th>Сокращенное наименование организации</th>
+                <th>Email</th>
                 <td></td>
             </tr>
             <tr>
-                <th>Дата регистрации</th>
+                <th>Created</th>
                 <td></td>
             </tr>
             <tr>
@@ -43,5 +43,18 @@
             </tbody>
         </table>
     </div>
+    {% else %}
+        <div class="card">
+            <div class="card-body">
+
+                <h4>Введите УНП</h4>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary">Добавить компанию</button>
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}

@@ -2,31 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Company;
 
-use App\Model\Company\Entity\Company;
 use App\Model\User\Entity\User\User;
 use App\Model\User\UseCase\Create;
 use App\Model\User\UseCase\Role;
 use App\Model\User\UseCase\SignUp\Confirm;
 use App\Model\User\UseCase\Edit;
-use App\ReadModel\Company\CompanyFetcher;
-use App\ReadModel\Company\Filter;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/company", name="company")
- * @IsGranted("ROLE_MANAGE_USERS")
+ * @Route("/user_company/", name="user_company")
  */
 class CompanyController extends AbstractController
 {
-    private const PER_PAGE = 10;
-    
     private $logger;
     
     public function __construct(LoggerInterface $logger)
@@ -36,42 +29,37 @@ class CompanyController extends AbstractController
     
     /**
      * @Route("", name="")
-     * @param     Request        $request
-     * @param     CompanyFetcher $fetcher
-     * @return    Response
+     * @param Request $request
+     * @param Create\Handler $handler
+     * @return Response
      */
-    public function index(Request $request, CompanyFetcher $fetcher): Response
+    public function show(Request $request, Create\Handler $handler): Response
     {
-        $filter = new Filter\Filter();
-        $form = $this->createForm(Filter\Form::class, $filter);
+        $command = new Create\Command();
+    
+        $form = $this->createForm(Create\Form::class, $command);
         $form->handleRequest($request);
-        $pagination = $fetcher->all(
-            $filter,
-            $request->query->getInt('page', 1),
-            self::PER_PAGE,
-            $request->query->get('sort', 'date'),
-            $request->query->get('direction', 'desc'),
-        );
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $handler->handle($command);
+                $this->addFlash('success', 'Компания успешно создана');
+                return $this->redirectToRoute('users');
+            } catch (\DomainException $e) {
+                $this->logger->warning($e->getMessage(), ['exception' => $e]);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
         
-        dump($pagination);
-
+        $company = '00a7e66c-cbef-4efa-b6cd-85253d2357e0';
+        
         return $this->render(
-            'app/company/index.html.twig',
+            'app/users/company/show.html.twig',
             [
-            'pagination' => $pagination,
-            'form' => $form->createView(),
+                'company' => $company,
+                'form' => $form->createView()
             ]
         );
-    }
-    
-    /**
-     * @Route("/{id}", name=".show")
-     * @param          Company $company
-     * @return         Response
-     */
-    public function show(Company $company): Response
-    {
-        return $this->render('app/company/show.html.twig', compact('company'));
     }
 
     /**
@@ -83,10 +71,10 @@ class CompanyController extends AbstractController
     public function create(Request $request, Create\Handler $handler): Response
     {
         $command = new Create\Command();
-
+    
         $form = $this->createForm(Create\Form::class, $command);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
@@ -97,10 +85,12 @@ class CompanyController extends AbstractController
                 $this->addFlash('error', $e->getMessage());
             }
         }
-
+    
         return $this->render(
             'app/users/create.html.twig',
-            ['form' => $form->createView()]
+            [
+                'form' => $form->createView()
+            ]
         );
     }
 

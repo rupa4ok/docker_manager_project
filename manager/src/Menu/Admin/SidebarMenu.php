@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Menu;
+namespace App\Menu\Admin;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
@@ -24,7 +24,7 @@ class SidebarMenu
         $menu = $this->factory->createItem('root')
             ->setChildrenAttributes(['class' => 'nav']);
         
-        $menu->addChild('Dashboard', ['route' => 'home'])
+        $menu->addChild('Главная', ['route' => 'home'])
             ->setExtra('icon', 'nav-icon icon-speedometer')
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', 'nav-link');

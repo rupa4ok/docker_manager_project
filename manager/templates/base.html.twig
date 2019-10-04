@@ -38,7 +38,12 @@
 <div class="app-body">
     <div class="sidebar">
         <nav class="sidebar-nav">
-            {{ knp_menu_render('sidebar', {'currentClass': 'active'}) }}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                {{ knp_menu_render('sidebar.admin', {'currentClass': 'active'}) }}
+            {% else %}
+                {{ knp_menu_render('sidebar.user', {'currentClass': 'active'}) }}
+            {% endif %}
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
     </div>

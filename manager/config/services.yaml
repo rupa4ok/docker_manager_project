@@ -60,10 +60,12 @@ services:
         resource: '../src/Widget'
         tags: ['twig.extension']
 
-    App\Menu\SidebarMenu:
-        tags: [{ name: knp_menu.menu_builder, method: build, alias: sidebar }]
-
     Symfony\Component\HttpFoundation\Session\Session:
         alias: Symfony\Component\HttpFoundation\Session\SessionInterface
 
-    App\Services\CouchDb\Connector:
+    # Sitemenu
+    App\Menu\User\SidebarMenu:
+        tags: [{ name: knp_menu.menu_builder, method: build, alias: sidebar.user }]
+
+    App\Menu\Admin\SidebarMenu:
+        tags: [{ name: knp_menu.menu_builder, method: build, alias: sidebar.admin }]
