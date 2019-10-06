@@ -45,7 +45,7 @@ class SidebarMenu
         $menu->addChild('Control')->setAttribute('class', 'nav-title');
         
         if ($this->auth->isGranted('ROLE_MANAGE_USERS')) {
-            $menu->addChild('Users', ['route' => 'users'])
+            $menu->addChild('Пользователи', ['route' => 'users'])
                 ->setExtra('icon', 'nav-icon icon-people')
                 ->setExtra('routes', [
                     ['route' => 'users'],
@@ -54,8 +54,19 @@ class SidebarMenu
                 ->setAttribute('class', 'nav-item')
                 ->setLinkAttribute('class', 'nav-link');
         }
+    
+        if ($this->auth->isGranted('ROLE_WORK_MANAGE_MEMBERS')) {
+            $menu->addChild('Компании', ['route' => 'company'])
+                ->setExtra('routes', [
+                    ['route' => 'company'],
+                    ['pattern' => '/^company\..+/']
+                ])
+                ->setExtra('icon', 'nav-icon icon-people')
+                ->setAttribute('class', 'nav-item')
+                ->setLinkAttribute('class', 'nav-link');
+        }
         
-        $menu->addChild('Profile', ['route' => 'profile'])
+        $menu->addChild('Профиль', ['route' => 'profile'])
             ->setExtra('icon', 'nav-icon icon-user')
             ->setExtra('routes', [
                 ['route' => 'profile'],

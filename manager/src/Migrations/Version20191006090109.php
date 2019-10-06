@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191002134746 extends AbstractMigration
+final class Version20191006090109 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,18 +22,19 @@ final class Version20191002134746 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
+        $this->addSql('ALTER TABLE user_users ADD company_id VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE user_users ALTER id TYPE VARCHAR(255)');
         $this->addSql('ALTER TABLE user_users ALTER id DROP DEFAULT');
         $this->addSql('ALTER TABLE user_users ALTER email TYPE VARCHAR(255)');
         $this->addSql('ALTER TABLE user_users ALTER email DROP DEFAULT');
         $this->addSql('ALTER TABLE user_users ALTER new_email TYPE VARCHAR(255)');
         $this->addSql('ALTER TABLE user_users ALTER new_email DROP DEFAULT');
+        $this->addSql('ALTER TABLE user_users ADD CONSTRAINT FK_F6415EB1979B1AD6 FOREIGN KEY (company_id) REFERENCES user_company (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('CREATE INDEX IDX_F6415EB1979B1AD6 ON user_users (company_id)');
         $this->addSql('ALTER TABLE user_user_networks ALTER user_id TYPE VARCHAR(255)');
         $this->addSql('ALTER TABLE user_user_networks ALTER user_id DROP DEFAULT');
         $this->addSql('ALTER TABLE user_company ALTER id TYPE VARCHAR(255)');
         $this->addSql('ALTER TABLE user_company ALTER id DROP DEFAULT');
-        $this->addSql('ALTER TABLE shop_product_products ADD article_post VARCHAR(10) DEFAULT NULL');
-        $this->addSql('ALTER TABLE shop_product_products ADD article VARCHAR(10) DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -44,6 +45,9 @@ final class Version20191002134746 extends AbstractMigration
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE user_company ALTER id TYPE VARCHAR(255)');
         $this->addSql('ALTER TABLE user_company ALTER id DROP DEFAULT');
+        $this->addSql('ALTER TABLE user_users DROP CONSTRAINT FK_F6415EB1979B1AD6');
+        $this->addSql('DROP INDEX IDX_F6415EB1979B1AD6');
+        $this->addSql('ALTER TABLE user_users DROP company_id');
         $this->addSql('ALTER TABLE user_users ALTER id TYPE VARCHAR(255)');
         $this->addSql('ALTER TABLE user_users ALTER id DROP DEFAULT');
         $this->addSql('ALTER TABLE user_users ALTER email TYPE VARCHAR(255)');
@@ -52,7 +56,5 @@ final class Version20191002134746 extends AbstractMigration
         $this->addSql('ALTER TABLE user_users ALTER new_email DROP DEFAULT');
         $this->addSql('ALTER TABLE user_user_networks ALTER user_id TYPE VARCHAR(255)');
         $this->addSql('ALTER TABLE user_user_networks ALTER user_id DROP DEFAULT');
-        $this->addSql('ALTER TABLE shop_product_products DROP article_post');
-        $this->addSql('ALTER TABLE shop_product_products DROP article');
     }
 }

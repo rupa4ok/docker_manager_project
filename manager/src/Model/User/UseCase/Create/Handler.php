@@ -18,17 +18,14 @@ class Handler
     private $users;
     private $hasher;
     private $flusher;
-    private $generator;
 
     public function __construct(
         UserRepository $users,
         PasswordHasher $hasher,
-        PasswordGenerator $generator,
         Flusher $flusher
     ) {
         $this->users = $users;
         $this->hasher = $hasher;
-        $this->generator = $generator;
         $this->flusher = $flusher;
     }
 
@@ -45,7 +42,7 @@ class Handler
             new \DateTimeImmutable(),
             new Name($command->firstName, $command->lastName),
             $email,
-            $this->generator->generate(),
+            $this->hasher->hash($command->password)
         );
 
         $this->users->add($user);

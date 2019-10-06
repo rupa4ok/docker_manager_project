@@ -20,11 +20,11 @@ class CompanyFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $company = Company::signUp(
+        $company = Company::create(
             Id::next(),
             new \DateTimeImmutable(),
             new Name('Test', 'test short'),
-            '190437290'
+            '100325912'
         );
         
         $manager->persist($company);

@@ -3,8 +3,11 @@
 namespace App\DataFixtures\Users;
 
 use App\Model\User\Entity\User\User;
+use App\Model\Company\Entity\Company;
 use App\Model\User\Entity\User\ValueObject\Email;
 use App\Model\User\Entity\User\ValueObject\Id;
+use App\Model\Company\Entity\Id as CompanyId;
+use App\Model\Company\Entity\Name as CompanyName;
 use App\Model\User\Entity\User\ValueObject\Name;
 use App\Model\User\Entity\User\ValueObject\Role;
 use App\Model\User\Service\PasswordHasher;
@@ -39,6 +42,12 @@ class UserFixtures extends Fixture
             new Email('user@mail.ru'),
             $hash
         );
+        $confirmed->addCompany(Company::create(
+            CompanyId::next(),
+            new \DateTimeImmutable(),
+            new CompanyName('Test Full Name 2', 'Test Short Name 2'),
+            '200246676'
+        ));
         $manager->persist($confirmed);
         $this->setReference(self::REFERENCE_USER, $confirmed);
         
@@ -47,6 +56,12 @@ class UserFixtures extends Fixture
             new Email('test@mail.ru'),
             $hash
         );
+        $admin->addCompany(Company::create(
+            CompanyId::next(),
+            new \DateTimeImmutable(),
+            new CompanyName('Test Full Name', 'Test Short Name'),
+            '190437290'
+        ));
         $manager->persist($admin);
         $this->setReference(self::REFERENCE_ADMIN, $admin);
         

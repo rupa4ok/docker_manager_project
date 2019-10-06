@@ -45,7 +45,7 @@ class Company
         $this->name = $name;
     }
     
-    public static function signUp(Id $id, \DateTimeImmutable $date, Name $name, string $inn): self
+    public static function create(Id $id, \DateTimeImmutable $date, Name $name, string $inn): self
     {
         $company = new self($id, $date, $name);
         $company->inn = $inn;

@@ -4,15 +4,15 @@
 
 {% block breadcrumbs %}
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Users</li>
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Главная</a></li>
+        <li class="breadcrumb-item active">Пользователи</li>
     </ol>
 {% endblock %}
 
 {% block body %}
 
     <div class="controls">
-        <a href="{{ path('users.create') }}" class="btn btn-success">Create User</a>
+        <a href="{{ path('users.create') }}" class="btn btn-success">Создать пользователя</a>
     </div>
 
     <div class="card">
@@ -25,8 +25,8 @@
                 <div class="col-md-2">{{ form_widget(form.role) }}</div>
                 <div class="col-md-2">{{ form_widget(form.status) }}</div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                    <a href="{{ path('users') }}" class="btn btn-outline-secondary">Reset</a>
+                    <button type="submit" class="btn btn-primary">Подобрать</button>
+                    <a href="{{ path('users') }}" class="btn btn-outline-secondary">Сбросить</a>
                 </div>
             </div>
             {{ form_end(form) }}
@@ -38,11 +38,12 @@
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'Date', 'date') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Name', 'name') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Дата регистрации', 'date') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'ФИО', 'name') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'Email', 'email') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Role', 'role') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Status', 'status') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Роль', 'role') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Статус', 'status') }}</th>
+                <th>Компания</th>
             </tr>
             </thead>
             <tbody>
@@ -53,6 +54,13 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user_role(user.role) }}</td>
                     <td>{{ user_status(user.status) }}</td>
+                    <td>
+                        {% if user.company_id %}
+                            <a href="{{ path('company.show', {'id': user.company_id}) }}">{{ user.company_name }}</a>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

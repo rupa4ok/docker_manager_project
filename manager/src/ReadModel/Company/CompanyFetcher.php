@@ -47,7 +47,7 @@ class CompanyFetcher
             ->select(
                 'id',
                 'date',
-                'name_full AS name',
+                'name_full AS nameFull',
                 'inn',
             )
             ->from('user_company');

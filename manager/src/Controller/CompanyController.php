@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Annotation\Guid;
 use App\Model\Company\Entity\Company;
 use App\Model\User\Entity\User\User;
 use App\Model\User\UseCase\Create;
@@ -54,12 +55,12 @@ class CompanyController extends AbstractController
         );
         
         dump($pagination);
-
+        
         return $this->render(
             'app/company/index.html.twig',
             [
-            'pagination' => $pagination,
-            'form' => $form->createView(),
+                'pagination' => $pagination,
+                'form' => $form->createView(),
             ]
         );
     }
@@ -73,7 +74,7 @@ class CompanyController extends AbstractController
     {
         return $this->render('app/company/show.html.twig', compact('company'));
     }
-
+    
     /**
      * @Route("create", name=".create")
      * @param           Request        $request
@@ -83,10 +84,10 @@ class CompanyController extends AbstractController
     public function create(Request $request, Create\Handler $handler): Response
     {
         $command = new Create\Command();
-
+        
         $form = $this->createForm(Create\Form::class, $command);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
@@ -97,13 +98,13 @@ class CompanyController extends AbstractController
                 $this->addFlash('error', $e->getMessage());
             }
         }
-
+        
         return $this->render(
             'app/users/create.html.twig',
             ['form' => $form->createView()]
         );
     }
-
+    
     /**
      * @Route("/{id}/edit", name=".edit")
      * @param               User         $user
@@ -114,10 +115,10 @@ class CompanyController extends AbstractController
     public function edit(User $user, Request $request, Edit\Handler $handler): Response
     {
         $command = Edit\Command::fromUser($user);
-
+        
         $form = $this->createForm(Edit\Form::class, $command);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
@@ -128,12 +129,12 @@ class CompanyController extends AbstractController
                 $this->addFlash('error', $e->getMessage());
             }
         }
-
+        
         return $this->render(
             'app/users/edit.html.twig',
             [
-            'user' => $user,
-            'form' => $form->createView()
+                'user' => $user,
+                'form' => $form->createView()
             ]
         );
     }
@@ -151,7 +152,7 @@ class CompanyController extends AbstractController
             $this->addFlash('error', 'Невозможно изменить свою роль.');
             return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
         }
-
+        
         $command = Role\Command::fromUser($user);
         
         $form = $this->createForm(Role\Form::class, $command);
@@ -171,13 +172,13 @@ class CompanyController extends AbstractController
         return $this->render(
             'app/users/role.html.twig',
             [
-            'user' => $user,
-            'form' => $form->createView()
+                'user' => $user,
+                'form' => $form->createView()
             ]
         );
     }
-
-
+    
+    
     /**
      * @Route("/{id}/confirm", name=".confirm", methods={"POST"})
      * @param                  User                   $user

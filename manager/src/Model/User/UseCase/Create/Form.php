@@ -14,7 +14,8 @@ class Form extends AbstractType
         $builder
             ->add('firstName', Type\TextType::class, ['required' => false])
             ->add('lastName', Type\TextType::class, ['required' => false])
-            ->add('email', Type\EmailType::class);
+            ->add('email', Type\EmailType::class)
+            ->add('password', Type\PasswordType::class, ['required' => false]);
     }
     
     public function configureOptions(OptionsResolver $resolver): void

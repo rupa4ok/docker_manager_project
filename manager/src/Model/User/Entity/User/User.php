@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\User\Entity\User;
 
+use App\Model\Company\Entity\Company;
 use App\Model\User\Entity\Network\Network;
 use App\Model\User\Entity\User\ValueObject\Email;
 use App\Model\User\Entity\User\ValueObject\Id;
@@ -88,6 +89,12 @@ class User
      * mappedBy="user", orphanRemoval=true, cascade={"persist"})
      */
     private $networks;
+    /**
+     * @var ArrayCollection|Company[]
+     * @ORM\ManyToOne(targetEntity="App\Model\Company\Entity\Company", cascade={"persist"}))
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=true)
+     */
+    private $company;
     
     private function __construct(Id $id, \DateTimeImmutable $date, Name $name)
     {
@@ -144,6 +151,11 @@ class User
         $user->attachNetwork($network, $identity);
         $user->status = self::STATUS_ACTIVE;
         return $user;
+    }
+    
+    public function addCompany(Company $company): void
+    {
+        $this->company = $company;
     }
     
     public function attachNetwork(string $network, string $identity): void
@@ -324,6 +336,14 @@ class User
     public function getStatus(): string
     {
         return $this->status;
+    }
+    
+    /**
+     * @return Company[]|ArrayCollection
+     */
+    public function getCompany()
+    {
+        return $this->company;
     }
     
     /**

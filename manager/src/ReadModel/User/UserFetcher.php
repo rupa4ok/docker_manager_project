@@ -144,32 +144,36 @@ class UserFetcher
     {
         $qb = $this->connection->createQueryBuilder()
             ->select(
-                'id',
-                'date',
-                'TRIM(CONCAT(name_first, \' \', name_last)) AS name',
-                'email',
-                'role',
-                'status'
+                'us.id',
+                'us.date',
+                'TRIM(CONCAT(us.name_first, \' \', us.name_last)) AS name',
+                'us.email',
+                'us.role',
+                'us.status',
+                'us.company_id',
+                'co.name_full as company_name'
             )
-            ->from('user_users');
+            ->from('user_users', 'us')
+            ->leftJoin('us', 'user_company', 'co', 'co.id = us.company_id');
+        ;
         
         if ($filter->name) {
-            $qb->andWhere($qb->expr()->like('LOWER(CONCAT(name_first, \' \', name_last))', ':name'));
+            $qb->andWhere($qb->expr()->like('LOWER(CONCAT(us.name_first, \' \', us.name_last))', ':name'));
             $qb->setParameter(':name', '%' . mb_strtolower($filter->name) . '%');
         }
         
         if ($filter->email) {
-            $qb->andWhere($qb->expr()->like('LOWER(email)', ':email'));
+            $qb->andWhere($qb->expr()->like('LOWER(us.email)', ':email'));
             $qb->setParameter(':email', '%' . mb_strtolower($filter->email) . '%');
         }
         
         if ($filter->status) {
-            $qb->andWhere('status = :status');
+            $qb->andWhere('us.status = :status');
             $qb->setParameter(':status', $filter->status);
         }
         
         if ($filter->role) {
-            $qb->andWhere('role = :role');
+            $qb->andWhere('us.role = :role');
             $qb->setParameter(':role', $filter->role);
         }
         
