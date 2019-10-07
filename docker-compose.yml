@@ -63,6 +63,7 @@ services:
       - internal1
   manager-redis:
     image: redis:5.0-alpine
+    restart: always
     volumes:
       - manager-redis:/data
     command:
@@ -71,6 +72,8 @@ services:
       - '--save 900 1'
       - '--save 300 10'
       - '--save 60 10000'
+      - 'dbfilename dump.rdb'
+      - 'rdbcompression yes'
       - '--requirepass secret'
     networks:
       - internal1
