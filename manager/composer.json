@@ -7,6 +7,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "^1.6",
+        "ext-redis": "*",
         "cebe/markdown": "^1.2",
         "centrifugal/phpcent": "^3.0",
         "doctrine/couchdb": "^1.0@beta",

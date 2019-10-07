@@ -31,18 +31,24 @@ class Product
     private $name;
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=true, length=10)
+     * @ORM\Column(type="string", nullable=true, length=30)
      */
     private $articlePost;
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=true, length=10)
+     * @ORM\Column(type="string", nullable=true, length=30)
      */
     private $article;
     /**
-     * @var
+     * @var string
+     * @ORM\Column(type="string", nullable=true, length=20)
      */
     private $brand;
+    
+    /**
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $measures;
     
     private function __construct(Id $id, \DateTimeImmutable $date)
     {

@@ -63,6 +63,12 @@ class ImportCommand extends Command
             $progressBar->advance();
             $data = $serializer->serialize($item['doc']['data'], 'json');
             $productList = $serializer->deserialize($data, Product::class, 'json');
+            $productList->measures = $serializer->serialize(
+                $item['doc']['data']['measures'],
+                'json',
+                ['json_encode_options' => JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT]
+            );
+            var_dump($productList);
             $this->create($productList);
         }
         
@@ -79,9 +85,11 @@ class ImportCommand extends Command
             'id' => $product->id,
             'date' => $date,
             'name' => $product->name,
-            'article_post' => $product->articlePost
+            'article_post' => $product->articlePost,
+            'measures' => $product->measures,
+            'brand' => $product->brand
         ];
-
+        
         $this->product->insert($products);
     }
 }

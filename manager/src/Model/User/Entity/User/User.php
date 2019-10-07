@@ -21,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\UniqueConstraint(columns={"email"}),
  *     @ORM\UniqueConstraint(columns={"reset_token_token"})
  * })
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class User
 {
@@ -31,6 +32,7 @@ class User
     /**
      * @ORM\Column(type="user_user_id")
      * @ORM\Id
+     * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
      */
     private $id;
     /**

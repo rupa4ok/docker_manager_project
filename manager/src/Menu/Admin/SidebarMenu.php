@@ -42,7 +42,7 @@ class SidebarMenu
                 ->setLinkAttribute('class', 'nav-link');
         }
         
-        $menu->addChild('Control')->setAttribute('class', 'nav-title');
+        $menu->addChild('Управление')->setAttribute('class', 'nav-title');
         
         if ($this->auth->isGranted('ROLE_MANAGE_USERS')) {
             $menu->addChild('Пользователи', ['route' => 'users'])
@@ -50,6 +50,17 @@ class SidebarMenu
                 ->setExtra('routes', [
                     ['route' => 'users'],
                     ['pattern' => '/^users\..+/']
+                ])
+                ->setAttribute('class', 'nav-item')
+                ->setLinkAttribute('class', 'nav-link');
+        }
+    
+        if ($this->auth->isGranted('ROLE_MANAGE_USERS')) {
+            $menu->addChild('Товары', ['route' => 'products'])
+                ->setExtra('icon', 'nav-icon icon-people')
+                ->setExtra('routes', [
+                    ['route' => 'products'],
+                    ['pattern' => '/^products\..+/']
                 ])
                 ->setAttribute('class', 'nav-item')
                 ->setLinkAttribute('class', 'nav-link');

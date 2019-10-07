@@ -10,6 +10,7 @@ use App\ReadModel\User\Filter\Filter;
 use App\ReadModel\User\View\AuthView;
 use App\ReadModel\User\View\ShortView;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -155,7 +156,6 @@ class UserFetcher
             )
             ->from('user_users', 'us')
             ->leftJoin('us', 'user_company', 'co', 'co.id = us.company_id');
-        ;
         
         if ($filter->name) {
             $qb->andWhere($qb->expr()->like('LOWER(CONCAT(us.name_first, \' \', us.name_last))', ':name'));
@@ -184,5 +184,14 @@ class UserFetcher
         $qb->orderBy($sort, $direction === 'desc' ? 'desc' : 'asc');
         
         return $this->paginator->paginate($qb, $page, $size);
+    }
+    
+    public function insert(array $data): void
+    {
+        try {
+            $this->connection->insert('user_users', $data);
+        } catch (DBALException $e) {
+            return;
+        }
     }
 }

@@ -19,4 +19,6 @@ class ImportCommand
      * @SerializedName("articul_post")
      */
     public $articlePost;
+    public $measures;
+    public $brand;
 }

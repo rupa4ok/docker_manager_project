@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Annotation\Guid;
-use App\Model\Company\Entity\Company;
 use App\Model\User\Entity\User\User;
 use App\Model\User\UseCase\Create;
+use App\Model\User\UseCase\Edit;
 use App\Model\User\UseCase\Role;
 use App\Model\User\UseCase\SignUp\Confirm;
-use App\Model\User\UseCase\Edit;
 use App\ReadModel\Company\CompanyFetcher;
 use App\ReadModel\Company\Filter;
-use Psr\Log\LoggerInterface;
+use App\ReadModel\Work\Members\Member\MemberFetcher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,11 +26,11 @@ class CompanyController extends AbstractController
 {
     private const PER_PAGE = 10;
     
-    private $logger;
+    private $errors;
     
-    public function __construct(LoggerInterface $logger)
+    public function __construct(ErrorHandler $errors)
     {
-        $this->logger = $logger;
+        $this->errors = $errors;
     }
     
     /**
@@ -52,7 +50,7 @@ class CompanyController extends AbstractController
             self::PER_PAGE,
             $request->query->get('sort', 'date'),
             $request->query->get('direction', 'desc'),
-        );
+            );
         
         dump($pagination);
         
@@ -66,20 +64,10 @@ class CompanyController extends AbstractController
     }
     
     /**
-     * @Route("/{id}", name=".show")
-     * @param          Company $company
-     * @return         Response
-     */
-    public function show(Company $company): Response
-    {
-        return $this->render('app/company/show.html.twig', compact('company'));
-    }
-    
-    /**
-     * @Route("create", name=".create")
-     * @param           Request        $request
-     * @param           Create\Handler $handler
-     * @return          Response
+     * @Route("/create", name=".create")
+     * @param Request $request
+     * @param Create\Handler $handler
+     * @return Response
      */
     public function create(Request $request, Create\Handler $handler): Response
     {
@@ -91,29 +79,32 @@ class CompanyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
-                $this->addFlash('success', 'Пользователь успешно создан');
                 return $this->redirectToRoute('users');
             } catch (\DomainException $e) {
-                $this->logger->warning($e->getMessage(), ['exception' => $e]);
+                $this->errors->handle($e);
                 $this->addFlash('error', $e->getMessage());
             }
         }
         
-        return $this->render(
-            'app/users/create.html.twig',
-            ['form' => $form->createView()]
-        );
+        return $this->render('app/users/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
     
     /**
      * @Route("/{id}/edit", name=".edit")
-     * @param               User         $user
-     * @param               Request      $request
-     * @param               Edit\Handler $handler
-     * @return              Response
+     * @param User $user
+     * @param Request $request
+     * @param Edit\Handler $handler
+     * @return Response
      */
     public function edit(User $user, Request $request, Edit\Handler $handler): Response
     {
+        if ($user->getId()->getValue() === $this->getUser()->getId()) {
+            $this->addFlash('error', 'Unable to edit yourself.');
+            return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
+        }
+        
         $command = Edit\Command::fromUser($user);
         
         $form = $this->createForm(Edit\Form::class, $command);
@@ -122,34 +113,30 @@ class CompanyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
-                $this->addFlash('success', 'Пользователь успешно отредактирован');
                 return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
             } catch (\DomainException $e) {
-                $this->logger->warning($e->getMessage(), ['exception' => $e]);
+                $this->errors->handle($e);
                 $this->addFlash('error', $e->getMessage());
             }
         }
         
-        return $this->render(
-            'app/users/edit.html.twig',
-            [
-                'user' => $user,
-                'form' => $form->createView()
-            ]
-        );
+        return $this->render('app/users/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
     
     /**
      * @Route("/{id}/role", name=".role")
-     * @param               User         $user
-     * @param               Request      $request
-     * @param               Role\Handler $handler
-     * @return              Response
+     * @param User $user
+     * @param Request $request
+     * @param Role\Handler $handler
+     * @return Response
      */
     public function role(User $user, Request $request, Role\Handler $handler): Response
     {
         if ($user->getId()->getValue() === $this->getUser()->getId()) {
-            $this->addFlash('error', 'Невозможно изменить свою роль.');
+            $this->addFlash('error', 'Unable to change role for yourself.');
             return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
         }
         
@@ -161,43 +148,69 @@ class CompanyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
-                $this->addFlash('success', 'Пользователь успешно отредактирован');
                 return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
             } catch (\DomainException $e) {
-                $this->logger->warning($e->getMessage(), ['exception' => $e]);
+                $this->errors->handle($e);
                 $this->addFlash('error', $e->getMessage());
             }
         }
         
-        return $this->render(
-            'app/users/role.html.twig',
-            [
-                'user' => $user,
-                'form' => $form->createView()
-            ]
-        );
+        return $this->render('app/users/role.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
-    
     
     /**
      * @Route("/{id}/confirm", name=".confirm", methods={"POST"})
-     * @param                  User                   $user
-     * @param                  Request                $request
-     * @param                  Confirm\Manual\Handler $handler
-     * @return                 Response
+     * @param User $user
+     * @param Request $request
+     * @param Confirm\Manual\Handler $handler
+     * @return Response
      */
     public function confirm(User $user, Request $request, Confirm\Manual\Handler $handler): Response
     {
         if (!$this->isCsrfTokenValid('confirm', $request->request->get('token'))) {
             return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
         }
+        
         $command = new Confirm\Manual\Command($user->getId()->getValue());
+        
         try {
             $handler->handle($command);
         } catch (\DomainException $e) {
-            $this->logger->warning($e->getMessage(), ['exception' => $e]);
+            $this->errors->handle($e);
             $this->addFlash('error', $e->getMessage());
         }
+        
         return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
+    }
+    
+    /**
+     * @Route("/{id}", name=".show")
+     * @param User $user
+     * @param MemberFetcher $members
+     * @return Response
+     */
+    public function show(User $user, MemberFetcher $members): Response
+    {
+        $member = $members->find($user->getId()->getValue());
+        
+        return $this->render('app/users/show.html.twig', compact('user', 'member'));
+    }
+    
+    /**
+     * @Route("/{id}/company", name=".company")
+     * @param User $user
+     * @param MemberFetcher $members
+     * @return Response
+     */
+    public function addCompany(User $user, MemberFetcher $members): Response
+    {
+        $member = $members->find($user->getId()->getValue());
+        
+        $form = '';
+        
+        return $this->render('app/users/company.html.twig', compact('user', 'member'));
     }
 }

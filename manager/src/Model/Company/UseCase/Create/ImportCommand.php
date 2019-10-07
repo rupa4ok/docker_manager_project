@@ -14,4 +14,17 @@ class ImportCommand
      */
     public $id;
     public $inn;
+    /**
+     * @SerializedName("full_name")
+     */
+    public $name;
+    /**
+     * @SerializedName("name")
+     */
+    public $short;
+    /**
+     * @SerializedName("legal_status")
+     */
+    public $status;
+    public $users;
 }

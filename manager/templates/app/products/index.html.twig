@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Users{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Главная</a></li>
+        <li class="breadcrumb-item active">Пользователи</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    <div class="box">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'Guid', 'id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Название', 'name') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Бренд', 'brand') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Артикул', 'article') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Арт. поставщика', 'post') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Ед. изм.', 'measures') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in pagination %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.brand }}</td>
+                    <td>{{ product.article }}</td>
+                    <td>{{ product.post }}</td>
+                    <td>
+                        {% for parameter in product.measures|json_decode() %}
+                            <div>
+                                {{ parameter.name }} : {{ parameter.capacity }} шт
+                            </div>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+{% endblock %}

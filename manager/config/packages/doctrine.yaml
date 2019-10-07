@@ -34,6 +34,12 @@ doctrine:
 
         url: '%env(resolve:DATABASE_URL)%'
     orm:
+        second_level_cache:
+            region_cache_driver:
+                type: service
+                id: redis_cache_service
+            enabled: true
+            region_lifetime: 86400
         metadata_cache_driver:
             type: service
             id: redis_cache_service

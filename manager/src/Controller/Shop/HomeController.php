@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Shop;
 
-use App\Model\Company\Service\InnChecker\Checker;
-use App\Model\Company\Service\InnChecker\Inn;
+use App\ReadModel\Shop\Product\Filter\Filter;
+use App\ReadModel\Shop\Product\ProductFetcher;
 use App\Services\Redis\RedisHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+    private const PER_PAGE = 10;
     private $redisHelper;
     
     public function __construct(RedisHelper $redisHelper)
@@ -20,18 +21,27 @@ class HomeController extends AbstractController
     }
     
     /**
-     * @Route("/", name="home")
-     * @param Checker $checker
+     * @Route("/product", name="products")
+     * @param Request $request
+     * @param ProductFetcher $products
      * @return     Response
      */
-    public function index(Checker $checker)
+    public function index(Request $request, ProductFetcher $products)
     {
-        $inn = $checker->check(new Inn(190275968));
-        
+        $filter = new Filter();
+    
+        $pagination = $products->all(
+            $filter,
+            $request->query->getInt('page', 1),
+            self::PER_PAGE,
+            $request->query->get('sort', 'date'),
+            $request->query->get('direction', 'desc')
+        );
+
         return $this->render(
-            'app/home.html.twig',
+            'app/products/index.html.twig',
             [
-            'inn' => $inn
+            'pagination' => $pagination
             ]
         );
     }
