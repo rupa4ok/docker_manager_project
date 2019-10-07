@@ -292,6 +292,12 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
+    "phpsed/cache": {
+        "version": "1.5"
+    },
+    "predis/predis": {
+        "version": "v1.1.1"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },

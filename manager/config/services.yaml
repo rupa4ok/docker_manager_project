@@ -42,6 +42,13 @@ services:
         factory: 'App\Model\User\UseCase\ResetPassword\ResetTokenizerFactory:create'
         arguments: ['PT1H']
 
+    redis_cache_service:
+        class: Doctrine\Common\Cache\RedisCache
+        calls:
+            - method: setRedis
+              arguments:
+                  - '@Redis'
+
     Redis:
         class: Redis
         calls:

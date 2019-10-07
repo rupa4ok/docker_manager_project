@@ -75,6 +75,8 @@ services:
       - 'dbfilename dump.rdb'
       - 'rdbcompression yes'
       - '--requirepass secret'
+    ports:
+      - 6379:6379
     networks:
       - internal1
   mailer:
