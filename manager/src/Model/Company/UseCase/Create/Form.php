@@ -14,10 +14,10 @@ class Form extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('firstName', Type\TextType::class, ['required' => false])
-            ->add('lastName', Type\TextType::class, ['required' => false])
-            ->add('email', Type\EmailType::class);
+        $builder->add('inn', Type\TextType::class, [
+                'required' => false,
+                'label' => 'Введите ИНН'
+            ]);
     }
     
     public function configureOptions(OptionsResolver $resolver): void

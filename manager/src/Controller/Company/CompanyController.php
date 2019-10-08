@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Company;
 
+use App\Model\Company\Entity\CompanyRepository;
 use App\Model\User\Entity\User\User;
-use App\Model\User\UseCase\Create;
+use App\Model\Company\UseCase\Create;
 use App\Model\User\UseCase\Role;
 use App\Model\User\UseCase\SignUp\Confirm;
 use App\Model\User\UseCase\Edit;
@@ -31,15 +32,16 @@ class CompanyController extends AbstractController
      * @Route("", name="")
      * @param Request $request
      * @param Create\Handler $handler
+     * @param CompanyRepository $repository
      * @return Response
      */
-    public function show(Request $request, Create\Handler $handler): Response
+    public function show(Request $request, Create\Handler $handler, CompanyRepository $repository): Response
     {
         $command = new Create\Command();
     
         $form = $this->createForm(Create\Form::class, $command);
         $form->handleRequest($request);
-    
+        
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
@@ -51,7 +53,7 @@ class CompanyController extends AbstractController
             }
         }
         
-        $company = '00a7e66c-cbef-4efa-b6cd-85253d2357e0';
+        $company = $repository->get($this->getUser()->getCompany());
         
         return $this->render(
             'app/users/company/show.html.twig',

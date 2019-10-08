@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\User\Entity\User\User;
-use App\Model\User\UseCase\Create;
+use App\Model\Company\UseCase\Create;
 use App\Model\User\UseCase\Edit;
 use App\Model\User\UseCase\Role;
 use App\Model\User\UseCase\SignUp\Confirm;
 use App\ReadModel\Company\CompanyFetcher;
 use App\ReadModel\Company\Filter;
 use App\ReadModel\Work\Members\Member\MemberFetcher;
+use DateTimeImmutable;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,7 +51,7 @@ class CompanyController extends AbstractController
             self::PER_PAGE,
             $request->query->get('sort', 'date'),
             $request->query->get('direction', 'desc'),
-            );
+        );
         
         dump($pagination);
         
@@ -79,7 +80,8 @@ class CompanyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $handler->handle($command);
-                return $this->redirectToRoute('users');
+                $this->addFlash('success', 'Компания успешно создана');
+                return $this->redirectToRoute('company');
             } catch (\DomainException $e) {
                 $this->errors->handle($e);
                 $this->addFlash('error', $e->getMessage());

@@ -21,24 +21,16 @@
         <table class="table table-bordered">
             <tbody>
             <tr>
-                <th>Name</th>
-                <td></td>
+                <th>Полное название</th>
+                <td>{{ company.name.full }}</td>
             </tr>
             <tr>
-                <th>Email</th>
-                <td></td>
+                <th>Дата регистрации</th>
+                <td>{{ company.date|date('Y-m-d H:i:s') }}</td>
             </tr>
             <tr>
-                <th>Created</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>Role</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td></td>
+                <th>ИНН</th>
+                <td>{{ company.inn }}</td>
             </tr>
             </tbody>
         </table>

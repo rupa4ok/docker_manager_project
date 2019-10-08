@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\User\Entity\User;
 
+use App\Model\Company\Entity\Company;
 use App\Model\EntityNotFoundException;
 use App\Model\User\Entity\User\ValueObject\Email;
 use App\Model\User\Entity\User\ValueObject\Id;
@@ -88,5 +89,15 @@ class UserRepository
     public function add(User $user): void
     {
         $this->em->persist($user);
+    }
+    
+    public function findCompanyByUserId(string $id)
+    {
+        return $this->repo->createQueryBuilder('u')
+            ->select('u.*')
+            ->innerJoin('user_company', 'c')
+            ->andWhere('c.company_id = :company')
+            ->setParameter(':user', $id)
+            ->getQuery();
     }
 }

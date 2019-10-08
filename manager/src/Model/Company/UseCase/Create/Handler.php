@@ -4,51 +4,54 @@ declare(strict_types=1);
 
 namespace App\Model\Company\UseCase\Create;
 
+use App\Model\Company\Entity\Company;
+use App\Model\Company\Entity\CompanyRepository;
+use App\Model\Company\Entity\Id;
+use App\Model\Company\Entity\Name;
+use App\Model\Company\Service\InnChecker\Checker;
+use App\Model\Company\Service\InnChecker\Inn;
 use App\Model\Flusher;
-use App\Model\User\Entity\User\User;
-use App\Model\User\Entity\User\UserRepository;
-use App\Model\User\Entity\User\ValueObject\Email;
-use App\Model\User\Entity\User\ValueObject\Id;
-use App\Model\User\Entity\User\ValueObject\Name;
-use App\Model\User\Service\PasswordGenerator;
-use App\Model\User\Service\PasswordHasher;
+use DateTimeImmutable;
 
 class Handler
 {
-    private $users;
-    private $hasher;
+    private $company;
+    private $innChecker;
     private $flusher;
-    private $generator;
 
     public function __construct(
-        UserRepository $users,
-        PasswordHasher $hasher,
-        PasswordGenerator $generator,
-        Flusher $flusher
+        CompanyRepository $company,
+        Flusher $flusher,
+        Checker $innChecker
     ) {
-        $this->users = $users;
-        $this->hasher = $hasher;
-        $this->generator = $generator;
+        $this->company = $company;
+        $this->innChecker = $innChecker;
         $this->flusher = $flusher;
     }
 
     public function handle(Command $command): void
     {
-        $email = new Email($command->email);
-
-        if ($this->users->hasByEmail($email)) {
-            throw new \DomainException('Пользователь уже существует.');
+        $inn = new Inn($command->inn);
+        
+        if ($this->company->hasByInn($inn)) {
+            throw new \DomainException('Компания уже зарегистрирована.');
+        }
+        
+        if (!$company = $this->innChecker->check($inn)) {
+            throw new \DomainException('Такой компании не существует.');
         }
 
-        $user = User::create(
+        $company = Company::create(
             Id::next(),
-            new \DateTimeImmutable(),
-            new Name($command->firstName, $command->lastName),
-            $email,
-            $this->generator->generate(),
+            DateTimeImmutable::createFromFormat('d.m.Y', $company->reg),
+            new Name(
+                $company->full,
+                $company->short
+            ),
+            $inn
         );
 
-        $this->users->add($user);
+        $this->company->add($company);
         $this->flusher->flush();
     }
 }

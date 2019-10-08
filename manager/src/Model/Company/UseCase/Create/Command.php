@@ -11,14 +11,14 @@ class Command
     /**
      * @var string
      */
-    public $firstName;
+    public $fullName;
     /**
      * @var string
      */
-    public $lastName;
+    public $shortName;
     /**
-     * @var            string
-     * @Assert\Email()
+     * @var string
+     * @Assert\NotNull()
      */
-    public $email;
+    public $inn;
 }

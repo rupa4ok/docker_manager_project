@@ -16,6 +16,7 @@ class UserIdentity implements UserInterface, EquatableInterface
     private $display;
     private $role;
     private $status;
+    private $company;
     
     public function __construct(
         string $id,
@@ -23,7 +24,8 @@ class UserIdentity implements UserInterface, EquatableInterface
         string $password,
         string $display,
         string $role,
-        string $status
+        string $status,
+        string $company
     ) {
         $this->id = $id;
         $this->username = $username;
@@ -31,6 +33,7 @@ class UserIdentity implements UserInterface, EquatableInterface
         $this->display = $display;
         $this->role = $role;
         $this->status = $status;
+        $this->company = $company;
     }
     
     public function getId(): string
@@ -70,7 +73,11 @@ class UserIdentity implements UserInterface, EquatableInterface
     
     public function eraseCredentials(): void
     {
+    }
     
+    public function getCompany(): string
+    {
+        return $this->company;
     }
     
     public function isEqualTo(UserInterface $user): bool

@@ -48,7 +48,8 @@ class UserFetcher
                 'password_hash',
                 'TRIM(CONCAT(name_first, \' \', name_last)) AS name',
                 'role',
-                'status'
+                'status',
+                'company_id AS company'
             )
             ->from('user_users')
             ->where('email = :email')

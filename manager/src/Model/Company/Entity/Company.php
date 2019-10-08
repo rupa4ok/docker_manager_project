@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Company\Entity;
 
+use App\Model\Company\Service\InnChecker\Inn;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,8 +46,9 @@ class Company
         $this->name = $name;
     }
     
-    public static function create(Id $id, \DateTimeImmutable $date, Name $name, string $inn): self
+    public static function create(Id $id, \DateTimeImmutable $date, Name $name, Inn $inn): self
     {
+        dump($date);
         $company = new self($id, $date, $name);
         $company->inn = $inn;
         
