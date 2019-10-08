@@ -31,6 +31,9 @@ doctrine:
             shop_product_products_id:
                 class: 'App\Model\Shop\Entity\Product\Type\IdType'
                 commented: false
+            user_info_id:
+                class: 'App\Model\User\Entity\UserInfo\Type\IdType'
+                commented: false
 
         url: '%env(resolve:DATABASE_URL)%'
     orm:

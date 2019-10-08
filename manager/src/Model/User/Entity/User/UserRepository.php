@@ -90,14 +90,4 @@ class UserRepository
     {
         $this->em->persist($user);
     }
-    
-    public function findCompanyByUserId(string $id)
-    {
-        return $this->repo->createQueryBuilder('u')
-            ->select('u.*')
-            ->innerJoin('user_company', 'c')
-            ->andWhere('c.company_id = :company')
-            ->setParameter(':user', $id)
-            ->getQuery();
-    }
 }

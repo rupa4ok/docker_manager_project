@@ -98,7 +98,7 @@ class UsersController extends AbstractController
     public function edit(User $user, Request $request, Edit\Handler $handler): Response
     {
         if ($user->getId()->getValue() === $this->getUser()->getId()) {
-            $this->addFlash('error', 'Unable to edit yourself.');
+            $this->addFlash('error', 'Невозможно редактировать себя.');
             return $this->redirectToRoute('users.show', ['id' => $user->getId()]);
         }
         

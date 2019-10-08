@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures\Users;
 
+use App\Model\Company\Service\InnChecker\Inn;
 use App\Model\User\Entity\User\User;
 use App\Model\Company\Entity\Company;
 use App\Model\User\Entity\User\ValueObject\Email;
@@ -46,7 +47,7 @@ class UserFixtures extends Fixture
             CompanyId::next(),
             new \DateTimeImmutable(),
             new CompanyName('Test Full Name 2', 'Test Short Name 2'),
-            '200246676'
+            new Inn(200246676)
         ));
         $manager->persist($confirmed);
         $this->setReference(self::REFERENCE_USER, $confirmed);
@@ -60,7 +61,7 @@ class UserFixtures extends Fixture
             CompanyId::next(),
             new \DateTimeImmutable(),
             new CompanyName('Test Full Name', 'Test Short Name'),
-            '190437290'
+            new Inn(190437290)
         ));
         $manager->persist($admin);
         $this->setReference(self::REFERENCE_ADMIN, $admin);

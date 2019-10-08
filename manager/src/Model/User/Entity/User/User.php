@@ -11,6 +11,7 @@ use App\Model\User\Entity\User\ValueObject\Id;
 use App\Model\User\Entity\User\ValueObject\Name;
 use App\Model\User\Entity\User\ValueObject\ResetToken;
 use App\Model\User\Entity\User\ValueObject\Role;
+use App\Model\User\Entity\UserInfo\UserInfo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -92,8 +93,15 @@ class User
      */
     private $networks;
     /**
-     * @var ArrayCollection|Company[]
-     * @ORM\ManyToOne(targetEntity="App\Model\Company\Entity\Company", cascade={"persist"}))
+     * @var UserInfo|null
+     * @ORM\OneToOne(targetEntity="App\Model\User\Entity\UserInfo\UserInfo", mappedBy="user",
+     * orphanRemoval=true, cascade={"persist"})
+     */
+    private $userInfo;
+    /**
+     * @var Company
+     * @ORM\ManyToOne(targetEntity="App\Model\Company\Entity\Company",
+     * inversedBy="users", cascade={"persist"}, fetch="EAGER"))
      * @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=true)
      */
     private $company;
@@ -341,7 +349,7 @@ class User
     }
     
     /**
-     * @return Company[]|ArrayCollection
+     * @return Company
      */
     public function getCompany()
     {
@@ -354,6 +362,14 @@ class User
     public function getNetworks(): array
     {
         return $this->networks->toArray();
+    }
+    
+    /**
+     * @return UserInfo|null
+     */
+    public function getUserInfo(): ?UserInfo
+    {
+        return $this->userInfo;
     }
     
     /**

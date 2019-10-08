@@ -49,6 +49,7 @@ class CompanyFetcher
                 'date',
                 'name_full AS nameFull',
                 'inn',
+                'address'
             )
             ->from('user_company');
         if ($filter->name) {

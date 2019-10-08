@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Company\Entity\Company;
 use App\Model\User\Entity\User\User;
 use App\Model\Company\UseCase\Create;
 use App\Model\User\UseCase\Edit;
@@ -12,7 +13,6 @@ use App\Model\User\UseCase\SignUp\Confirm;
 use App\ReadModel\Company\CompanyFetcher;
 use App\ReadModel\Company\Filter;
 use App\ReadModel\Work\Members\Member\MemberFetcher;
-use DateTimeImmutable;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,8 +53,6 @@ class CompanyController extends AbstractController
             $request->query->get('direction', 'desc'),
         );
         
-        dump($pagination);
-        
         return $this->render(
             'app/company/index.html.twig',
             [
@@ -79,8 +77,8 @@ class CompanyController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $handler->handle($command);
-                $this->addFlash('success', 'Компания успешно создана');
+                $company = $handler->handle($command);
+                $this->addFlash('success', 'Компания ' .$company. ' успешно создана');
                 return $this->redirectToRoute('company');
             } catch (\DomainException $e) {
                 $this->errors->handle($e);
@@ -190,15 +188,13 @@ class CompanyController extends AbstractController
     
     /**
      * @Route("/{id}", name=".show")
-     * @param User $user
-     * @param MemberFetcher $members
+     * @param Company $company
      * @return Response
      */
-    public function show(User $user, MemberFetcher $members): Response
+    public function show(Company $company): Response
     {
-        $member = $members->find($user->getId()->getValue());
-        
-        return $this->render('app/users/show.html.twig', compact('user', 'member'));
+        dump($company);
+        return $this->render('app/company/show.html.twig', compact('company'));
     }
     
     /**

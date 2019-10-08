@@ -13,35 +13,60 @@
 {% block body %}
 
     <div class="controls">
-        <a href="" class="btn btn-primary">Edit</a>
-        <a href="" class="btn btn-primary">Change Role</a>
+        <a href="" class="btn btn-primary">Редактировать компанию</a>
     </div>
 
-    <div class="box">
-        <table class="table table-bordered">
-            <tbody>
-            <tr>
-                <th>Наименование организации</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>Сокращенное наименование организации</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>Дата регистрации</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>Role</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="card">
+        <div class="card-header">Компания</div>
+        <div class="card-body">
+            <table class="table table-bordered mb-0">
+                <tbody>
+                <tr>
+                    <th>ID организации</th>
+                    <td>{{ company.id }}</td>
+                </tr>
+                <tr>
+                    <th>Полное название организации</th>
+                    <td>{{ company.name.full }}</td>
+                </tr>
+                <tr>
+                    <th>Сокращенное наименование организации</th>
+                    <td>{{ company.name.short }}</td>
+                </tr>
+                <tr>
+                    <th>ИНН</th>
+                    <td>{{ company.inn }}</td>
+                </tr>
+                <tr>
+                    <th>Юридический адрес</th>
+                    <td>{{ company.address }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
+    <div class="card">
+        <div class="card-header">Сотрудники</div>
+        <div class="card-body">
+            <table class="table table-bordered mb-0">
+                <tbody>
+                {% if company.users %}
+                    <tr>
+                        <th>ID сотрудника</th>
+                        <th>ФИО</th>
+                        <th>Email</th>
+                    </tr>
+                    {% for user in company.users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td><a href="{{ path('users.show', {'id': user.id}) }}">{{ user.name.first }} {{ user.name.last }}</a></td>
+                            <td>{{ user.email ? user.email.value : '' }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

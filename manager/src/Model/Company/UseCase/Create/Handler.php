@@ -29,7 +29,7 @@ class Handler
         $this->flusher = $flusher;
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command): string
     {
         $inn = new Inn($command->inn);
         
@@ -41,7 +41,7 @@ class Handler
             throw new \DomainException('Такой компании не существует.');
         }
 
-        $company = Company::create(
+        $agent = Company::create(
             Id::next(),
             DateTimeImmutable::createFromFormat('d.m.Y', $company->reg),
             new Name(
@@ -50,8 +50,10 @@ class Handler
             ),
             $inn
         );
-
-        $this->company->add($company);
+    
+        $agent->addAddress($company->address);
+        $this->company->add($agent);
         $this->flusher->flush();
+        return $agent->getName()->getFull();
     }
 }

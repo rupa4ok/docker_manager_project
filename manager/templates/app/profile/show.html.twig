@@ -60,13 +60,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Должность</th>
-                    <td>
-                        {{ user.name.full }}
-                        <a href="{{ path('profile.name') }}" class="btn btn-sm btn-outline-primary"><span class="fa fa-pencil"></span></a>
-                    </td>
-                </tr>
-                <tr>
                     <th>Телефон</th>
                     <td>
                         {{ user.name.full }}
@@ -74,21 +67,30 @@
                         <a href="{{ path('profile.name') }}" class="btn btn-sm btn-outline-success"><span class="fa fa-plus"></span></a>
                     </td>
                 </tr>
+                {% if user.userinfo %}
+                <tr>
+                    <th>Должность</th>
+                    <td>
+                        {{ user.userinfo.position }}
+                        <a href="{{ path('profile.name') }}" class="btn btn-sm btn-outline-primary"><span class="fa fa-pencil"></span></a>
+                    </td>
+                </tr>
                 <tr>
                     <th>Факс</th>
                     <td>
-                        {{ user.name.full }}
+                        {{ user.userinfo.fax }}
                         <a href="{{ path('profile.name') }}" class="btn btn-sm btn-outline-primary"><span class="fa fa-pencil"></span></a>
                     </td>
                 </tr>
                 <tr>
                     <th>Адрес доставки</th>
                     <td>
-                        {{ user.name.full }}
+                        {{ user.userinfo.fax }}
                         <a href="{{ path('profile.name') }}" class="btn btn-sm btn-outline-primary"><span class="fa fa-pencil"></span></a>
                         <a href="{{ path('profile.name') }}" class="btn btn-sm btn-outline-success"><span class="fa fa-plus"></span></a>
                     </td>
                 </tr>
+                {% endif %}
                 </tbody>
             </table>
         </div>

@@ -25,6 +25,8 @@ class ShowController extends AbstractController
     public function index()
     {
         $user = $this->users->get($this->getUser()->getId());
+        
+        dump($user);
 
         return $this->render('app/profile/show.html.twig', compact('user'));
     }

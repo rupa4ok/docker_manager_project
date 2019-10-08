@@ -40,6 +40,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'Дата регистрации', 'date') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'Полное название', 'name') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'ИНН', 'inn') }}</th>
+                <th>Юридический адрес</th>
             </tr>
             </thead>
             <tbody>
@@ -48,6 +49,7 @@
                     <td>{{ company.date|date('Y-m-d') }}</td>
                     <td><a href="{{ path('company.show', {'id': company.id}) }}">{{ company.namefull }}</a></td>
                     <td>{{ company.inn }}</td>
+                    <td>{{ company.address }}</td>
                 </tr>
             {% endfor %}
             </tbody>
