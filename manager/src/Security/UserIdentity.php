@@ -25,7 +25,7 @@ class UserIdentity implements UserInterface, EquatableInterface
         string $display,
         string $role,
         string $status,
-        string $company
+        ?string $company
     ) {
         $this->id = $id;
         $this->username = $username;

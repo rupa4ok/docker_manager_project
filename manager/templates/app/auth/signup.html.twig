@@ -10,7 +10,9 @@
                     <div class="card-body p-4">
                         {% include '_flashes.html.twig' %}
 
-                        <h1>Регистрация</h1>
+                        <h2 class="mb-3 text-center">
+                            Регистрация
+                        </h2>
 
                         {{ form_start(form) }}
 
@@ -45,7 +47,7 @@
                             {{ form_errors(form.password) }}
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-success">Create Account</button>
+                        <button type="submit" class="btn btn-block btn-success">Зарегистрироваться</button>
 
                         {{ form_end(form) }}
                     </div>
