@@ -35,8 +35,8 @@ class UserFactoryFixtures extends BaseFixture
     protected function createUsers(int $count, callable $factory)
     {
         for ($i = 0; $i < $count; $i++) {
-            $faker = Factory::create();
-
+            $faker = Factory::create('ru_RU');
+            
             $user = User::signUpByEmail(
                 Id::next(),
                 new \DateTimeImmutable(),
@@ -45,7 +45,7 @@ class UserFactoryFixtures extends BaseFixture
                 $this->hasher->hash($faker->numberBetween(6, 10)),
                 'token'
             );
-    
+            
             if (rand(1, 10) % 2 == 0) {
                 $user->confirmSignUp();
             }
