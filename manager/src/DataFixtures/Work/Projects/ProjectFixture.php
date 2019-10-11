@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Work\Projects;
 
 use App\DataFixtures\Work\Members\MemberFixture;
-use App\Model\User\Entity\User\Role;
+use App\Model\User\Entity\User\ValueObject\Role;
 use App\Model\Work\Entity\Members\Member\Member;
 use App\Model\Work\Entity\Projects\Project\Department\Id as DepartmentId;
 use App\Model\Work\Entity\Projects\Project\Project;

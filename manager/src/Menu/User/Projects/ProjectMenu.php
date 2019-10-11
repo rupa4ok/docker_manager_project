@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Menu\Work\Projects;
+namespace App\Menu\User\Projects;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
