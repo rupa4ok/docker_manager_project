@@ -34,6 +34,16 @@ doctrine:
             user_info_id:
                 class: 'App\Model\User\Entity\UserInfo\Type\IdType'
                 commented: false
+            work_projects_project_id:
+                class: 'App\Model\Work\Entity\Projects\Project\IdType'
+            work_projects_project_status:
+                class: 'App\Model\Work\Entity\Projects\Project\StatusType'
+            work_projects_project_department_id:
+                class: 'App\Model\Work\Entity\Projects\Project\Department\IdType'
+            work_projects_role_id:
+                class: 'App\Model\Work\Entity\Projects\Role\IdType'
+            work_projects_role_permissions:
+                class: 'App\Model\Work\Entity\Projects\Role\PermissionsType'
 
         url: '%env(resolve:DATABASE_URL)%'
     orm:
