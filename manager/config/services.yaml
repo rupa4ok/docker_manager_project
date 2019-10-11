@@ -76,3 +76,6 @@ services:
 
     App\Menu\Admin\SidebarMenu:
         tags: [{ name: knp_menu.menu_builder, method: build, alias: sidebar.admin }]
+
+    App\Menu\Work\Projects\ProjectMenu:
+        tags: [{ name: knp_menu.menu_builder, method: build, alias: work_project }]
