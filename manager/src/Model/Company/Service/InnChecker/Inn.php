@@ -21,7 +21,7 @@ class Inn
         return $this->value;
     }
     
-    public function __toString(): string
+    public function __toString(): ?string
     {
         return $this->getValue();
     }

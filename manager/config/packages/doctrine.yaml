@@ -15,6 +15,8 @@ doctrine:
             user_company_id:
                 class: 'App\Model\Company\Entity\Type\IdType'
                 commented: false
+            user_company_inn:
+                class: 'App\Model\Company\Entity\Type\InnType'
             user_user_email:
                 class: 'App\Model\User\Entity\User\Type\EmailType'
                 commented: false

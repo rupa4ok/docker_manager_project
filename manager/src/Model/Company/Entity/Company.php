@@ -45,7 +45,7 @@ class Company
     private $name;
     /**
      * @var Inn
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="user_company_inn", nullable=false)
      */
     private $inn;
     /**

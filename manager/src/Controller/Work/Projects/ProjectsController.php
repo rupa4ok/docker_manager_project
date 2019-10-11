@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProjectsController extends AbstractController
 {
-    private const PER_PAGE = 50;
+    private const PER_PAGE = 10;
 
     private $errors;
 
