@@ -57,7 +57,7 @@ class User
      */
     private $confirmToken;
     /**
-     * @var                                                               Name
+     * @var Name
      * @ORM\Embedded(class="App\Model\User\Entity\User\ValueObject\Name")
      */
     private $name;

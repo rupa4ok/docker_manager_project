@@ -9,11 +9,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Command
 {
     /**
-     * @var string
+     * @var string|null
      */
     public $firstName;
     /**
-     * @var string
+     * @var string|null
      */
     public $lastName;
     /**

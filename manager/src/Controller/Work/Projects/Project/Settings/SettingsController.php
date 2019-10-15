@@ -38,7 +38,7 @@ class SettingsController extends AbstractController
      */
     public function show(Project $project): Response
     {
-        $this->denyAccessUnlessGranted(ProjectAccess::EDIT, $project);
+//        $this->denyAccessUnlessGranted(ProjectAccess::EDIT, $project);
 
         return $this->render('app/work/projects/project/settings/show.html.twig', compact('project'));
     }

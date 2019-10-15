@@ -23,7 +23,7 @@ class ProjectController extends AbstractController
      */
     public function show(Project $project): Response
     {
-        $this->denyAccessUnlessGranted(ProjectAccess::VIEW, $project);
+//        $this->denyAccessUnlessGranted(ProjectAccess::VIEW, $project);
 
         return $this->render('app/work/projects/project/show.html.twig', compact('project'));
     }

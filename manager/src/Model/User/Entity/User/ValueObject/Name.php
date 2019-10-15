@@ -13,16 +13,16 @@ class Name
 {
     /**
      * @var                       string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $first;
     /**
      * @var                       string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $last;
     
-    public function __construct(string $first, string $last)
+    public function __construct(?string $first, ?string $last)
     {
         $this->first = $first;
         $this->last = $last;
