@@ -17,6 +17,7 @@ doctrine:
                 commented: false
             user_company_inn:
                 class: 'App\Model\Company\Entity\Type\InnType'
+                commented: false
             user_user_email:
                 class: 'App\Model\User\Entity\User\Type\EmailType'
                 commented: false

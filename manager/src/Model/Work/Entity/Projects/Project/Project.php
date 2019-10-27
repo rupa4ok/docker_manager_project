@@ -58,7 +58,7 @@ class Project
      * @ORM\Column(type="integer")
      */
     private $version;
-
+    
     public function __construct(Id $id, string $name, int $sort)
     {
         $this->id = $id;
@@ -68,13 +68,13 @@ class Project
         $this->departments = new ArrayCollection();
         $this->memberships = new ArrayCollection();
     }
-
+    
     public function edit(string $name, int $sort): void
     {
         $this->name = $name;
         $this->sort = $sort;
     }
-
+    
     public function archive(): void
     {
         if ($this->isArchived()) {
@@ -82,7 +82,7 @@ class Project
         }
         $this->status = Status::archived();
     }
-
+    
     public function reinstate(): void
     {
         if ($this->isActive()) {
@@ -90,7 +90,7 @@ class Project
         }
         $this->status = Status::active();
     }
-
+    
     public function addDepartment(DepartmentId $id, string $name): void
     {
         foreach ($this->departments as $department) {
@@ -100,7 +100,7 @@ class Project
         }
         $this->departments->add(new Department($this, $id, $name));
     }
-
+    
     public function editDepartment(DepartmentId $id, string $name): void
     {
         foreach ($this->departments as $current) {
@@ -111,7 +111,7 @@ class Project
         }
         throw new \DomainException('Department is not found.');
     }
-
+    
     public function removeDepartment(DepartmentId $id): void
     {
         foreach ($this->departments as $department) {
@@ -127,7 +127,7 @@ class Project
         }
         throw new \DomainException('Department is not found.');
     }
-
+    
     public function hasMember(MemberId $id): bool
     {
         foreach ($this->memberships as $membership) {
@@ -137,7 +137,7 @@ class Project
         }
         return false;
     }
-
+    
     /**
      * @param Member $member
      * @param DepartmentId[] $departmentIds
@@ -154,7 +154,7 @@ class Project
         $departments = array_map([$this, 'getDepartment'], $departmentIds);
         $this->memberships->add(new Membership($this, $member, $departments, $roles));
     }
-
+    
     /**
      * @param MemberId $member
      * @param DepartmentId[] $departmentIds
@@ -171,7 +171,7 @@ class Project
         }
         throw new \DomainException('Member is not found.');
     }
-
+    
     public function removeMember(MemberId $member): void
     {
         foreach ($this->memberships as $membership) {
@@ -182,7 +182,7 @@ class Project
         }
         throw new \DomainException('Member is not found.');
     }
-
+    
     public function isMemberGranted(MemberId $id, string $permission): bool
     {
         foreach ($this->memberships as $membership) {
@@ -192,42 +192,42 @@ class Project
         }
         return false;
     }
-
+    
     public function isArchived(): bool
     {
         return $this->status->isArchived();
     }
-
+    
     public function isActive(): bool
     {
         return $this->status->isActive();
     }
-
+    
     public function getId(): Id
     {
         return $this->id;
     }
-
+    
     public function getName(): string
     {
         return $this->name;
     }
-
+    
     public function getSort(): int
     {
         return $this->sort;
     }
-
+    
     public function getStatus(): Status
     {
         return $this->status;
     }
-
+    
     public function getDepartments()
     {
         return $this->departments->toArray();
     }
-
+    
     public function getDepartment(DepartmentId $id): Department
     {
         foreach ($this->departments as $department) {
@@ -237,12 +237,12 @@ class Project
         }
         throw new \DomainException('Department is not found.');
     }
-
+    
     public function getMemberships()
     {
         return $this->memberships->toArray();
     }
-
+    
     public function getMembership(MemberId $id): Membership
     {
         foreach ($this->memberships as $membership) {
