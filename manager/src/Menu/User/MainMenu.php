@@ -33,6 +33,17 @@ class MainMenu
             ->addChild('Actions', ['route' => 'work.projects.actions'])
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', 'nav-link');
+    
+        if ($this->auth->isGranted('ROLE_WORK_MANAGE_PROJECTS')) {
+            $menu
+                ->addChild('Roles', ['route' => 'work.projects.roles'])
+                ->setExtra('routes', [
+                    ['route' => 'work.projects.roles'],
+                    ['pattern' => '/^work.projects.roles\..+/']
+                ])
+                ->setAttribute('class', 'nav-item')
+                ->setLinkAttribute('class', 'nav-link');
+        }
 
         return $menu;
     }

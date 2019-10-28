@@ -36,8 +36,6 @@ class MembersController extends AbstractController
      */
     public function index(Project $project): Response
     {
-        $this->denyAccessUnlessGranted(ProjectAccess::MANAGE_MEMBERS, $project);
-
         return $this->render('app/work/projects/project/settings/members/index.html.twig', [
             'project' => $project,
             'memberships' => $project->getMemberships(),
@@ -53,8 +51,6 @@ class MembersController extends AbstractController
      */
     public function assign(Project $project, Request $request, Membership\Add\Handler $handler): Response
     {
-        $this->denyAccessUnlessGranted(ProjectAccess::MANAGE_MEMBERS, $project);
-
         if (!$project->getDepartments()) {
             $this->addFlash('error', 'Add departments before adding members.');
             return $this->redirectToRoute('work.projects.project.settings.members', ['project_id' => $project->getId()]);
@@ -91,8 +87,6 @@ class MembersController extends AbstractController
      */
     public function edit(Project $project, string $member_id, Request $request, Membership\Edit\Handler $handler): Response
     {
-        $this->denyAccessUnlessGranted(ProjectAccess::MANAGE_MEMBERS, $project);
-
         $membership = $project->getMembership(new Id($member_id));
 
         $command = Membership\Edit\Command::fromMembership($project, $membership);
