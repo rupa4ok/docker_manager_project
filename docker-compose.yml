@@ -82,7 +82,7 @@ services:
   mailer:
     image: mailhog/mailhog
     ports:
-      - "8082:8025"
+      - "8051:8025"
     networks:
       - internal1
   elasticsearch:
